@@ -15,13 +15,13 @@ if ($_SESSION && $_SESSION['userId'] > 0){
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label class="control-label">Nombre del visitante</label>
-							    <input type="text" id="nombreVisitante" name="nombreVisitante" tabindex="1" class="form-control required letras" placeholder="Nombre del visitante" maxlength="80">
+							    <input type="text" id="nombreVisitante" name="nombreVisitante" tabindex="1" class="form-control required letras" placeholder="Nombre del visitante" maxlength="70">
                             </div>
                         </div>
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label class="control-label">Testimonial</label>
-                                <textarea class="form-control" name="testimonial" tabindex="2" id="testimonial" placeholder="Testimonial" rows="8"></textarea>
+                                <textarea class="form-control" name="testimonial" tabindex="2" id="testimonial" placeholder="Testimonial" rows="8"  maxlength="118"></textarea>
                             </div>
                         </div>
                     </div>

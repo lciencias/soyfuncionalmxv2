@@ -291,7 +291,7 @@ $(document).ready(function() {
                 validating: 'glyphicon glyphicon-refresh'
             },
             fields: {
-                nombre: {
+                nombreVisitante: {
                     message: 'Campo obligatorio',
                     validators: {
                         notEmpty: {
@@ -314,10 +314,14 @@ $(document).ready(function() {
                         notEmpty: {
                             message: 'Campo obligatorio'
                         },
+                        regexp: {
+                            regexp: alfanum,
+                            message: 'El campo es s&oacute;lo para letras y numeros'
+                        },
                         stringLength: {
                             min: 3,
-                            max: 20,
-                            message: 'Minimo 3 y maximo 20 caracteres'
+                            max: 120,
+                            message: 'Minimo 3 y maximo 120 caracteres'
                         }
                     }
                 }
