@@ -249,9 +249,9 @@ $(document).ready(function() {
                             message: 'El campo es s&oacute;lo numeros'
                         },
                         stringLength: {
-                            min: 6,
-                            max: 50,
-                            message: 'Minimo 6 y maximo 50 caracteres'
+                            min: 1,
+                            max: 8,
+                            message: 'Minimo 2 y maximo 8 caracteres'
                         }
                     }
                 },

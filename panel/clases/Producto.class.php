@@ -4,7 +4,6 @@ class Producto extends Comunes{
 
 	private $db;
 	public $session;
-	private $idDocumento;
 	private $data;
 	private $idImagen;
 	private $opc;
@@ -16,13 +15,12 @@ class Producto extends Comunes{
 	private $arrayCategorias;
 	private $totalProductos;
 	
-	function __construct($db,$session,$data,$idImagen,$idDocumento,$opc){
+	function __construct($db,$session,$data,$idImagen,$opc){
 		parent::__construct($session);
 		$this->db 		   = $db;
 		$this->session     = $session;
 		$this->data        = $data;
 		$this->idImagen    = $idImagen;
-		$this->idDocumento = $idDocumento;
 		$this->filtro      = "";
 		$this->opc         = $opc;
 		$this->mensaje     = "";
@@ -76,7 +74,7 @@ class Producto extends Comunes{
 	private function categorias(){
 		$this->arrayCategorias = array();
 		try{
-			$sql = "SELECT a.id,a.nombre FROM categoria as a
+			$sql = "SELECT a.id,a.nombre FROM categorias as a
 					WHERE a.status = '".Comunes::SAVE."' ORDER BY a.nombre ASC;";
 			$res = $this->db->sql_query ($sql);
 			if ($this->db->sql_numrows ($res) > 0){

@@ -9,69 +9,173 @@ var procesando = " P R O C E S A N D O . . . . .";
 $(function() {
     "use strict";
     var SweetAlert = function() {};
-
-    //examples 
     SweetAlert.prototype.init = function() {
-
-            //Evento nuevoUsuario
-            $(document).on("click", "#nuevoUsuario", function(e) {
-                var baseUrl = $("#baseUrl").val();
-                var name = $("#name").val();
-                var email = $("#email").val();
-                var password = $("#passwordS").val();
-                var idT = $("#idT").val();
-                if (name.length >= 6 && email.length >= 6 && valEmail(email) &&
-                    password.length >= 8 && parseInt(idT) > 0 && parseInt(idT) < 7) {
-                    swal({
-                        title: "Desea guardar el registro?",
-                        text: "Soy Funcional MX",
-                        type: "warning",
-                        showCancelButton: true,
-                        confirmButtonColor: "#f8b32d",
-                        confirmButtonText: "Guardar",
-                        closeOnConfirm: false
-                    }, function() {
-                        var url = "guardaDatos.php";
-                        var formData = new FormData();
-                        formData.append("name", name);
-                        formData.append("email", email);
-                        formData.append("password", password);
-                        formData.append("idT", $("#idT").val());
-                        console.log(formData);
-                        $.ajax({
-                            type: 'POST',
-                            url: url,
-                            data: formData,
-                            processData: false,
-                            contentType: false,
-                            //dataType: 'json',
-                            beforeSend: function() {
-                                $('#procesando').html(procesando);
-                            },
-                            success: function(data) {
-                                alert("exito.  " + parseInt(data.exito));
-                                if (parseInt(data.exito) === 1) {
-                                    swal("Registrado", data.msg, "success");
-                                    setTimeout(function() {
-                                        location.href = baseUrl + data.url;
-                                    }, 2500);
-                                } else {
-                                    swal("Error", data.msg, "error");
-                                }
-                                return false;
-                                console.log("Success");
-                            },
-                            error: function(xhr, ajaxOptions, thrownError) {
-                                //("Error");
-                                // return false;
-                                console.log("Error");
-                            },
-                            complete: function() {}
-                        });
+        //Evento nuevo Usuario
+        $(document).on("click", "#nuevoUsuario", function(e) {
+            var baseUrl = $("#baseUrl").val();
+            var name = $("#name").val();
+            var email = $("#email").val();
+            var password = $("#passwordS").val();
+            var idT = $("#idT").val();
+            if (name.length >= 6 && email.length >= 6 && valEmail(email) &&
+                password.length >= 8 && parseInt(idT) > 0 && parseInt(idT) < 7) {
+                swal({
+                    title: "Desea guardar el registro?",
+                    text: "Soy Funcional MX",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#f8b32d",
+                    confirmButtonText: "Guardar",
+                    closeOnConfirm: false
+                }, function() {
+                    var url = "guardaDatos.php";
+                    var formData = new FormData();
+                    formData.append("name", name);
+                    formData.append("email", email);
+                    formData.append("password", password);
+                    formData.append("idT", $("#idT").val());
+                    $.ajax({
+                        type: 'POST',
+                        url: url,
+                        data: formData,
+                        processData: false,
+                        contentType: false,
+                        dataType: 'json',
+                        beforeSend: function() {
+                            $('#procesando').html(procesando);
+                        },
+                        success: function(data) {
+                            $('#procesando').html("");
+                            if (parseInt(data.exito) === 1) {
+                                swal("Registrado", data.msg, "success");
+                                setTimeout(function() {
+                                    location.href = baseUrl + data.url;
+                                }, 1500);
+                            } else {
+                                swal("Error", data.msg, "error");
+                            }
+                            return false;                                
+                        },
+                        error: function(xhr, ajaxOptions, thrownError) {
+                            return false;
+                        },
+                        complete: function() {}
                     });
-                }
-                return false;
-            });
+                });
+            }
+            return false;
+        });
+
+        // Evento  nuevoCategoria
+        $(document).on("click", "#nuevoCategoria", function(e) {
+            var baseUrl = $("#baseUrl").val();
+            var nombre  = $("#nombreC").val();
+            var orden   = $("#orden").val();
+            var idT     = $("#idT").val();
+            if (nombre.length >= 6 && parseInt(orden) > 0 && parseInt(idT) > 0 && parseInt(idT) < 7) {
+                swal({
+                    title: "Desea guardar el registro?",
+                    text: "Soy Funcional MX",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#f8b32d",
+                    confirmButtonText: "Guardar",
+                    closeOnConfirm: false
+                }, function() {
+                    var url = "guardaDatos.php";
+                    var formData = new FormData();
+                    formData.append("nombre", nombre);
+                    formData.append("orden", orden);
+                    formData.append("idT", $("#idT").val());
+                    $.ajax({
+                        type: 'POST',
+                        url: url,
+                        data: formData,
+                        processData: false,
+                        contentType: false,
+                        dataType: 'json',
+                        beforeSend: function() {
+                            $('#procesando').html(procesando);
+                        },
+                        success: function(data) {
+                            $('#procesando').html("");
+                            if (parseInt(data.exito) === 1) {
+                                swal("Registrado", data.msg, "success");
+                                setTimeout(function() {
+                                    location.href = baseUrl + data.url;
+                                }, 1500);
+                            } else {
+                                swal("Error", data.msg, "error");
+                            }
+                            return false;                                
+                        },
+                        error: function(xhr, ajaxOptions, thrownError) {
+                            return false;
+                        },
+                        complete: function() {}
+                    });
+                });
+            }
+            return false;
+        });
+
+        //Evento nuevoProducto
+        $(document).on("click", "#nuevoProducto", function(e) {
+            var baseUrl     = $("#baseUrl").val();
+            var idcategoria = $("#idcategoria").val();
+            var producto    = $("#producto").val();
+            var caloria     = $("#caloria").val();
+            var precio      = $("#precio").val();
+            var orden       = $("#orden").val();
+            var idT         = $("#idT").val();
+            if (parseInt(idcategoria) > 0 && producto.length >= 6 && caloria.length >= 6 
+                && precio.length >= 2  && parseInt(orden) > 0 && parseInt(idT) > 0 && parseInt(idT) < 7) {
+                swal({
+                    title: "Desea guardar el registro?",
+                    text: "Soy Funcional MX",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#f8b32d",
+                    confirmButtonText: "Guardar",
+                    closeOnConfirm: false
+                }, function() {
+                    var url = "guardaDatos.php";
+                    var formData = new FormData();
+                    formData.append("nombre", nombre);
+                    formData.append("orden", orden);
+                    formData.append("idT", $("#idT").val());
+                    $.ajax({
+                        type: 'POST',
+                        url: url,
+                        data: formData,
+                        processData: false,
+                        contentType: false,
+                        dataType: 'json',
+                        beforeSend: function() {
+                            $('#procesando').html(procesando);
+                        },
+                        success: function(data) {
+                            $('#procesando').html("");
+                            if (parseInt(data.exito) === 1) {
+                                swal("Registrado", data.msg, "success");
+                                setTimeout(function() {
+                                    location.href = baseUrl + data.url;
+                                }, 1500);
+                            } else {
+                                swal("Error", data.msg, "error");
+                            }
+                            return false;                                
+                        },
+                        error: function(xhr, ajaxOptions, thrownError) {
+                            return false;
+                        },
+                        complete: function() {}
+                    });
+                });
+            }
+            return false;
+        });
+
 
             $(document).on("click", ".mostrar", function() {
                 var div = $(this).attr('id');

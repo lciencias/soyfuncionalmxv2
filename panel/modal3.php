@@ -9,19 +9,20 @@ if ($_SESSION && $_SESSION['userId'] > 0){
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title" id="myModalLabel">Alta Categor&iacute;a</h4>
             </div>
-            <form enctype="multipart/form-data" action="<?=$_SERVER['PHP_SELF']?>" method="post" name="formaCategoria" id="validateFormCategoria" autocomplete="off" data-toogle="validator" role="form">
+            <form action="<?=$_SERVER['PHP_SELF']?>" method="post" name="formaCategoria" id="validateFormCategoria" autocomplete="off" data-toogle="validator" role="form">
+                <input type="hidden" name="idT" id="idT" value="<?=$idT?>">
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
 							    <label class="control-label mb-10">Nombre de la Categorias</label>
-								<input type="text" id="nombre" name="nombre" tabindex="1" class="form-control required letras" placeholder="Nombre de la Categorias" maxlength="80">
+								<input type="text" id="nombreC" name="nombreC" tabindex="1" class="form-control required letras" placeholder="Nombre de la Categorias" maxlength="80"/>
 							</div>
                         </div>
                         <div class="col-md-12">
                             <div class="form-group">
 							    <label class="control-label mb-10">Orden</label>		
-								<select name="orden" id="orden" class="form-control">
+								<select name="orden" id="orden" class="form-control" tabindex="2">
 								<?php 
 								    for( $j=1; $j <= $maxOrden; $j++){
 								?>
@@ -35,8 +36,8 @@ if ($_SESSION && $_SESSION['userId'] > 0){
                     </div>                                       
                 </div>
                 <div class="modal-footer">
-                <button class="btn btn-success" id="nuevoCategoria" name="nuevoCategoria"> <i class="fa fa-check"></i> <span>Crear</span></button>
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+                    <button type="button" tabindex="3" class="btn btn-success" id="nuevoCategoria" name="nuevoCategoria"> <i class="fa fa-check"></i> <span>Crear</span></button>
+                    <button type="button" tabindex="4" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
                 </div>
             </form>
         </div>

@@ -8,7 +8,7 @@ if ($_SESSION && $_SESSION['userId'] > 0){
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title" id="myModalLabel">Alta Usuario</h4>
             </div>
-            <form enctype="multipart/form-data" action="<?=$_SERVER['PHP_SELF']?>" method="post" name="formaUsuario" id="validateFormUsuario" autocomplete="off" data-toogle="validator" role="form">
+            <form action="<?=$_SERVER['PHP_SELF']?>" method="post" name="formaUsuario" id="validateFormUsuario" autocomplete="off" data-toogle="validator" role="form">
                 <input type="hidden" name="idT" id="idT" value="<?=$idT?>">    
                 <div class="modal-body">
                     <div class="row">

@@ -24,7 +24,7 @@ $ext = $db->url();
 $modalId   = "modal".$idT;
 switch($idT){
     case 0:
-        $objeto    = new Inicio($db);
+        $objeto    = new Inicio( $db,$_SESSION,$_REQUEST,Comunes::LISTAR,Comunes::LISTAR );
         $registros = $objeto->obtenRegistros();
         $bread     = $objeto->obtenBreadcrumb();
         $table     = $objeto->obtenBuffer();
@@ -66,6 +66,7 @@ switch($idT){
         $total     = count($registros);
         $titulo    = "Listado de Productos";
         $tituloBoton= "Alta de Productos";
+        $categorias = $objeto->obtenCategorias();
         break;
     case 5:
         $objeto    = new Pedidos ($db,$_SESSION,$_REQUEST,Comunes::LISTAR,Comunes::LISTAR,Comunes::LISTAR);
