@@ -32,7 +32,7 @@ if(isset($_POST)  && (int) $_POST['idT'] > 0 && (int) $_POST['idT'] < 7 && ((int
 			$array = array('exito' => $produ->obtenExito(),'msg' => $produ->obtenMensaje(), 'url' => $url);
 			break;
 		case 6:
-			$testti = new Testimonial($db, $_SESSION, $_POST, $_POST['idT'], Comunes::SAVE);
+			$testi = new Testimonial($db, $_SESSION, $_POST, $_POST['idT'], Comunes::SAVE);
 			$array = array('exito' => $testi->obtenExito(),'msg' => $testi->obtenMensaje(), 'url' => $url);
 			break;
 			

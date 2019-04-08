@@ -314,10 +314,6 @@ $(document).ready(function() {
                         notEmpty: {
                             message: 'Campo obligatorio'
                         },
-                        regexp: {
-                            regexp: alfanum,
-                            message: 'El campo es s&oacute;lo para letras y numeros'
-                        },
                         stringLength: {
                             min: 3,
                             max: 20,

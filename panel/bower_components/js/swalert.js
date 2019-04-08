@@ -127,9 +127,11 @@ $(function() {
             var caloria     = $("#caloria").val();
             var precio      = $("#precio").val();
             var orden       = $("#orden").val();
+            var fileImg     = $("#fileImg").val();
             var idT         = $("#idT").val();
             if (parseInt(idcategoria) > 0 && producto.length >= 6 && caloria.length >= 6 
-                && precio.length >= 2  && parseInt(orden) > 0 && parseInt(idT) > 0 && parseInt(idT) < 7) {
+                && precio.length >= 2  && parseInt(orden) > 0 && parseInt(idT) > 0 
+                && parseInt(idT) < 7 && String(fileImg) !== "") {
                 swal({
                     title: "Desea guardar el registro?",
                     text: "Soy Funcional MX",
@@ -143,6 +145,61 @@ $(function() {
                     var formData = new FormData();
                     formData.append("nombre", nombre);
                     formData.append("orden", orden);
+                    formData.append("idT", $("#idT").val());
+                    formData.append('image', $('input[type=file]')[0].files[0]); 
+                    $.ajax({
+                        type: 'POST',
+                        url: url,
+                        data: formData,
+                        processData: false,
+                        contentType: false,
+                        dataType: 'json',
+                        beforeSend: function() {
+                            $('#procesando').html(procesando);
+                        },
+                        success: function(data) {
+                            $('#procesando').html("");
+                            if (parseInt(data.exito) === 1) {
+                                swal("Registrado", data.msg, "success");
+                                setTimeout(function() {
+                                    location.href = baseUrl + data.url;
+                                }, 1500);
+                            } else {
+                                swal("Error", data.msg, "error");
+                            }
+                            return false;                                
+                        },
+                        error: function(xhr, ajaxOptions, thrownError) {
+                            return false;
+                        },
+                        complete: function() {}
+                    });
+                });
+            }
+            return false;
+        });
+
+        //Evento nuevoTestimonial
+        $(document).on("click", "#nuevoTestimonial", function(e) {
+            var baseUrl     = $("#baseUrl").val();
+            var nombre = $("#nombreVisitante").val();
+            var testimonial = $("#testimonial").val();
+            var idT         = $("#idT").val();
+            if (nombre.length >= 6 && testimonial.length >= 6 
+                && parseInt(idT) > 0 && parseInt(idT) < 7) {
+                swal({
+                    title: "Desea guardar el registro?",
+                    text: "Soy Funcional MX",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#f8b32d",
+                    confirmButtonText: "Guardar",
+                    closeOnConfirm: false
+                }, function() {
+                    var url = "guardaDatos.php";
+                    var formData = new FormData();
+                    formData.append("nombre", nombre);
+                    formData.append("testimonial", testimonial);
                     formData.append("idT", $("#idT").val());
                     $.ajax({
                         type: 'POST',
@@ -176,16 +233,15 @@ $(function() {
             return false;
         });
 
-
-            $(document).on("click", ".mostrar", function() {
-                var div = $(this).attr('id');
-                var tmp = div.split('-');
-                var dataString = '';
-                var baseUrl = $("#baseUrl").val();
-                var url = baseUrl + 'mostrar-registro.php';
-                if (parseInt(tmp[1]) > 0 && parseInt(tmp[2]) > 0) {
-                    dataString = 'id=' + tmp[1] + "&idModulo=" + tmp[2];
-                    swal({
+        $(document).on("click", ".mostrar", function() {
+            var div = $(this).attr('id');
+            var tmp = div.split('-');
+            var dataString = '';
+            var baseUrl = $("#baseUrl").val();
+            var url = baseUrl + 'mostrar-registro.php';
+            if (parseInt(tmp[1]) > 0 && parseInt(tmp[2]) > 0) {
+                dataString = 'id=' + tmp[1] + "&idModulo=" + tmp[2];
+                swal({
                         title: "Desea activar el testimonial?",
                         text: "",
                         type: "warning",

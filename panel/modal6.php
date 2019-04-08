@@ -9,12 +9,13 @@ if ($_SESSION && $_SESSION['userId'] > 0){
                 <h4 class="modal-title" id="myModalLabel">Alta Testimonial</h4>
             </div>
             <form enctype="multipart/form-data" action="<?=$_SERVER['PHP_SELF']?>" method="post" name="formaTestimonial" id="validateFormTestimonial" autocomplete="off" data-toogle="validator" role="form"> 
+                <input type="hidden" name="idT" id="idT" value="<?=$idT?>">
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label class="control-label">Nombre del visitante</label>
-							    <input type="text" id="nombre" name="nombre" tabindex="1" class="form-control required letras" placeholder="Nombre del visitante" maxlength="80">
+							    <input type="text" id="nombreVisitante" name="nombreVisitante" tabindex="1" class="form-control required letras" placeholder="Nombre del visitante" maxlength="80">
                             </div>
                         </div>
                         <div class="col-md-12">
@@ -26,8 +27,8 @@ if ($_SESSION && $_SESSION['userId'] > 0){
                     </div>
                 </div>
                 <div class="modal-footer">
-                <button class="btn btn-success btn-icon" id="nuevoTestimonial" name="nuevoTestimonial"> <i class="fa fa-check"></i> <span>Crear</span></button>
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-success btn-icon" tabindex="3"  id="nuevoTestimonial" name="nuevoTestimonial"> <i class="fa fa-check"></i> <span>Crear</span></button>
+                    <button type="button" class="btn btn-danger" tabindex="4" data-dismiss="modal">Cerrar</button>
                 </div>
             </form>
         </div>
