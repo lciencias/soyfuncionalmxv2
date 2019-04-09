@@ -213,7 +213,7 @@ class Comunes {
     }
   
     public function options($total,$selec){
-		$cadena = "";
+        $cadena = "";
 		for($i=1; $i <= $total; $i++){
 			$tmp = "";
 			if($i == $selec){

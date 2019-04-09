@@ -24,7 +24,7 @@ if ($_SESSION && $_SESSION['userId'] > 0){
 							    <label class="control-label mb-10">Orden</label>		
 								<select name="orden" id="orden" class="form-control" tabindex="2">
 								<?php 
-								    for( $j=1; $j <= $maxOrden; $j++){
+								    for( $j=$maxOrden; $j >= 1; $j--){
 								?>
 								    <option value="<?=$j?>"><?=$j?></option>
 								<?php 
