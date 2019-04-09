@@ -172,9 +172,21 @@ include_once($pathSys."scriptsAdmin.php");
 
 <!-- Modales -->
 <?php
-require_once("modal1.php");
-require_once("modal2.php");
-require_once("modal3.php");
-require_once("modal4.php");
-require_once("modal6.php");
+switch($idT){
+    case 1:
+        require_once("modal1.php");
+        break;
+    case 2:
+        require_once("modal2.php");
+        break;
+    case 3:
+        require_once("modal3.php");
+        break;
+    case 4:
+        require_once("modal4.php");
+        break;
+    case 6:
+        require_once("modal6.php");
+        break;
+}
 ?>

@@ -9,7 +9,7 @@ var fecha = /[0-9\-]/;
 var url = /^(http|https)\:\/\/[a-z0-9\.-]+\.[a-z]{2,4}/;
 
 $(document).ready(function() {
-    setInterval(revisaSesion, 30000);
+    setInterval(revisaSesion, 300000);
     /*var dataString = 'idModulo=' + $("#idModulo").val() + '&page=1&noRegs=0&orden=asc';
 
     if (parseInt($("#idModulo").val()) > 0 && String(token) !== '') {

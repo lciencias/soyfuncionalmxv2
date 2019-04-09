@@ -19,8 +19,19 @@ if(isset($_POST)  && (int) $_POST['idT'] > 0 && (int) $_POST['idT'] < 7 && ((int
 			$usuario = new Usuario($db,$_SESSION,$_POST,$_POST['idT'], Comunes::SAVE);
 			$array = array('exito' => $usuario->obtenExito(),'msg' => $usuario->obtenMensaje(), 'url' => $url);
 			break;
-        case 2:
-			$slide = new Slider ($db,$_SESSION,$_POST,$_POST['idT'], Comunes::SAVE, Comunes::LISTAR);
+		case 2:
+			$idImagen = $idImagenM = 0;
+        	if( isset($_FILES) && isset($_FILES['image']['name'])){
+				include_once ($_SESSION ['pathCla']."Imagen.class.php");
+				$imagen   = new Imagen ($db,$_SESSION,$_FILES,Comunes::SAVE);
+				$idImagen = $imagen->obtenIdImagen();
+			}
+			if( isset($_FILES) && isset($_FILES['imageM']['name'])){
+				include_once ($_SESSION ['pathCla']."ImagenBiz.class.php");
+				$imagenM   = new ImagenBiz ($db,$_SESSION,$_FILES,Comunes::SAVE);
+				$idImagenM = $imagenM->obtenIdImagen();
+			}
+			$slide = new Slider ($db,$_SESSION,$_POST,$idImagen,Comunes::SAVE,$idImagenM);
 			$array = array('exito' => $slide->obtenExito(),'msg' => $slide->obtenMensaje(), 'url' => $url);
 			break;
 		case 3:
@@ -28,8 +39,14 @@ if(isset($_POST)  && (int) $_POST['idT'] > 0 && (int) $_POST['idT'] < 7 && ((int
 			$array = array('exito' => $categ->obtenExito(),'msg' => $categ->obtenMensaje(), 'url' => $url);
 			break;
 		case 4:
-			$produ = new Producto ($db,$_SESSION,$_POST,$_POST['idT'],Comunes::SAVE);
-			$array = array('exito' => $produ->obtenExito(),'msg' => $produ->obtenMensaje(), 'url' => $url);
+			$idImagen = 0;
+        	if( isset($_FILES) && isset($_FILES['image']['name'])){
+				include_once ($_SESSION ['pathCla']."Imagen.class.php");
+                $imagen   = new Imagen ($db,$_SESSION,$_FILES,Comunes::SAVE);
+				$idImagen = $imagen->obtenIdImagen();
+				$produ = new Producto ($db,$_SESSION,$_POST,$idImagen,Comunes::SAVE);
+				$array = array('exito' => $produ->obtenExito(),'msg' => $produ->obtenMensaje(), 'url' => $url);
+			}
 			break;
 		case 6:
 			$testi = new Testimonial($db, $_SESSION, $_POST, $_POST['idT'], Comunes::SAVE);

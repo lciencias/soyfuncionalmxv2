@@ -129,6 +129,8 @@ class Producto extends Comunes{
 						VALUES ('".$this->data['idcategoria']."','".$this->data['producto']."','".$this->data['caloria']."',
 								'".$this->data['precio']."','".$fecha."','".Comunes::SAVE."','".$this->idImagen."');";
 				$res = $this->db->sql_query($ins);
+				$this->mensaje = Comunes::MSGSUCESS;
+				$this->exito   = 1;
 			}
 		}
 		catch(\Exception $e){

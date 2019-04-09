@@ -34,15 +34,14 @@ class ImagenBiz extends Comunes{
 	 * Metodo que almacena una imagen en base de datos
 	 */
 	private function guardaImagen(){
-		$this->files['fileImg2']['name'] = utf8_encode($this->files['fileImg2']['name']);
-		$pathCom = $this->session['pathFile'].$this->files['fileImg2']['name'];
-		$path = 'downfiles/'.$this->files['fileImg2']['name'];		
-		
-		$web  = $this->session['pathFileWeb'].$this->files['fileImg2']['name'];
+		$this->files['imageM']['name'] = utf8_encode($this->files['imageM']['name']);
+		$pathCom = $this->session['pathSys']."img/banners/".$this->files['imageM']['name'];
+		$path = 'img/banners/'.$this->files['imageM']['name'];		
+		$web  = $this->session['pathWeb']."img/banners/".$this->files['imageM']['name'];		
 		try{			
 			if($this->validaArchivo()){
 				try{
-					if (move_uploaded_file($this->files['fileImg2']['tmp_name'], $path)) {
+					if (move_uploaded_file($this->files['imageM']['tmp_name'], $path)) {
 						$this->insertaArchivo($pathCom, $web);
 						$this->mensaje  = Comunes::MSGSUCESS;
 					} else {
@@ -66,7 +65,7 @@ class ImagenBiz extends Comunes{
 		$fecha = date("Y-m-d H:i:s");	
 		try{
 			$ins = "INSERT INTO imagen (idusuario, archivo, ruta,fecha,status,web) 
-				VALUES ('".$this->session['userId']."','".$this->files['fileImg2']['name']."','".$path."','".$fecha."','".Comunes::SAVE."','".$web."');";
+				VALUES ('".$this->session['userId']."','".$this->files['imageM']['name']."','".$path."','".$fecha."','".Comunes::SAVE."','".$web."');";
 			$this->db->sql_query($ins);
 			$this->idImagen = $this->db->sql_nextid();			
 		}
@@ -75,16 +74,16 @@ class ImagenBiz extends Comunes{
 		}
 	}
 	private function validaArchivo(){
-		$array_ext = explode ('.',$this->files['fileImg2']['name']);
+		$array_ext = explode ('.',$this->files['imageM']['name']);
 		$l 		   = count ( $array_ext );
 		$ext       = strtolower($array_ext [($l - 1)]);
-		$size 	   = @filesize ($this->files['fileImg2']['tmp_name'] );
+		$size 	   = @filesize ($this->files['imageM']['tmp_name'] );
 		if(!in_array($ext, $this->extensionesIma)){
 			$this->mensaje="Tipo de archivo invalido";
 			return false;
 		}
 		if((int) $size > $this->tamanoBytes){
-			$this->mensaje = "El tamaño del archivo excede el número de bytes permitidos";
+			$this->mensaje = "El tamaï¿½o del archivo excede el nï¿½mero de bytes permitidos";
 			return false;				
 		}
 		return true;		

@@ -205,7 +205,7 @@ class Usuario extends Comunes{
                                                    </a>
                                                </td>
                                                <td class="tdCenter">
-                                                    <a href="#" id="e-'.$reg['id'].'-2" class="eliminar">
+                                                    <a href="#" id="e-'.$reg['id'].'-1" class="eliminar">
                                                         <span class="glyphicon glyphicon-trash"></span>
                                                     </a>
                                                </td>

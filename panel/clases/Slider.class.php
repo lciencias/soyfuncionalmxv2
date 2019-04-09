@@ -173,9 +173,8 @@ class Slider extends Comunes{
 				foreach($this->data as $key => $value){
 					$this->data[$key] = $this->eliminaCaracteresInvalidos($value);
 				}
-				$ins = "INSERT INTO ".$this->tabla."(nombre, fecha, status, orden, texto_corto, texto_grande, texto_boton, url, idImagen,idimagenMovil)
-						VALUES ('".$this->data['nombre']."','".$fecha."','".Comunes::SAVE."','".$this->data['orden']."','".$this->data['texto_corto']."','".$this->data['texto_grande']."','".$this->data['texto_boton']."','".$this->data['url']."','".$this->idImagen."','".$this->idImagenMovil."');";
-				
+				$ins = "INSERT INTO ".$this->tabla."(nombre, fecha, status, orden, idImagen,idimagenMovil,url)
+						VALUES ('".$this->data['nombre']."','".$fecha."','".Comunes::SAVE."','".$this->data['orden']."','".$this->idImagen."','".$this->idImagenMovil."','');";
 				$this->db->sql_query($ins);
 				$this->mensaje = Comunes::MSGSUCESS;
 				$this->exito   = Comunes::SAVE;
@@ -315,18 +314,17 @@ class Slider extends Comunes{
 							<td>'.$reg['nombre'].'</td>
 							<td>'.$reg['fecha'].'</td>
 							<td>
-								<a href="'.$path_web.'banner-editar.php?id='.$reg['idslide'].'&'.$db->url().'" id="m-'.$reg['idslide'].'" class="editar">
-								<img src="'.$path_lib.'dist/img/icons/editar.png">
+								<a href="'.$path_web.'banner-editar.php?id='.$reg['idslide'].'&'.$this->db->url().'" id="m-'.$reg['idslide'].'" class="editar">
+								<span class="glyphicon glyphicon-pencil"></span>
 								</a>
 							</td>
 							<td>
-								<a href="#" id="e-'.$reg['idslide'].'-1" class="eliminar">
-									<img src="'.$path_lib.'dist/img/sweetalert/eliminar.png"																	
-									alt="alert" class="img-responsive model_img" id="sa-warning'.$reg['idslide'].'">
+								<a href="#" id="e-'.$reg['idslide'].'-2" class="eliminar">
+								<span class="glyphicon glyphicon-trash"></span>
     							</a>
 							</td>
     						<td>
-    							<select name="orden-'.$reg['idslide'].'-1" id="orden-'.$reg['idslide'].'-1" style="width:50px;border:solid 1px #e5e5e5;" class="ordenar">
+    							<select name="orden-'.$reg['idslide'].'-2" id="orden-'.$reg['idslide'].'-2" style="width:50px;border:solid 1px #e5e5e5;" class="ordenar">
 									'.$this->options($total,$reg['orden']).'
 								</select>
     						</td>

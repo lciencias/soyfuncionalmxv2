@@ -34,15 +34,14 @@ class Imagen extends Comunes{
 	 * Metodo que almacena una imagen en base de datos
 	 */
 	private function guardaImagen(){
-		$this->files['fileImg']['name'] = utf8_encode($this->files['fileImg']['name']);
-		$pathCom = $this->session['pathFile'].$this->files['fileImg']['name'];
-		$path = 'downfiles/'.$this->files['fileImg']['name'];		
-		
-		$web  = $this->session['pathFileWeb'].$this->files['fileImg']['name'];
+		$this->files['imagen']['name'] = utf8_encode($this->files['image']['name']);
+		$pathCom = $this->session['pathSys']."img/banners/".$this->files['image']['name'];
+		$path = 'img/banners/'.$this->files['image']['name'];		
+		$web  = $this->session['pathWeb']."img/banners/".$this->files['image']['name'];		
 		try{			
 			if($this->validaArchivo()){
 				try{
-					if (move_uploaded_file($this->files['fileImg']['tmp_name'], $path)) {
+					if (move_uploaded_file($this->files['image']['tmp_name'], $path)) {
 						$this->insertaArchivo($pathCom, $web);
 						$this->mensaje  = Comunes::MSGSUCESS;
 					} else {
@@ -54,7 +53,7 @@ class Imagen extends Comunes{
 				}					
 			}else{
 				$this->writeLog($this->mensaje, Comunes::INFO);
-			}				
+			}	
 		}
 		catch(\Exception $e){
 			$this->mensaje = Comunes::MSGERROR;
@@ -66,7 +65,7 @@ class Imagen extends Comunes{
 		$fecha = date("Y-m-d H:i:s");	
 		try{
 			$ins = "INSERT INTO imagen (idusuario, archivo, ruta,fecha,status,web) 
-				VALUES ('".$this->session['userId']."','".$this->files['fileImg']['name']."','".$path."','".$fecha."','".Comunes::SAVE."','".$web."');";
+				VALUES ('".$this->session['userId']."','".$this->files['imagen']['name']."','".$path."','".$fecha."','".Comunes::SAVE."','".$web."');";
 			$this->db->sql_query($ins);
 			$this->idImagen = $this->db->sql_nextid();			
 		}
@@ -75,16 +74,16 @@ class Imagen extends Comunes{
 		}
 	}
 	private function validaArchivo(){
-		$array_ext = explode ('.',$this->files['fileImg']['name']);
+		$array_ext = explode ('.',$this->files['imagen']['name']);
 		$l 		   = count ( $array_ext );
 		$ext       = strtolower($array_ext [($l - 1)]);
-		$size 	   = @filesize ($this->files['fileImg']['tmp_name'] );
+		$size 	   = @filesize ($this->files['imagen']['tmp_name'] );
 		if(!in_array($ext, $this->extensionesIma)){
 			$this->mensaje="Tipo de archivo invalido";
 			return false;
 		}
 		if((int) $size > $this->tamanoBytes){
-			$this->mensaje = "El tamaño del archivo excede el número de bytes permitidos";
+			$this->mensaje = "El tamaï¿½o del archivo excede el nï¿½mero de bytes permitidos";
 			return false;				
 		}
 		return true;		

@@ -232,9 +232,9 @@ $(document).ready(function() {
                             message: 'El campo es s&oacute;lo para letras y numeros'
                         },
                         stringLength: {
-                            min: 6,
-                            max: 50,
-                            message: 'Minimo 6 y maximo 50 caracteres'
+                            min: 3,
+                            max: 20,
+                            message: 'Minimo 3 y maximo 20 caracteres'
                         }
                     }
                 },
@@ -245,7 +245,7 @@ $(document).ready(function() {
                             message: 'Campo obligatorio'
                         },
                         regexp: {
-                            regexp: numericos,
+                            regexp: decimales,
                             message: 'El campo es s&oacute;lo numeros'
                         },
                         stringLength: {

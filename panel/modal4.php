@@ -32,7 +32,7 @@ if ($_SESSION && $_SESSION['userId'] > 0){
                         <div class="col-md-6">
                             <div class="form-group">
                             <label class="control-label">Productos</label>
-							<input type="text" id="producto" maxlength="100"  name="producto" tabindex="2" value="<?=$registro['producto']?>" class="form-control required letras" placeholder="Nombre del Producto">											
+							<input type="text" id="producto" maxlength="100"  name="producto" tabindex="2" maxlength="80" value="<?=$registro['producto']?>" class="form-control required letras" placeholder="Nombre del Producto">											
 							</div>
                         </div>                                            
                     </div>                                       
@@ -40,13 +40,13 @@ if ($_SESSION && $_SESSION['userId'] > 0){
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label class="control-label">Calorias</label>
-                                <input type="text" id="caloria" name="caloria" tabindex="3" class="form-control required alfa" placeholder="calor&iacute;as">
+                                <input type="text" id="caloria" name="caloria" tabindex="3" maxlength="20" class="form-control required alfa" placeholder="calor&iacute;as">
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label class="control-label">Precio</label>
-                                <input type="text" id="precio" name="precio" tabindex="4" class="form-control required numeros" placeholder="Precio">
+                                <input type="text" id="precio" name="precio" tabindex="4" maxlength="8" class="form-control required decimales" placeholder="Precio">
                             </div>
                         </div>
                     </div>
@@ -68,7 +68,7 @@ if ($_SESSION && $_SESSION['userId'] > 0){
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label class="control-label">Imagen</label>
-                                <input type="file" id="fileImg" name="fileImg" class="form-control upload" tabindex="8" accept="image/gif, image/jpeg , image/png" />
+                                <input type="file" id="fileImgProd" name="fileImgProd" class="form-control upload" tabindex="8" accept="image/gif, image/jpeg , image/png" />
                             </div>
                         </div>
                     </div>

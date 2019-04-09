@@ -10,6 +10,7 @@ if ($_SESSION && $_SESSION['userId'] > 0){
                 <h4 class="modal-title" id="myModalLabel">Alta Banner</h4>
             </div>
             <form enctype="multipart/form-data" action="<?=$_SERVER['PHP_SELF']?>" method="post" name="formaSlider" id="validateFormSlider" autocomplete="off" data-toogle="validator" role="form"> 
+                <input type="hidden" name="idT" id="idT" value="<?=$idT?>"> 
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-md-6">
@@ -37,7 +38,7 @@ if ($_SESSION && $_SESSION['userId'] > 0){
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label class="control-label">Cargar imagen Web</label>		
-                                <input type="file" id="fileImg" name="fileImg" class="form-control upload" tabindex="4" accept="image/gif, image/jpeg , image/png" />
+                                <input type="file" id="imagen" name="imagen" class="form-control upload" tabindex="4" accept="image/gif, image/jpeg , image/png" />
                             </div>
                         </div>
                     </div>
@@ -45,13 +46,13 @@ if ($_SESSION && $_SESSION['userId'] > 0){
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label class="control-label">Cargar imagen Movil</label>		
-                                <input type="file" id="fileImgMovil" name="fileImgMovil" class="form-control upload" tabindex="4" accept="image/gif, image/jpeg , image/png" />
+                                <input type="file" id="imagenM" name="imagenM" class="form-control upload" tabindex="4" accept="image/gif, image/jpeg , image/png" />
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                <button class="btn btn-success" id="crearSlider" name="crearSlider"> <i class="fa fa-check"></i> <span>Crear</span></button>
+                    <button type="button" class="btn btn-success" id="crearSlider" name="crearSlider"> <i class="fa fa-check"></i> <span>Crear</span></button>
                     <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
                 </div>
             </form>

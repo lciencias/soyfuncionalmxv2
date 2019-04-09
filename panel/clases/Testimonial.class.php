@@ -251,13 +251,13 @@ class Testimonial extends Comunes{
 				</td>
 				<td>';
 					if((int) $reg['status'] == 0){
-						$this->buffer .= '<a href="#" id="e-'.$reg['id'].'-5" class="mostrar">
+						$this->buffer .= '<a href="#" id="e-'.$reg['id'].'-6" class="mostrar">
 						<span class="glyphicon glyphicon-eye-open"></span>
 						</a>';
 					}
 					$this->buffer .= '</td><td>';
 					if((int) $reg['status'] == 1){
-						$this->buffer .= '<a href="#" id="e-'.$reg['id'].'-5" class="eliminar">
+						$this->buffer .= '<a href="#" id="e-'.$reg['id'].'-6" class="eliminar">
 							<span class="glyphicon glyphicon-eye-close"></span>
 						</a>';
 					}															  

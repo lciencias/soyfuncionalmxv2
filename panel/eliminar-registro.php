@@ -15,30 +15,27 @@ if(isset($_POST) && ((int)$_POST['id'] > 0) && ((int) $_POST['idModulo'] > 0) ){
 	include_once ($_SESSION['pathCla']."Categoria.class.php");
 	include_once ($_SESSION['pathCla']."Producto.class.php");
 	include_once ($_SESSION['pathCla']."Testimonial.class.php");
+	$url = "admin.php?idT=".$_POST['idModulo']."&idS=0&".$db->url();
 	switch((int)$_POST['idModulo']){
 		case 1:
-			$slide = new Slider ($db,$_SESSION,$_POST,$_POST['id'],Comunes::DELETE,0);
-			$array = array('exito' => $slide->obtenExito(),'msg' => $slide->obtenMensaje(), 'url' => "banner-lista.php");
+			$usuario = new Usuario($db,$_SESSION,$_POST,$_POST['id'],Comunes::DELETE);
+			$array = array('exito' => $usuario->obtenExito(),'msg' => $usuario->obtenMensaje(), 'url' => $url);
 			break;
 		case 2:
-			$usuario = new Usuario($db,$_SESSION,$_POST,$_POST['id'],Comunes::DELETE);
-			$array = array('exito' => $usuario->obtenExito(),'msg' => $usuario->obtenMensaje(), 'url' => "usuarios-lista.php");
-			break;					
+			$slide = new Slider ($db,$_SESSION,$_POST,$_POST['id'],Comunes::DELETE,0);
+			$array = array('exito' => $slide->obtenExito(),'msg' => $slide->obtenMensaje(), 'url' => $url);
+			break;				
 		case 3:
 			$categoria = new Categoria($db,$_SESSION,$_POST,$_POST['id'],Comunes::DELETE);
-			$array = array('exito' => $categoria->obtenExito(),'msg' => $categoria->obtenMensaje(), 'url' => "categoria-lista.php");
+			$array = array('exito' => $categoria->obtenExito(),'msg' => $categoria->obtenMensaje(), 'url' => $url);
 			break;					
 		case 4:
-			$producto = new Producto($db,$_SESSION,$_POST,$_POST['id'],Comunes::LISTAR, Comunes::DELETE);
-			$array = array('exito' => $producto->obtenExito(),'msg' => $producto->obtenMensaje(), 'url' => "producto-lista.php");
+			$producto = new Producto($db,$_SESSION,$_POST,$_POST['id'],Comunes::DELETE);
+			$array = array('exito' => $producto->obtenExito(),'msg' => $producto->obtenMensaje(), 'url' => $url);
 			break;					
-		case 5:
-			$testimonial = new Testimonial($db,$_SESSION,$_POST,$_POST['id'],Comunes::DELETE);
-			$array = array('exito' => $testimonial->obtenExito(),'msg' => $testimonial->obtenMensaje(), 'url' => "testimonial-lista.php");
-			break;
 		case 6:
-			$revista = new Revista($db,$_SESSION,$_POST,$_POST['id'],$_POST['id'],Comunes::DELETE);
-			$array = array('exito' => $revista->obtenExito(),'msg' => $revista->obtenMensaje(), 'url' => "revista-lista.php");
+			$testimonial = new Testimonial($db,$_SESSION,$_POST,$_POST['id'],Comunes::DELETE);
+			$array = array('exito' => $testimonial->obtenExito(),'msg' => $testimonial->obtenMensaje(), 'url' => $url);
 			break;
 	}
 }
