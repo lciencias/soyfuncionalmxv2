@@ -22,139 +22,74 @@ class Pedidos extends Comunes{
 		$this->opc         = $opc;
 		$this->mensaje     = "";
 		$this->buffer      = "";
-		$this->tabla       = "testimoniales";
+		$this->tabla       = "pedidos";
 		$this->exito       = Comunes::LISTAR;
 		$this->total       = 0;
 		$this->registros   = array();
 		switch($this->opc){
 			case Comunes::LISTAR:
-				$this->listarTestimonial();
+				$this->breadcrumb();
+				$this->listarPedido();
+				$this->tabla();
 				break;
 			case Comunes::SAVE:
-				$this->guardaTestimonial();
+				$this->guardaPedido();
 				break;
 			case Comunes::EDIT:
-				$this->totalTestimonial();
-				$this->editaTestimonial();
+				$this->totalPedido();
+				$this->editaPedido();
 				break;
 			case Comunes::UPDATE:
-				$this->actualizaTestimonial();
+				$this->actualizaPedido();
 				break;
 			case Comunes::DELETE:
-				$this->eliminaTestimonial();
+				$this->eliminaPedido();
 				break;	
 			case Comunes::ORDENAR:
 				$this->ordenaRegstro();
 				break;
             case Comunes::MOSTRAR:
-                $this->activaTestimonial();
+                $this->activaPedido();
 				break;
 
             }
 	}
 	
-	private function listarTestimonial(){
+	private function listarPedido(){
 		$this->registros = array();
 		try{
-			$sql = "SELECT a.id,concat(a.nombre,'<br>',a.testimonial) as testimonial,
-					DATE_FORMAT(a.fecha,'%d-%m-%Y %H:%i') as fecha,
-					a.status
-					FROM ".$this->tabla." as a 
-					WHERE a.status < ".Comunes::EDIT." ORDER BY a.fecha ASC;";
+			$sql = "SELECT a.id,DATE_FORMAT(a.fecha_pedido,'%d-%m-%Y %H:%i') as fecha_pedido,
+					DATE_FORMAT(a.fecha_entrega,'%d-%m-%Y %H:%i') as fecha_entrega,
+					a.importe,a.id_usuario,a.status,b.nombre,b.apellidos,b.email,b.celular
+					FROM ".$this->tabla." as a LEFT JOIN usuarios as b ON b.id = a.id_usuario
+					WHERE a.status = ".Comunes::SAVE." ORDER BY a.fecha_entrega ASC;";
 			$res = $this->db->sql_query ($sql);			
 			if ($this->db->sql_numrows ($res) > 0){
-				$this->total = $this->db->sql_numrows ($res);
+				$this->total = $this->db->sql_numrows($res);
 				while($row = $this->db->sql_fetchass($res)){
 					$this->registros[] = $row;
 				}
 			}
-			$this->total++;
 		}catch (\Exception $e){
 			$this->writeLog($e->getMessage(), Comunes::ERROR);
 		}		
 	}
 	
-	private function totalTestimonial(){
-		try{
-			$sql = "SELECT a.id
-					FROM ".$this->tabla." as a 
-					WHERE a.status= ".Comunes::SAVE.";";
-			$res = $this->db->sql_query ($sql);
-			$this->total = $this->db->sql_numrows ($res);			
-		}catch (\Exception $e){
-			$this->writeLog($e->getMessage(), Comunes::ERROR);
-		}				
+	private function totalPedido(){
 	}
 	
-	private function guardaTestimonial(){
-		$fecha = date("Y-m-d H:i:s");
-		try{
-			$this->mensaje = "Los datos del testimonio no se cargaron correctamente";
-			if(count($this->data) > 0){			
-				foreach($this->data as $key => $value){
-					$this->data[$key] = $this->eliminaCaracteresInvalidos($value);
-				}
-				$ins = "INSERT INTO ".$this->tabla."(nombre,fecha,status, testimonial)
-						VALUES ('".$this->data['nombre']."','".$fecha."','".Comunes::LISTAR."','".$this->data['testimonial']."');";				
-				$this->db->sql_query($ins);
-				$this->mensaje = Comunes::MSGSUCESS;
-				$this->exito   = Comunes::SAVE;
-			}
-		}
-		catch(\Exception $e){
-			$this->mensaje = Comunes::MSGERROR;
-			$this->writeLog($e->getMessage(), Comunes::ERROR);
-		}	
+	private function guardaPedido(){
 	}
 	
-	private function editaTestimonial(){
-		$this->exito = -1;
-		$id = (int)$this->data['id'];
-		try{
-			if($id > 0){
-				$this->exito = 1;
-				$sql = "SELECT a.id,a.nombre,a.testimonial,DATE_FORMAT(a.fecha,'%d-%m-%Y %H:%i') as fecha,a.status
-						FROM ".$this->tabla." as a  
-						WHERE a.id = '".$id."' LIMIT 1;";
-				$res = $this->db->sql_query ($sql);
-				if ($this->db->sql_numrows ($res) > 0){
-					$this->registros = $this->db->sql_fetchass($res);
-				}			
-			}
-		}
-		catch(\Exception $e){
-			$this->writeLog($e->getMessage(), Comunes::ERROR);
-		}		
+	private function editaPedido(){
 	}
 	
 	
-	private function actualizaTestimonial(){
-		$fecha = date("Y-m-d H:i:s");
-		try{
-			$this->mensaje = "Los datos del testimonio no se almacenaron correctamente";
-			if(count($this->data) > 0){
-				foreach($this->data as $key => $value){
-					$this->data[$key] = $this->eliminaCaracteresInvalidos($value);
-				}
-				$ins = "UPDATE ".$this->tabla." set ";
-				$ins .= "nombre = '".$this->data['nombre']."',
-						 testimonial  = '".$this->data['testimonial']."',
-						 fecha  = '".$fecha."',
-						 status = '". Comunes::LISTAR."'
-						 WHERE id = '".$this->data['id']."' limit 1;";
-				$this->db->sql_query($ins);
-				$this->mensaje = Comunes::MSGSUCESS;
-				$this->exito   = 1;
-			}
-		}
-		catch(\Exception $e){
-			$this->mensaje = Comunes::MSGERROR;
-			$this->writeLog($e->getMessage(), Comunes::ERROR);
-		}		
+	private function actualizaPedido(){
 	}
 	
 	
-	private function eliminaTestimonial(){
+	private function eliminaPedido(){
 		$this->exito   = Comunes::LISTAR;
 		$this->mensaje = Comunes::ERROR; 
 		if((int) $this->idImagen > 0){
@@ -169,39 +104,72 @@ class Pedidos extends Comunes{
 			}
 		}
     }
-    
-	private function activaTestimonial(){
-        $this->exito   = Comunes::LISTAR;
-		$this->mensaje = Comunes::ERROR; 
-		if((int) $this->idImagen > 0){
-			try{
-				$upd = "UPDATE ".$this->tabla." SET status = '". Comunes::SAVE."' WHERE id= '".$this->idImagen."' LIMIT 1;";
-				$this->db->sql_query($upd);
-				$this->exito = Comunes::SAVE;
-				$this->mensaje = Comunes::MSGSUCESS;
-			}catch(\Exception $e){
-				$this->mensaje = $e->getMessage();
-				$this->writeLog($e->getMessage(), Comunes::ERROR);
-			}
-		}
-    }
-	private function ordenaRegstro(){
-		$id = (int) $this->data['id'];
-		$valor = (int) $this->data['valor'];
-		if($id > 0 && $valor > 0){
-			try{
-				$upd = "UPDATE ".$this->tabla." SET status = '".$valor."' WHERE id= '".$id."' LIMIT 1;";
-				$this->db->sql_query($upd);
-				$this->exito = Comunes::SAVE;
-				$this->mensaje = Comunes::MSGSUCESS;
-			}catch(\Exception $e){
-				$this->mensaje = $e->getMessage();
-				$this->writeLog($e->getMessage(), Comunes::ERROR);
-			}
-			
-		}	
+
+	private function breadcrumb(){
+		$this->bread = '<ol class="breadcrumb">
+			<li><a href="'.$this->session['pathWeb'].'"><i class="fa fa-dashboard"></i> Inicio</a></li>
+			<li class="active">Pedidos</li>
+		</ol>';
 	}
 	
+	private function tabla(){
+		$this->buffer = ' <div class="table-responsive" style="overflow: auto;">
+			<table id="example1" class="table table-bordered table-striped">
+                <thead>
+					<tr>
+						<th>No. Pedido</th>
+						<th>Nombre</th>
+						<th>Celular</th>
+						<th>Fecha solicitud</th>
+						<th>Fecha Entrega</th>
+						<th>Atendido</th>
+					</tr>
+				</thead>';
+		if(count($this->registros) > 0){
+			$this->buffer .= '
+				<tfoot>
+					<tr>
+						<th>No. Pedido</th>
+						<th>Nombre</th>
+						<th>Celular</th>
+						<th>Fecha solicitud</th>
+						<th>Fecha Entrega</th>
+						<th>Atendido</th>
+					</tr>
+				</tfoot>';
+		}
+		$total    = count($this->registros); 
+		if(count($this->registros) > 0){
+			$this->buffer .= '<tbody>';
+			foreach($this->registros as $reg){
+				$this->buffer .= '
+				<tr class="renglon'.$reg['id'].'">
+				<td>'.str_pad($reg['id'],6,'0',STR_PAD_LEFT).'</td>
+				<td>'.trim($reg['nombre'])." ".$reg['apellidos'].'</td>
+				<td>'.$reg['celular'].'</td>
+				<td>'.$reg['fecha_pedido'].'</td>
+				<td>'.$reg['fecha_entrega'].'</td>
+				<td>';
+					$this->buffer .= '<a href="#" id="e-'.$reg['id'].'-5" class="eliminar">
+						<span class="glyphicon glyphicon-eye-close"></span>
+					</a>';
+				$this->buffer .= '</td>
+			</tr>';
+			}
+			$this->buffer .= '</tbody>';
+		}
+		$this->buffer .= '</table></div>';
+	}
+
+
+	private function activaPedido(){
+    }
+	private function ordenaRegstro(){
+	}
+	
+	function obtenBreadcrumb(){
+		$this->bread;
+	}
 	function obtenExito(){
 		return $this->exito;
 	}

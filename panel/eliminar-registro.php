@@ -32,6 +32,10 @@ if(isset($_POST) && ((int)$_POST['id'] > 0) && ((int) $_POST['idModulo'] > 0) ){
 		case 4:
 			$producto = new Producto($db,$_SESSION,$_POST,$_POST['id'],Comunes::DELETE);
 			$array = array('exito' => $producto->obtenExito(),'msg' => $producto->obtenMensaje(), 'url' => $url);
+			break;	
+		case 5:
+			$pedido = new Pedidos($db,$_SESSION,$_POST,$_POST['id'],Comunes::DELETE);
+			$array = array('exito' => $pedido->obtenExito(),'msg' => $pedido->obtenMensaje(), 'url' => $url);
 			break;					
 		case 6:
 			$testimonial = new Testimonial($db,$_SESSION,$_POST,$_POST['id'],Comunes::DELETE);

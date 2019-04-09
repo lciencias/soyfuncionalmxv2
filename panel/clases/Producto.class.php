@@ -247,8 +247,8 @@ class Producto extends Comunes{
 						<th>Ordenar</th>                                                        
 					</tr>
 				</thead>';
-		if(count($registros) > 0){
-			$this->buffer = '
+		if(count($this->registros) > 0){
+			$this->buffer .= '
 				<tfoot>
 					<tr>
 						<th>Categoria</th>

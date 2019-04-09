@@ -12,6 +12,7 @@ class Inicio extends Comunes{
 	private $tabla;
 	private $buffer;
 	private $total;
+	private $arrayTotales;
 	
 	function __construct($db,$session,$data,$idImagen,$opc){
 		parent::__construct($session);
@@ -26,34 +27,83 @@ class Inicio extends Comunes{
 		$this->exito       = Comunes::LISTAR;
 		$this->total       = 0;
 		$this->registros   = array();
+		$this->arrayTotales= array();
 		switch($this->opc){
 			case Comunes::LISTAR:
-				$this->listar();
-				$this->breadcrumb();
+				$this->pedidosTotales();
+				$this->pedidosPendientes();
+				$this->pedidosTotalesDia();
+				$this->pedidosPendientesDia();
 				$this->tabla();
 				break;
-            }
+    }
 	}
 	
-	private function listar(){
-		$this->registros = array();
+	public function pedidosTotales(){
 		try{
-			$sql = "SELECT a.id,concat(a.nombre,'<br>',a.testimonial) as testimonial,
-					DATE_FORMAT(a.fecha,'%d-%m-%Y %H:%i') as fecha,
-					a.status
-					FROM ".$this->tabla." as a 
-					WHERE a.status < ".Comunes::EDIT." ORDER BY a.fecha ASC;";
+			$sql = "SELECT count(id) as pedidos FROM pedidos as a  WHERE a.status > ".Comunes::LISTAR.";";
+			$res = $this->db->sql_query ($sql);			
+			if ($this->db->sql_numrows ($res) > 0){
+				$row = $this->db->sql_fetchass($res);
+				$this->arrayTotales['pedidosTotales'] = $row['pedidos'];
+			}
+		}
+		catch(Exception $e){
+			die("Error: ".$e->getMesssage());
+		}
+	}
+
+	public function pedidosPendientes(){
+		try{
+			$sql = "SELECT a.id,a.fecha_entrega,a.importe,a.id_usuario,b.nombre,b.celular
+					    FROM pedidos as a left join usuarios b ON b.id = a.id_usuario
+							WHERE a.status = ".Comunes::SAVE." ORDER BY a.fecha_entrega ASC;";
 			$res = $this->db->sql_query ($sql);			
 			if ($this->db->sql_numrows ($res) > 0){
 				$this->total = $this->db->sql_numrows ($res);
+				$this->arrayTotales['pedidosPendientes'] = $this->total;
 				while($row = $this->db->sql_fetchass($res)){
 					$this->registros[] = $row;
 				}
 			}
-			$this->total++;
-		}catch (\Exception $e){
-			$this->writeLog($e->getMessage(), Comunes::ERROR);
-		}		
+		}
+		catch(Exception $e){
+			die("Error: ".$e->getMesssage());
+		}
+	}
+
+	public function pedidosTotalesDia(){
+		$dia = date("Y-m-d");
+		try{
+			$sql = "SELECT count(id) as pedidos FROM pedidos as a  WHERE substr(a.fecha_entrega,1,10) = '".$dia."';";
+			$res = $this->db->sql_query ($sql);			
+			if ($this->db->sql_numrows ($res) > 0){
+				$row = $this->db->sql_fetchass($res);
+				$this->arrayTotales['pedidosTotalesDia'] = $row['pedidos'];
+			}
+		}
+		catch(Exception $e){
+			die("Error: ".$e->getMesssage());
+		}
+	}
+
+	public function pedidosPendientesDia(){
+		$dia = date("Y-m-d");
+		try{
+			$sql = "SELECT count(id) as pedidos FROM pedidos as a  WHERE a.status = ".Comunes::SAVE." AND substr(a.fecha_entrega,1,10) = '".$dia."';";
+			$res = $this->db->sql_query ($sql);			
+			if ($this->db->sql_numrows ($res) > 0){
+				$row = $this->db->sql_fetchass($res);
+				$this->arrayTotales['pedidosPendientesDia'] = $row['pedidos'];
+			}
+		}
+		catch(Exception $e){
+			die("Error: ".$e->getMesssage());
+		}
+	}
+
+	public function visitantes(){
+
 	}
 	
 	private function guardar(){
@@ -84,65 +134,52 @@ class Inicio extends Comunes{
 		$this->buffer = '
 		<div class="row">
         <div class="col-lg-3 col-xs-6">
-          <!-- small box -->
           <div class="small-box bg-aqua">
-            <div class="inner">
-              <h3>150</h3>
-
-              <p>New Orders</p>
+            <div class="inner tdCenter">
+              <h3>'.$this->arrayTotales['pedidosTotales'].'</h3>
+              <p>Total de Pedidos</p>
             </div>
-            <div class="icon">
+            <!--<div class="icon">
               <i class="ion ion-bag"></i>
-            </div>
-            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            </div>-->
           </div>
         </div>
-        <!-- ./col -->
+
         <div class="col-lg-3 col-xs-6">
-          <!-- small box -->
           <div class="small-box bg-green">
-            <div class="inner">
-              <h3>53<sup style="font-size: 20px">%</sup></h3>
-
-              <p>Bounce Rate</p>
+            <div class="inner  tdCenter">
+						<h3>'.$this->arrayTotales['pedidosPendientes'].'</h3>
+						<p>Pedidos por entregar</p>
             </div>
-            <div class="icon">
+            <!--<div class="icon">
               <i class="ion ion-stats-bars"></i>
-            </div>
-            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            </div>-->
           </div>
         </div>
-        <!-- ./col -->
+
         <div class="col-lg-3 col-xs-6">
-          <!-- small box -->
           <div class="small-box bg-yellow">
-            <div class="inner">
-              <h3>44</h3>
-
-              <p>User Registrations</p>
-            </div>
-            <div class="icon">
+            <div class="inner  tdCenter">
+						<h3>'.$this->arrayTotales['pedidosTotalesDia'].'</h3>
+						<p>Total de Pedidos del d&iacute;a</p>
+					</div>
+            <!--<div class="icon">
               <i class="ion ion-person-add"></i>
-            </div>
-            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            </div>-->
           </div>
         </div>
-        <!-- ./col -->
-        <div class="col-lg-3 col-xs-6">
-          <!-- small box -->
-          <div class="small-box bg-red">
-            <div class="inner">
-              <h3>65</h3>
 
-              <p>Unique Visitors</p>
+        <div class="col-lg-3 col-xs-6">
+          <div class="small-box bg-red">
+            <div class="inner  tdCenter">
+						<h3>'.$this->arrayTotales['pedidosPendientesDia'].'</h3>
+						<p>Pedidos por entregar del d&iacute;a</p>
             </div>
-            <div class="icon">
+            <!--<div class="icon">
               <i class="ion ion-pie-graph"></i>
-            </div>
-            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            </div>-->
           </div>
         </div>
-        <!-- ./col -->
       </div>';
 	}
 
@@ -162,7 +199,7 @@ class Inicio extends Comunes{
 		return $this->registros;
 	}
 	
-	public function obtenTotalCategorias(){
+	public function obtenTotal(){
 		return $this->total;
 	}
 	public function obtenBreadcrumb(){

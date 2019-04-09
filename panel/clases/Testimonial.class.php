@@ -223,8 +223,8 @@ class Testimonial extends Comunes{
 						<th>Ocultar</th>				   
 					</tr>
 				</thead>';
-		if(count($registros) > 0){
-			$this->buffer = '
+		if(count($this->registros) > 0){
+			$this->buffer .= '
 				<tfoot>
 					<tr>
 						<th>Testimonial</th>
@@ -269,6 +269,7 @@ class Testimonial extends Comunes{
 		}
 		$this->buffer .= '</table></div>';
 	}
+	
 	public function obtenExito(){
 		return $this->exito;
 	}

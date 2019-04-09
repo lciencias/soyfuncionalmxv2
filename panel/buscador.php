@@ -11,7 +11,7 @@ if ($_SESSION && $_SESSION['userId'] > 0){
         </div>
     </div>
     <!-- search form -->
-    <form action="#" method="get" class="sidebar-form">
+    <!--<form action="#" method="get" class="sidebar-form">
         <div class="input-group">
           <input type="text" name="q" class="form-control" placeholder="Search...">
           <span class="input-group-btn">
@@ -19,7 +19,7 @@ if ($_SESSION && $_SESSION['userId'] > 0){
                 </button>
               </span>
         </div>
-    </form>
+    </form>-->
 <?php
 }
 ?>

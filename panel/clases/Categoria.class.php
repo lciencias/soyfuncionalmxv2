@@ -208,8 +208,8 @@ class Categoria extends Comunes{
 						<th>Orden</th>                                                         
 					</tr>
 				</thead>';
-		if(count($registros) > 0){
-			$this->buffer = '
+		if(count($this->registros) > 0){
+			$this->buffer .= '
 				<tfoot>
 					<tr>
 						<th>Nombre</th>

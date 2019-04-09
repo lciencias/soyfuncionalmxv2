@@ -1,70 +1,34 @@
 <?php
-if ($_SESSION && $_SESSION['userId'] > 0){
+if ($_SESSION && $_SESSION['userId'] > 0 && $_SESSION['pendientesT'] > 0){
 ?>
     <ul class="nav navbar-nav">
       <!-- Messages: style can be found in dropdown.less-->
         <li class="dropdown messages-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <i class="fa fa-envelope-o"></i>
-              <span class="label label-success">4</span>
+              <span class="label label-success"><?=$_SESSION['pendientesT']?></span>
             </a>
             <ul class="dropdown-menu">
-              <li class="header">Tienes 4 pedidos</li>
+              <li class="header">Tienes <?=$_SESSION['pendientesT']?> sin entregar</li>
               <li>
-                <!-- inner menu: contains the actual data -->
                 <ul class="menu">
+                <?php
+                foreach($_SESSION['pendientes'] as $ind => $data){
+                ?>
                   <li><!-- start message -->
                     <a href="#">
-                      <div class="pull-left">
-                        <img src="<?=$pathWeb?>img/user2-160x160.jpg" class="img-circle" alt="User Image">
-                      </div>
-                      <h4>
-                        Pedido No. 23345
-                        <small><i class="fa fa-clock-o"></i> 5 mins</small>
+                      <h4>Pedido <?=str_pad($data['id'],6,'0',STR_PAD_LEFT)?>
+                        <small><i class="fa fa-clock-o"></i><?=$data['fecha_entrega']?></small>
                       </h4>
-                      <p>Pedido 1</p>
+                      <p><?=$data['nombre']?><br><?=$data['celular']?></p>
                     </a>
                   </li>
-                  <!-- end message -->
-                  <li>
-                    <a href="#">
-                      <div class="pull-left">
-                        <img src="<?=$pathWeb?>img/user3-128x128.jpg" class="img-circle" alt="User Image">
-                      </div>
-                      <h4>
-                      Pedido No. 23346
-                        <small><i class="fa fa-clock-o"></i> 2 hours</small>
-                      </h4>
-                      <p>Pedido 2</p>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#">
-                      <div class="pull-left">
-                        <img src="<?=$pathWeb?>img/user4-128x128.jpg" class="img-circle" alt="User Image">
-                      </div>
-                      <h4>
-                      Pedido No. 23347
-                        <small><i class="fa fa-clock-o"></i> Today</small>
-                      </h4>
-                      <p>Pedido 3</p>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#">
-                      <div class="pull-left">
-                        <img src="<?=$pathWeb?>img/user3-128x128.jpg" class="img-circle" alt="User Image">
-                      </div>
-                      <h4>
-                      Pedido No. 23348
-                        <small><i class="fa fa-clock-o"></i> Yesterday</small>
-                      </h4>
-                      <p>Pedido 4</p>
-                    </a>
-                  </li>
+                <?php
+                }
+                ?>
                 </ul>
               </li>
-              <li class="footer"><a href="#">Ver Todos</a></li>
+              <li class="footer"><a href="<?=$pathWeb?>admin.php?idT=5&idS=0">Ver Todos</a></li>
             </ul>
           </li>
           <!-- User Account: style can be found in dropdown.less -->

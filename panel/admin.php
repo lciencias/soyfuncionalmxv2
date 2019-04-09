@@ -25,10 +25,13 @@ $modalId   = "modal".$idT;
 switch($idT){
     case 0:
         $objeto    = new Inicio( $db,$_SESSION,$_REQUEST,Comunes::LISTAR,Comunes::LISTAR );
-        $registros = $objeto->obtenRegistros();
+        $pendientes= $objeto->obtenTotal();
+        $_SESSION['pendientesT'] =  $pendientes;
         $bread     = $objeto->obtenBreadcrumb();
         $table     = $objeto->obtenBuffer();
-        $tituloBoton= "";
+        $registros = $objeto->obtenRegistros();
+        $_SESSION['pendientes'] = $registros;
+        $tituloBoton= "";;
         $total     = 0;
         break;
     case 1:
@@ -71,6 +74,8 @@ switch($idT){
     case 5:
         $objeto    = new Pedidos ($db,$_SESSION,$_REQUEST,Comunes::LISTAR,Comunes::LISTAR,Comunes::LISTAR);
         $registros = $objeto->obtenRegistros();
+        $bread     = $objeto->obtenBreadcrumb();
+        $table     = $objeto->obtenBuffer();
         $total     = count($registros);
         $titulo    = "Listado de Pedidos";
         $tituloBoton= "";
