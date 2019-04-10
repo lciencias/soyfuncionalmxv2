@@ -339,15 +339,16 @@ $(function() {
             });
 
             $(document).on("click", ".eliminar", function() {
-                alert("aaa:  " + $(this).attr('id'));
                 var div = $(this).attr('id');
                 var tmp = div.split('-');
                 var dataString = '';
                 var baseUrl = $("#baseUrl").val();
                 var url = baseUrl + 'eliminar-registro.php';
                 var titulo = "Desea eliminar el registro?";
-                if (parseFloat(tmp[2]) === 5) {
+                var tituloB = "Eliminar";
+                if (parseInt(tmp[2]) === 5) {
                     var titulo = "Desea cerrar el pedido?";
+                    var tituloB = "Cerrar Pedido";
                 }
                 if (parseInt(tmp[1]) > 0 && parseInt(tmp[2]) > 0) {
                     dataString = 'id=' + tmp[1] + "&idModulo=" + tmp[2];
@@ -357,7 +358,7 @@ $(function() {
                         type: "warning",
                         showCancelButton: true,
                         confirmButtonColor: "#f8b32d",
-                        confirmButtonText: "Eliminar",
+                        confirmButtonText: tituloB,
                         closeOnConfirm: false
                     }, function() {
                         $.ajax({

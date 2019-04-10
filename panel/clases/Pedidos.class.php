@@ -58,8 +58,8 @@ class Pedidos extends Comunes{
 	private function listarPedido(){
 		$this->registros = array();
 		try{
-			$sql = "SELECT a.id,DATE_FORMAT(a.fecha_pedido,'%d-%m-%Y %H:%i') as fecha_pedido,
-					DATE_FORMAT(a.fecha_entrega,'%d-%m-%Y %H:%i') as fecha_entrega,
+			$sql = "SELECT a.id,DATE_FORMAT(a.fecha_pedido,'%d-%m-%Y') as fecha_pedido,
+					DATE_FORMAT(a.fecha_entrega,'%d-%m-%Y') as fecha_entrega,
 					a.importe,a.id_usuario,a.status,b.nombre,b.apellidos,b.email,b.celular
 					FROM ".$this->tabla." as a LEFT JOIN usuarios as b ON b.id = a.id_usuario
 					WHERE a.status = ".Comunes::SAVE." ORDER BY a.fecha_entrega ASC;";
@@ -144,11 +144,11 @@ class Pedidos extends Comunes{
 			foreach($this->registros as $reg){
 				$this->buffer .= '
 				<tr class="renglon'.$reg['id'].'">
-				<td>'.str_pad($reg['id'],6,'0',STR_PAD_LEFT).'</td>
+				<td class="tdLeft">'.str_pad($reg['id'],6,'0',STR_PAD_LEFT).'</td>
 				<td>'.trim($reg['nombre'])." ".$reg['apellidos'].'</td>
-				<td>'.$reg['celular'].'</td>
-				<td>'.$reg['fecha_pedido'].'</td>
-				<td>'.$reg['fecha_entrega'].'</td>
+				<td class="tdLeft">'.$reg['celular'].'</td>
+				<td class="tdCenter">'.$reg['fecha_pedido'].'</td>
+				<td class="tdCenter">'.$reg['fecha_entrega'].'</td>
 				<td>';
 					$this->buffer .= '<a href="#" id="e-'.$reg['id'].'-5" class="eliminar">
 						<span class="glyphicon glyphicon-eye-close"></span>

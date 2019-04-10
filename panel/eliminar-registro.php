@@ -13,6 +13,7 @@ if(isset($_POST) && ((int)$_POST['id'] > 0) && ((int) $_POST['idModulo'] > 0) ){
 	include_once ($_SESSION['pathCla']."Revista.class.php");
 	include_once ($_SESSION['pathCla']."Usuario.class.php");
 	include_once ($_SESSION['pathCla']."Categoria.class.php");
+	include_once ($_SESSION['pathCla']."Pedidos.class.php");
 	include_once ($_SESSION['pathCla']."Producto.class.php");
 	include_once ($_SESSION['pathCla']."Testimonial.class.php");
 	$url = "admin.php?idT=".$_POST['idModulo']."&idS=0&".$db->url();

@@ -136,7 +136,7 @@ class Inicio extends Comunes{
         <div class="col-lg-3 col-xs-6">
           <div class="small-box bg-aqua">
             <div class="inner tdCenter">
-              <h3>'.$this->arrayTotales['pedidosTotales'].'</h3>
+              <h3>'.(int) $this->arrayTotales['pedidosTotales'].'</h3>
               <p>Total de Pedidos</p>
             </div>
             <!--<div class="icon">
@@ -148,7 +148,7 @@ class Inicio extends Comunes{
         <div class="col-lg-3 col-xs-6">
           <div class="small-box bg-green">
             <div class="inner  tdCenter">
-						<h3>'.$this->arrayTotales['pedidosPendientes'].'</h3>
+						<h3>'.(int) $this->arrayTotales['pedidosPendientes'].'</h3>
 						<p>Pedidos por entregar</p>
             </div>
             <!--<div class="icon">
@@ -160,7 +160,7 @@ class Inicio extends Comunes{
         <div class="col-lg-3 col-xs-6">
           <div class="small-box bg-yellow">
             <div class="inner  tdCenter">
-						<h3>'.$this->arrayTotales['pedidosTotalesDia'].'</h3>
+						<h3>'.(int) $this->arrayTotales['pedidosTotalesDia'].'</h3>
 						<p>Total de Pedidos del d&iacute;a</p>
 					</div>
             <!--<div class="icon">
@@ -172,7 +172,7 @@ class Inicio extends Comunes{
         <div class="col-lg-3 col-xs-6">
           <div class="small-box bg-red">
             <div class="inner  tdCenter">
-						<h3>'.$this->arrayTotales['pedidosPendientesDia'].'</h3>
+						<h3>'.(int) $this->arrayTotales['pedidosPendientesDia'].'</h3>
 						<p>Pedidos por entregar del d&iacute;a</p>
             </div>
             <!--<div class="icon">

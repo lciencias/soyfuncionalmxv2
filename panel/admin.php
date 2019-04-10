@@ -22,6 +22,11 @@ $idT = (int) $_REQUEST['idT'] + 0;
 $db  = new Conexion( $_dbhost, $_dbuname, $_dbpass, $_dbname, $persistency = true );
 $ext = $db->url(); 
 $modalId   = "modal".$idT;
+if($idT > 0 && $idT < 7){
+    $objetoI    = new Inicio( $db,$_SESSION,$_REQUEST,Comunes::LISTAR,Comunes::LISTAR );
+    $_SESSION['pendientesT'] =  $objetoI->obtenTotal();
+    $_SESSION['pendientes']  =  $objetoI->obtenRegistros();
+}
 switch($idT){
     case 0:
         $objeto    = new Inicio( $db,$_SESSION,$_REQUEST,Comunes::LISTAR,Comunes::LISTAR );
