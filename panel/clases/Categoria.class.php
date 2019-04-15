@@ -37,7 +37,7 @@ class Categoria extends Comunes{
 				$this->guardar();
 				break;
 			case Comunes::EDIT:
-				$this->totalCategoria();
+				//$this->totalCategoria();
 				$this->editar();
 				break;
 			case Comunes::UPDATE:
@@ -49,6 +49,10 @@ class Categoria extends Comunes{
 			case Comunes::ORDENAR:
 				$this->ordenar();
 				break;
+			case Comunes::WEB:
+				$this->listarCategoriaWebArray();
+				break;
+
 		}
 	}
 	
@@ -195,7 +199,24 @@ class Categoria extends Comunes{
 			<li class="active">Categorias</li>
 		</ol>';
 	}
-	
+
+	private function listarCategoriaWebArray(){
+		$this->registros = array();
+		try{
+			$sql = "SELECT a.id,a.nombre,DATE_FORMAT(a.fecha, '%d-%m-%y %H:%i:%s') AS fecha, a.status,a.orden
+					FROM ".$this->tabla." as a 
+					WHERE a.status = ".Comunes::SAVE." ORDER BY a.orden ASC;";			
+			$res = $this->db->sql_query ($sql);
+			if ($this->db->sql_numrows ($res) > 0){
+				while($row = $this->db->sql_fetchass($res)){
+					$this->registros[] = $row;
+				}
+			}
+		}catch (\Exception $e){
+			$this->writeLog($e->getMessage(), Comunes::ERROR);
+		}	
+	}
+
 	private function tabla(){
 		$this->buffer = ' <div class="table-responsive" style="overflow: auto;">
 			<table id="example1" class="table table-bordered table-striped">
@@ -228,12 +249,12 @@ class Categoria extends Comunes{
 					<tr class="renglon'.$reg['id'].'">
 						<td>'.$reg['nombre'].'</td>
 						<td>'.$reg['fecha'].'</td>
-						<td>
-							<a href="'.$this->session['pathWeb'].'categoria-editar.php?id='.$reg['id'].'&'.$this->db->url().'" id="m-'.$reg['id'].'" class="editar">
+						<td class="tdCenter">
+							<a href="#" id="mod-'.$reg['id'].'-3" class="modificarC">
 								<span class="glyphicon glyphicon-pencil"></span>
 							</a>
 						</td>
-						<td>
+						<td class="tdCenter">
 							<a href="#" id="e-'.$reg['id'].'-3" class="eliminar">
 								<span class="glyphicon glyphicon-trash"></span>
 							</a>

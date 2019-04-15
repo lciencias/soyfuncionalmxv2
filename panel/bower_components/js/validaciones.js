@@ -327,4 +327,56 @@ $(document).ready(function() {
                 }
             }
         });
+
+    //Evento Preguntas
+    var form = $('validateFormPregunta');
+    form.on('submit', function(e) {
+        e.preventDefault();
+    });
+
+    $('#validateFormPregunta')
+        .bootstrapValidator({
+            message: 'Campo obligatorio',
+            feedbackIcons: {
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            fields: {
+                pregunta: {
+                    message: 'Campo obligatorio',
+                    validators: {
+                        notEmpty: {
+                            message: 'Campo obligatorio'
+                        },
+                        regexp: {
+                            regexp: letras,
+                            message: 'El campo es s&oacute;lo para letras'
+                        },
+                        stringLength: {
+                            min: 6,
+                            max: 100,
+                            message: 'Minimo 3 y maximo 100 caracteres'
+                        }
+                    }
+                },
+                respuesta: {
+                    message: 'Campo obligatorio',
+                    validators: {
+                        notEmpty: {
+                            message: 'Campo obligatorio'
+                        },
+                        regexp: {
+                            regexp: alfanum,
+                            message: 'El campo es s&oacute;lo para letras y numeros'
+                        },
+                        stringLength: {
+                            min: 6,
+                            max: 300,
+                            message: 'Minimo 6 y maximo 300 caracteres'
+                        }
+                    }
+                }
+            }
+        });
 }); // Fin de jquery

@@ -149,7 +149,7 @@ class Pedidos extends Comunes{
 				<td class="tdLeft">'.$reg['celular'].'</td>
 				<td class="tdCenter">'.$reg['fecha_pedido'].'</td>
 				<td class="tdCenter">'.$reg['fecha_entrega'].'</td>
-				<td>';
+				<td class="tdCenter">';
 					$this->buffer .= '<a href="#" id="e-'.$reg['id'].'-5" class="eliminar">
 						<span class="glyphicon glyphicon-eye-close"></span>
 					</a>';

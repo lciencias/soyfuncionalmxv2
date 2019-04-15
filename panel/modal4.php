@@ -11,6 +11,7 @@ if ($_SESSION && $_SESSION['userId'] > 0){
             </div>
             <form enctype="multipart/form-data" action="<?=$_SERVER['PHP_SELF']?>" method="post" name="formaProducto" id="validateFormProducto" autocomplete="off" data-toogle="validator" role="form">
                 <input type="hidden" name="idT" id="idT" value="<?=$idT?>">
+                <input type="text" name="id" id="id" value="0">    
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-md-6">
@@ -74,7 +75,8 @@ if ($_SESSION && $_SESSION['userId'] > 0){
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-success btn-icon" id="nuevoProducto" name="nuevoProducto"> <i class="fa fa-check"></i> <span>Crear</span></button>
+                    <button type="button" class="btn btn-success btn-icon" id="nuevoProducto" name="nuevoProducto"> 
+                    <i class="fa fa-check"></i> <span id="titBtn">Crear</span></button>
                     <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
                 </div>
             </form>

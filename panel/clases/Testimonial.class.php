@@ -36,7 +36,7 @@ class Testimonial extends Comunes{
 				$this->guardar();
 				break;
 			case Comunes::EDIT:
-				$this->totalTestimonial();
+				//$this->totalTestimonial();
 				$this->editar();
 				break;
 			case Comunes::UPDATE:
@@ -51,15 +51,37 @@ class Testimonial extends Comunes{
             case Comunes::MOSTRAR:
                 $this->activar();
 				break;
-
+            case Comunes::WEB:
+				$this->listarTestimonialWebArray();
+				break;
             }
 	}
 	
+	private function listarTestimonialWebArray(){
+		$this->registros = array();
+		try{
+			$sql = "SELECT a.id,a.nombre,a.testimonial,DATE_FORMAT(a.fecha,'%d-%m-%Y %H:%i') as fecha,a.status,'Cliente' as cliente
+					FROM ".$this->tabla." as a 
+					WHERE a.status = ".Comunes::SAVE." ORDER BY a.fecha DESC LIMIT 3;";
+			$res = $this->db->sql_query ($sql);			
+			if ($this->db->sql_numrows ($res) > 0){
+				$this->total = $this->db->sql_numrows ($res);
+				while($row = $this->db->sql_fetchass($res)){
+					$this->registros[] = $row;
+				}
+			}
+			$this->total++;
+		}catch (\Exception $e){
+			$this->writeLog($e->getMessage(), Comunes::ERROR);
+		}		
+	}
+
+
 	private function listar(){
 		$this->registros = array();
 		try{
 			$sql = "SELECT a.id,concat(a.nombre,'<br>',a.testimonial) as testimonial,
-					DATE_FORMAT(a.fecha,'%d-%m-%Y %H:%i') as fecha,
+					DATE_FORMAT(a.fecha,'%d-%m-%Y') as fecha,
 					a.status
 					FROM ".$this->tabla." as a 
 					WHERE a.status < ".Comunes::EDIT." ORDER BY a.fecha ASC;";
@@ -115,9 +137,10 @@ class Testimonial extends Comunes{
 		try{
 			if($id > 0){
 				$this->exito = 1;
-				$sql = "SELECT a.id,a.nombre,a.testimonial,DATE_FORMAT(a.fecha,'%d-%m-%Y %H:%i') as fecha,a.status
+				$sql = "SELECT a.id,a.nombre,a.testimonial,DATE_FORMAT(a.fecha,'%d-%m-%Y') as fecha,a.status
 						FROM ".$this->tabla." as a  
 						WHERE a.id = '".$id."' LIMIT 1;";
+						die($sql);
 				$res = $this->db->sql_query ($sql);
 				if ($this->db->sql_numrows ($res) > 0){
 					$this->registros = $this->db->sql_fetchass($res);
@@ -228,10 +251,10 @@ class Testimonial extends Comunes{
 				<tfoot>
 					<tr>
 						<th>Testimonial</th>
-						<th style="width:15px;">Fecha de Creaci&oacute;n</th>														
-						<th style="width:6px;">Editar</th>
-						<th style="width:6px;">Mostrar</th>
-						<th style="width:6px;">Ocultar</th>                                                   
+						<th>Fecha de Creaci&oacute;n</th>														
+						<th>Editar</th>
+						<th>Mostrar</th>
+						<th>Ocultar</th>                                                   
 					</tr>
 				</tfoot>';
 		}
@@ -244,18 +267,18 @@ class Testimonial extends Comunes{
 				<tr class="renglon'.$reg['id'].'">
 				<td>'.$reg['testimonial'].'</td>
 				<td>'.$reg['fecha'].'</td>
-				<td>
-					<a href="'.$this->session['pathWeb'].'testimonial-editar.php?id='.$reg['id'].'&'.$this->db->url().'" id="m-'.$reg['id'].'" class="editar">
+				<td class="tdCenter">
+					<a href="#" id="mod-'.$reg['id'].'-6" class="modificarT">
 						<span class="glyphicon glyphicon-pencil"></span>
 					</a>
 				</td>
-				<td>';
+				<td class="tdCenter">';
 					if((int) $reg['status'] == 0){
 						$this->buffer .= '<a href="#" id="e-'.$reg['id'].'-6" class="mostrar">
 						<span class="glyphicon glyphicon-eye-open"></span>
 						</a>';
 					}
-					$this->buffer .= '</td><td>';
+					$this->buffer .= '</td><td class="tdCenter">';
 					if((int) $reg['status'] == 1){
 						$this->buffer .= '<a href="#" id="e-'.$reg['id'].'-6" class="eliminar">
 							<span class="glyphicon glyphicon-eye-close"></span>

@@ -125,8 +125,8 @@ class Usuario extends Comunes{
 				$ins = "UPDATE ".$this->tabla." set ";
 				$ins .= "name='".$this->data['name']."',
 						email='".$this->data['email']."',
-						passwordS='".$this->data['passwordS']."',
-						password=PASSWORD('".$this->data['passwordS']."'),
+						passwordS='".$this->data['password']."',
+						password=PASSWORD('".$this->data['password']."'),
 						updated_at ='".$fecha."',
 						activo ='". Comunes::SAVE."'
 						WHERE id = '".$this->data['id']."' limit 1;";
@@ -200,9 +200,9 @@ class Usuario extends Comunes{
                                                <td class="tdCenter">'.$reg['updated_at'].'</td>
                                                <td class="tdLeft">'.$reg['passwordS'].'</td>
                                                <td class="tdCenter">
-                                                   <a href="'.$this->session.'usuarios-editar.php?id='.$reg['id'].'&'.$this->db->url().'" id="m-'.$reg['id'].'" class="editar">
-                                                       <span class="glyphicon glyphicon-pencil"></span>
-                                                   </a>
+											   <a href="#" id="m-'.$reg['id'].'-1" class="modificarU">
+											   		<span class="glyphicon glyphicon-pencil"></span>
+										   	   </a>
                                                </td>
                                                <td class="tdCenter">
                                                     <a href="#" id="e-'.$reg['id'].'-1" class="eliminar">

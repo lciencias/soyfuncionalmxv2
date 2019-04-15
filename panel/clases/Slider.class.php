@@ -40,7 +40,7 @@ class Slider extends Comunes{
 				break;
 			case Comunes::EDIT:
 				$this->editar();
-				$this->totalCategoria();
+				//$this->totalCategoria();
 				
 				break;
 			case Comunes::UPDATE:
@@ -51,7 +51,7 @@ class Slider extends Comunes{
 				break;				
 			case Comunes::WEB:
 				$this->listarSlideWebArray();
-				$this->listarSlideWeb();
+				//$this->listarSlideWeb();
 				break;
 			case Comunes::ORDENAR:
 				$this->ordenaRegstro();
@@ -150,7 +150,7 @@ class Slider extends Comunes{
 	private function listar(){
 		$this->registros = array();
 		try{
-			$sql = "SELECT idslide,nombre,DATE_FORMAT(fecha, '%d-%m-%y %H:%i:%s') AS fecha, orden 
+			$sql = "SELECT idslide,nombre,DATE_FORMAT(fecha, '%d-%m-%y') AS fecha, orden 
 					FROM ".$this->tabla." WHERE status = 1 ORDER BY idslide desc;";
 			$res = $this->db->sql_query ($sql);	
 			if ($this->db->sql_numrows ($res) > 0){
@@ -173,8 +173,11 @@ class Slider extends Comunes{
 				foreach($this->data as $key => $value){
 					$this->data[$key] = $this->eliminaCaracteresInvalidos($value);
 				}
-				$ins = "INSERT INTO ".$this->tabla."(nombre, fecha, status, orden, idImagen,idimagenMovil,url)
-						VALUES ('".$this->data['nombre']."','".$fecha."','".Comunes::SAVE."','".$this->data['orden']."','".$this->idImagen."','".$this->idImagenMovil."','');";
+				$ins = "INSERT INTO ".$this->tabla."(nombre, fecha, status, orden, idImagen,idimagenMovil,url,texto_corto,texto_grande,texto_boton)
+						VALUES ('".$this->data['nombre']."','".$fecha."','".Comunes::SAVE."','".$this->data['orden']."','".$this->idImagen."','".$this->idImagenMovil."','".$this->data['texto_url']."','".$this->data['texto_corto']."','".$this->data['texto_grande']."','".$this->data['texto_boton']."');";
+
+						  
+
 				$this->db->sql_query($ins);
 				$this->mensaje = Comunes::MSGSUCESS;
 				$this->exito   = Comunes::SAVE;
@@ -192,12 +195,15 @@ class Slider extends Comunes{
 		try{
 			if($id > 0){
 				$this->exito = 1;
-				$sql = "SELECT a.idslide,a.nombre,DATE_FORMAT(a.fecha,'%d-%m-%y %H:%i:%s') AS fecha,a.texto_corto,a.texto_grande,
+				/*$sql = "SELECT a.idslide,a.nombre,DATE_FORMAT(a.fecha,'%d-%m-%y %H:%i:%s') AS fecha,a.texto_corto,a.texto_grande,
 						a.texto_boton,a.url,a.idimagen,b.archivo,b.ruta,b.web,c.web as webMovil,a.orden 
 						FROM ".$this->tabla." a 
 								LEFT JOIN imagen b on b.idimagen = a.idimagen 
 								LEFT JOIN imagen c on c.idimagen = a.idimagenMovil
-								WHERE a.idslide = '".$id."' LIMIT 1;";
+								WHERE a.idslide = '".$id."' LIMIT 1;";*/
+				$sql = "SELECT a.idslide,a.nombre,DATE_FORMAT(a.fecha,'%d-%m-%y') AS fecha,a.texto_corto,a.texto_grande,
+								a.texto_boton,a.url,a.idimagen,a.orden 
+								FROM ".$this->tabla." a WHERE a.idslide = '".$id."' LIMIT 1;";
 				$res = $this->db->sql_query ($sql);
 				if ($this->db->sql_numrows ($res) > 0){
 					$this->registros = $this->db->sql_fetchass($res);
@@ -226,9 +232,9 @@ class Slider extends Comunes{
 							texto_corto  = '".$this->data['texto_corto']."',
 							texto_grande = '".$this->data['texto_grande']."', 
 							texto_boton  ='".$this->data['texto_boton']."',
-							url          ='".$this->data['url']."',
+							url          ='".$this->data['texto_url']."',
 							idimagenMovil = '".($this->idImagenMovil + 0)."',
-							idImagen     ='".$this->idImagen."' WHERE idslide = '".$this->data['idslide']."' limit 1;";
+							idImagen     ='".$this->idImagen."' WHERE idslide = '".$this->data['id']."' limit 1;";
 				$this->db->sql_query($ins);
 				$this->mensaje = Comunes::MSGSUCESS;
 				$this->exito   = 1;
@@ -313,17 +319,17 @@ class Slider extends Comunes{
 						<tr class="renglon'.$reg['idslide'].'">
 							<td>'.$reg['nombre'].'</td>
 							<td>'.$reg['fecha'].'</td>
-							<td>
-								<a href="'.$path_web.'banner-editar.php?id='.$reg['idslide'].'&'.$this->db->url().'" id="m-'.$reg['idslide'].'" class="editar">
+							<td class="tdCenter">
+								<a href="#" id="mod-'.$reg['idslide'].'-2" class="modificarS">
 								<span class="glyphicon glyphicon-pencil"></span>
 								</a>
 							</td>
-							<td>
+							<td class="tdCenter">
 								<a href="#" id="e-'.$reg['idslide'].'-2" class="eliminar">
 								<span class="glyphicon glyphicon-trash"></span>
     							</a>
 							</td>
-    						<td>
+    						<td class="tdCenter">
     							<select name="orden-'.$reg['idslide'].'-2" id="orden-'.$reg['idslide'].'-2" style="width:50px;border:solid 1px #e5e5e5;" class="ordenar">
 									'.$this->options($total,$reg['orden']).'
 								</select>

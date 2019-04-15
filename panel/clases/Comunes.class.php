@@ -56,6 +56,10 @@ class Comunes {
         $valor = str_replace("'", "", $valor);
         $valor = str_replace('"', '', $valor);
         //$valor = str_replace(' ', '', $valor);
+        $valor = trim($valor);
+    	$valor = strip_tags($valor);
+        $valor = addslashes($valor);
+        $valor = utf8_decode($valor);
         return $valor;
     }
     function limpiaCadenas($valor) {

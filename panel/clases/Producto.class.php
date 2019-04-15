@@ -42,8 +42,8 @@ class Producto extends Comunes{
 				$this->guardar();
 				break;
 			case Comunes::EDIT:
-				$this->totalProductos();
-				$this->categorias();
+				//$this->totalProductos();
+				//$this->categorias();
 				$this->editar();
 				break;
 			case Comunes::UPDATE:
@@ -53,6 +53,7 @@ class Producto extends Comunes{
 				$this->eliminar();
 				break;
 			case Comunes::WEB:
+				$this->listarCategoriaProductoWebArray();
 				break;
 			case Comunes::ORDENAR:
 				$this->ordenar();
@@ -145,12 +146,12 @@ class Producto extends Comunes{
 		try{
 			if($id > 0){
 				$this->exito = 1;
-				$sql = "SELECT a.id,a.idcategoria,a.producto,a.caloria,DATE_FORMAT(a.fecha, '%d-%m-%y %H:%i:%s') AS fecha,
-					a.precio,a.status,a.idimagen,c.nombre as categoria,b.archivo,b.ruta,b.web as imagen,a.idimagen 					
+				$sql = "SELECT a.id,a.idcategoria,a.producto,a.caloria,DATE_FORMAT(a.fecha, '%d-%m-%y') AS fecha,
+					a.precio,a.status,a.idimagen,a.orden,c.nombre as categoria,b.archivo,b.ruta,b.web as imagen,a.idimagen 					
 					FROM ".$this->tabla." as a 
 					LEFT JOIN imagen as b ON b.idimagen = a.idimagen
-					LEFT JOIN categoria as c ON c.id = a.idcategoria	
-					WHERE a.id = '".$id."' LIMIT 1;";
+					LEFT JOIN categorias as c ON c.id = a.idcategoria	
+					WHERE a.id = '".$id."' LIMIT 1;";					
 				$res = $this->db->sql_query ($sql);
 				if ($this->db->sql_numrows ($res) > 0){
 					$this->registros = $this->db->sql_fetchass($res);
@@ -226,6 +227,29 @@ class Producto extends Comunes{
 		}	
 	}
 	
+	private function listarCategoriaProductoWebArray(){
+		$this->registros = array();
+		try{
+			$sql = "SELECT a.id, b.id as idproducto,b.producto,b.caloria,b.precio,b.idimagen,c.web,c.ruta 
+					FROM categorias a 
+					INNER JOIN productos b on b.idcategoria = a.id 
+					LEFT JOIN  imagen as c on c.idimagen = b.idimagen 
+					WHERE a.status = '".Comunes::SAVE."' AND b.status = '".Comunes::SAVE."' ORDER BY a.orden,b.orden;";
+			$res = $this->db->sql_query ($sql);			
+			$this->totalProductos = $this->db->sql_numrows ($res);
+			if ($this->db->sql_numrows ($res) > 0){
+				while($row = $this->db->sql_fetchass($res)){
+					$this->registros[$row['id']][$row['idproducto']] = $row;
+				}				
+			}
+			$this->totalProductos++;
+		}catch (\Exception $e){
+			$this->writeLog($e->getMessage(), Comunes::ERROR);
+		}		
+
+	}
+
+
 	private function breadcrumb(){
 		$this->bread = '<ol class="breadcrumb">
 			<li><a href="'.$this->session['pathWeb'].'"><i class="fa fa-dashboard"></i> Inicio</a></li>
@@ -272,17 +296,17 @@ class Producto extends Comunes{
 				<td>'.$reg['producto'].'</td>
 				<td>'.$reg['caloria'].'</td>
 				<td>'.$reg['precio'].'</td>
-				<td>
-					<a href="'.$this->session['pathWeb'].'producto-editar.php?id='.$reg['id'].'&'.$this->db->url().'" id="m-'.$reg['id'].'" class="editar">
+				<td class="tdCenter">
+					<a href="#" id="mod-'.$reg['id'].'-4" class="modificarP">
 						<span class="glyphicon glyphicon-pencil"></span>
 					</a>
 				</td>
-				<td>
+				<td class="tdCenter">
 					<a href="#" id="e-'.$reg['id'].'-4" class="eliminar">
 						<span class="glyphicon glyphicon-trash"></span>
 					</a>
 				</td>
-				<td>
+				<td class="tdCenter">
 				<select name="orden-'.$reg['id'].'-4" id="orden-'.$reg['id'].'-4" style="width:50px;border:solid 1px #e5e5e5;" class="ordenar">
 			'.$this->options($total,$reg['orden']).'
 			</select>

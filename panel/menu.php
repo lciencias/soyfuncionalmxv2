@@ -18,6 +18,7 @@ if ($_SESSION && $_SESSION['userId'] > 0){
             <li><a href="<?=$pathWeb?>admin.php?idT=4&idS=0&<?=$ext?>"><i class="glyphicon glyphicon-cutlery"></i> Productos</a></li>
             <li><a href="<?=$pathWeb?>admin.php?idT=5&idS=0&<?=$ext?>"><i class="glyphicon glyphicon-edit"></i> Pedidos</a></li>
             <li><a href="<?=$pathWeb?>admin.php?idT=6&idS=0&<?=$ext?>"><i class="glyphicon glyphicon-pencil"></i> Testimoniales</a></li>
+            <li><a href="<?=$pathWeb?>admin.php?idT=7&idS=0&<?=$ext?>"><i class="glyphicon glyphicon-education"></i> Preguntas</a></li>
           </ul>
         </li>
       </ul>

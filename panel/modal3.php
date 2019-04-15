@@ -11,6 +11,7 @@ if ($_SESSION && $_SESSION['userId'] > 0){
             </div>
             <form action="<?=$_SERVER['PHP_SELF']?>" method="post" name="formaCategoria" id="validateFormCategoria" autocomplete="off" data-toogle="validator" role="form">
                 <input type="hidden" name="idT" id="idT" value="<?=$idT?>">
+                <input type="hidden" name="id" id="id" value="0">    
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-md-12">
@@ -36,7 +37,7 @@ if ($_SESSION && $_SESSION['userId'] > 0){
                     </div>                                       
                 </div>
                 <div class="modal-footer">
-                    <button type="button" tabindex="3" class="btn btn-success" id="nuevoCategoria" name="nuevoCategoria"> <i class="fa fa-check"></i> <span>Crear</span></button>
+                    <button type="button" tabindex="3" class="btn btn-success" id="nuevoCategoria" name="nuevoCategoria"> <i class="fa fa-check"></i> <span id="titBtn">Crear</span></button>
                     <button type="button" tabindex="4" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
                 </div>
             </form>

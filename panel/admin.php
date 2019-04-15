@@ -11,6 +11,7 @@ include_once ($pathCla."Categoria.class.php");
 include_once ($pathCla."Producto.class.php");
 include_once ($pathCla."Pedidos.class.php");
 include_once ($pathCla."Testimonial.class.php");
+include_once ($pathCla."Preguntas.class.php");
 $objeto    = null;
 $registros = array();
 $total     = 0;
@@ -22,7 +23,7 @@ $idT = (int) $_REQUEST['idT'] + 0;
 $db  = new Conexion( $_dbhost, $_dbuname, $_dbpass, $_dbname, $persistency = true );
 $ext = $db->url(); 
 $modalId   = "modal".$idT;
-if($idT > 0 && $idT < 7){
+if($idT > 0 && $idT < 8){
     $objetoI    = new Inicio( $db,$_SESSION,$_REQUEST,Comunes::LISTAR,Comunes::LISTAR );
     $_SESSION['pendientesT'] =  $objetoI->obtenTotal();
     $_SESSION['pendientes']  =  $objetoI->obtenRegistros();
@@ -36,7 +37,7 @@ switch($idT){
         $table     = $objeto->obtenBuffer();
         $registros = $objeto->obtenRegistros();
         $_SESSION['pendientes'] = $registros;
-        $tituloBoton= "";;
+        $tituloBoton= "";
         $total     = 0;
         break;
     case 1:
@@ -93,6 +94,15 @@ switch($idT){
         $total      = count($registros);
         $titulo     = "Listado de Testimoniales";
         $tituloBoton= "Alta de Testimonial";
+        break;
+    case 7:
+        $objeto     = new Preguntas( $db,$_SESSION,$_REQUEST,Comunes::LISTAR,Comunes::LISTAR );
+        $registros  = $objeto->obtenRegistros();
+        $bread      = $objeto->obtenBreadcrumb();
+        $table      = $objeto->obtenBuffer();
+        $total      = count($registros);
+        $titulo     = "Listado de Preguntas";
+        $tituloBoton= "Alta de Pregunta";
         break;
     default:
         $objeto    = new Inicio($db);
@@ -197,6 +207,9 @@ switch($idT){
         break;
     case 6:
         require_once("modal6.php");
+        break;
+    case 7:
+        require_once("modal7.php");
         break;
 }
 ?>
