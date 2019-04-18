@@ -10,9 +10,6 @@ var url = /^(http|https)\:\/\/[a-z0-9\.-]+\.[a-z]{2,4}/;
 var procesando = " P r o c e s a n d o . . . . ";
 
 $(document).ready(function() {
-    console.log("path:  " + baseurl);
-    console.log("sessionId:  " + $("#sessionId").val());
-
     $(document).delegate(".numeros", "keypress", function(e) {
         tecla = (document.all) ? e.keyCode : e.which;
         if (tecla == 0 || tecla == 8) {
@@ -158,36 +155,8 @@ $(document).ready(function() {
         return false;
     });
 
-    //Tabs
-    $("[data-toggle='tab']").click(function() {
-        var tabs = $(this).attr('data-tabs');
-        var tab = $(this).attr("data-tab");
-        $(tabs).find(".gtab").removeClass("active");
-        $(tabs).find(tab).addClass("active");
-    });
 });
 
 $(window).on("load", function() {
     console.log("window loaded");
 });
-
-function openCity(evt, cityName) {
-    // Declare all variables
-    var i, tabcontent, tablinks;
-
-    // Get all elements with class="tabcontent" and hide them
-    tabcontent = document.getElementsByClassName("tabcontent");
-    for (i = 0; i < tabcontent.length; i++) {
-        tabcontent[i].style.display = "none";
-    }
-
-    // Get all elements with class="tablinks" and remove the class "active"
-    tablinks = document.getElementsByClassName("tablinks");
-    for (i = 0; i < tablinks.length; i++) {
-        tablinks[i].className = tablinks[i].className.replace(" active", "");
-    }
-
-    // Show the current tab, and add an "active" class to the button that opened the tab
-    document.getElementById(cityName).style.display = "block";
-    evt.currentTarget.className += " active";
-}
