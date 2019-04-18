@@ -22,6 +22,8 @@
   include_once("header.php");
 ?>
 	<body>
+		<input type="hidden" id="baseUrl" name="baseUrl" value="<?=$pathWeb?>" />
+		<input type="hidden" id="sessionId" name="sesionId" value="<?=$_SESSION['visitante']?>" />
 		<div class="preloader">
 			<div class="preloader-body">
 				<div class="cssload-bell">
@@ -94,9 +96,13 @@
 			<!-- Page Footer-->
 			<?php
 				require_once("footer.php");
+				require_once($pathSis."mtestimonial.php");
+				require_once($pathSis."mpregunta.php");
 			?>
 		</div>
 		<div class="snackbars" id="form-output-global"></div>
 <?php
+	#require_once($pathSis."mtestimonial.php");
+	#require_once($pathSis."mpregunta.php");
 	require_once($pathSis."scripts.php");
 ?>

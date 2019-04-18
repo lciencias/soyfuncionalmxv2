@@ -1,4 +1,8 @@
 <?php
+session_start();
+if($_SESSION['visitante'] == ""){
+    $_SESSION['visitante'] = rand(99999990,9999999999);
+}
 header('Content-Type: text/html; charset=ISO-8859-1');
 set_time_limit (0);
 error_reporting(-1);
@@ -10,12 +14,12 @@ $panelTitle = "Soy Funcional MX";
 $exito = 0;
 
 if(trim(strtolower($_SERVER['SERVER_NAME'])) == "localhost"){
-    $pathWeb = "http://localhost/soyfuncionalmx/";
-    $pathSis = "/Applications/XAMPP/htdocs/soyfuncionalmx/"; 
-    $pathSys = "/Applications/XAMPP/htdocs/soyfuncionalmx/";        
+ //   $pathWeb = "http://localhost/soyfuncionalmx/";
+    $pathSis = "/Applications/XAMPP/htdocs/soyfuncionalmxv2/"; 
+    $pathSys = "/Applications/XAMPP/htdocs/soyfuncionalmxv2/";        
     $pathWeb = "http://localhost/soyfuncionalmxv2/";
-    $pathSis = "c:/xampp/htdocs/soyfuncionalmxv2/"; 
-    $pathSys = "c:/xampp/htdocs/soyfuncionalmxv2/";        
+   /* $pathSis = "c:/xampp/htdocs/soyfuncionalmxv2/"; 
+    $pathSys = "c:/xampp/htdocs/soyfuncionalmxv2/";*/
     $exito    = 1;
 }
 if($exito == 1){

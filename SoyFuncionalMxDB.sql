@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 15-04-2019 a las 22:36:15
--- Versión del servidor: 10.1.38-MariaDB
--- Versión de PHP: 7.3.3
+-- Tiempo de generaciï¿½n: 15-04-2019 a las 22:36:15
+-- Versiï¿½n del servidor: 10.1.38-MariaDB
+-- Versiï¿½n de PHP: 7.3.3
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -113,7 +113,7 @@ INSERT INTO `categorias` (`id`, `nombre`, `fecha`, `orden`, `status`) VALUES
 (1, 'Proteina', '2019-04-06 00:27:20', 1, 1),
 (2, 'Vegetales', '2019-04-06 00:27:20', 2, 1),
 (3, 'Carbohidratos', '2019-04-06 00:27:20', 3, 1),
-(4, 'Crudités', '2019-04-06 00:27:20', 4, 1),
+(4, 'Cruditï¿½s', '2019-04-06 00:27:20', 4, 1),
 (5, 'Fruta', '2019-04-06 00:27:20', 5, 1),
 (6, 'Grasas', '2019-04-06 00:27:20', 6, 1),
 (7, 'Salsas', '2019-04-06 00:27:20', 7, 1),
@@ -382,9 +382,9 @@ INSERT INTO `productos` (`id`, `idcategoria`, `producto`, `caloria`, `precio`, `
 (1, 1, 'Arrachera', '50 grms', 30.00, 1, '2019-04-06 00:37:44', 1, 1),
 (2, 1, 'Pechuga de Pollo', '50 grms', 15.00, 1, '2019-04-06 00:37:44', 1, 1),
 (3, 1, 'Molida de Cerdo', '50 grms', 25.00, 1, '2019-04-06 00:37:44', 1, 1),
-(4, 1, 'Medallón Atún', '50 grms', 50.00, 1, '2019-04-06 00:37:44', 1, 1),
-(5, 1, 'Atún en Agua', '50 grms', 15.00, 1, '2019-04-06 00:37:44', 1, 2),
-(6, 1, 'Salmón', '50 grms', 60.00, 1, '2019-04-06 00:37:44', 1, 1),
+(4, 1, 'Medallï¿½n Atï¿½n', '50 grms', 50.00, 1, '2019-04-06 00:37:44', 1, 1),
+(5, 1, 'Atï¿½n en Agua', '50 grms', 15.00, 1, '2019-04-06 00:37:44', 1, 2),
+(6, 1, 'Salmï¿½n', '50 grms', 60.00, 1, '2019-04-06 00:37:44', 1, 1),
 (7, 1, 'Molida de Pavo', '50 grms', 25.00, 1, '2019-04-06 00:37:44', 1, 1),
 (8, 1, 'Pavo Horneado', '50 grms', 20.00, 1, '2019-04-06 00:37:44', 1, 1),
 (9, 1, 'Huevo Cocido', '1', 10.00, 1, '2019-04-06 00:37:44', 1, 1),
@@ -419,10 +419,10 @@ INSERT INTO `productos` (`id`, `idcategoria`, `producto`, `caloria`, `precio`, `
 (38, 4, 'Apio', '1/2 tz', 10.00, 1, '2019-04-06 00:37:44', 1, 4),
 (39, 4, 'Pimiento', '1/2 tz', 10.00, 1, '2019-04-06 00:37:44', 1, 5),
 (40, 4, 'Jitomate Uva', '1/2 tz', 10.00, 1, '2019-04-06 00:37:44', 1, 6),
-(41, 4, 'Champiñones', '1 tz', 10.00, 1, '2019-04-06 00:37:44', 1, 7),
+(41, 4, 'Champiï¿½ones', '1 tz', 10.00, 1, '2019-04-06 00:37:44', 1, 7),
 (42, 4, 'Zanahoria Rallada', '1/4 tz', 10.00, 1, '2019-04-06 00:37:44', 1, 8),
 (43, 5, 'Arandanos Deshidratados', '1/4 tz', 10.00, 1, '2019-04-06 00:37:44', 1, 1),
-(44, 5, 'Manzana Pequeña', '1', 10.00, 1, '2019-04-06 00:37:44', 1, 5),
+(44, 5, 'Manzana Pequeï¿½a', '1', 10.00, 1, '2019-04-06 00:37:44', 1, 5),
 (45, 5, 'Fresa', '1 tz', 20.00, 1, '2019-04-06 00:37:44', 1, 3),
 (46, 5, 'Melon', '1/4 pz', 10.00, 1, '2019-04-06 00:37:44', 1, 4),
 (47, 5, 'Papaya', '1 tz', 10.00, 1, '2019-04-06 00:37:44', 1, 5),
@@ -436,11 +436,11 @@ INSERT INTO `productos` (`id`, `idcategoria`, `producto`, `caloria`, `precio`, `
 (55, 6, 'Aguacate', '1/4 pz', 5.00, 1, '2019-04-06 00:37:44', 1, 6),
 (56, 6, 'Vinagreta Fresa', '1/4 tz', 5.00, 1, '2019-04-06 00:37:44', 1, 7),
 (57, 6, 'Mostaza Miel', '1/4 tz', 5.00, 1, '2019-04-06 00:37:44', 1, 8),
-(58, 6, 'Balsámico Miel', '1/4 tz', 5.00, 1, '2019-04-06 00:37:44', 1, 9),
+(58, 6, 'Balsï¿½mico Miel', '1/4 tz', 5.00, 1, '2019-04-06 00:37:44', 1, 9),
 (59, 6, 'Soya - Crema Cacahuate', '1/4 tz', 5.00, 1, '2019-04-06 00:37:44', 1, 10),
 (60, 6, 'Aceite Oliva + Vinagre Manzana', '1/4 tz', 5.00, 1, '2019-04-06 00:37:44', 1, 11),
 (61, 6, 'Almendras', '1/4 tz', 5.00, 1, '2019-04-06 00:37:44', 1, 13),
-(62, 6, 'Ajonjolí', '1/4 tz', 5.00, 1, '2019-04-06 00:37:44', 1, 14),
+(62, 6, 'Ajonjolï¿½', '1/4 tz', 5.00, 1, '2019-04-06 00:37:44', 1, 14),
 (63, 6, 'Semillas de Girasol', '1/4 tz', 5.00, 1, '2019-04-06 00:37:44', 1, 15),
 (64, 6, 'Pepitas de Calabaza', '1/4 tz', 5.00, 1, '2019-04-06 00:37:44', 1, 16),
 (65, 7, 'Salsa Verde', '1/4 tz', 5.00, 1, '2019-04-06 00:37:44', 1, 1),
@@ -523,7 +523,7 @@ INSERT INTO `slide` (`idslide`, `nombre`, `fecha`, `status`, `orden`, `texto_cor
 (4, 'Banner Tres', '2019-04-12 21:39:03', 1, 2, '', '', '', '', 7, 8),
 (5, 'Banner Cuatro', '2019-04-12 23:26:43', 1, 5, 'Texto Peque&ntilde;o', 'Texto Grande', 'Texto Boton', 'guardaDatos.php', 9, 10),
 (6, 'Banner Cinco Cambios', '2019-04-12 23:40:25', 1, 2, 'Texto Pequeno Banner 5 Cambios', 'Texto Grande Banner 5 Cambios', 'Texto Boton Banner 5 cambios', 'texto Mediano Banner 5 Cambios', 123, 124),
-(7, 'Banner Cuatro', '2019-04-12 23:28:09', 1, 5, 'Texto Pequeño', 'Texto Grande', 'Texto Boton', 'Texto Mediano', 13, 14);
+(7, 'Banner Cuatro', '2019-04-12 23:28:09', 1, 5, 'Texto Pequeï¿½o', 'Texto Grande', 'Texto Boton', 'Texto Mediano', 13, 14);
 
 -- --------------------------------------------------------
 
@@ -545,8 +545,8 @@ CREATE TABLE `testimoniales` (
 --
 
 INSERT INTO `testimoniales` (`id`, `nombre`, `fecha`, `status`, `testimonial`) VALUES
-(1, 'Luis Antonio Hernandez', '2019-04-13 00:20:48', 1, 'Es mi primer pedido y todo estuvo sensacional, la atención es muy cordial y de mucha calidad'),
-(2, 'Laura Villegas', '2019-04-13 00:20:11', 1, 'Muy buen servicio, los alimentos muy ricos nutritivos y económicos');
+(1, 'Luis Antonio Hernandez', '2019-04-13 00:20:48', 1, 'Es mi primer pedido y todo estuvo sensacional, la atenciï¿½n es muy cordial y de mucha calidad'),
+(2, 'Laura Villegas', '2019-04-13 00:20:11', 1, 'Muy buen servicio, los alimentos muy ricos nutritivos y econï¿½micos');
 
 -- --------------------------------------------------------
 
@@ -655,7 +655,7 @@ INSERT INTO `visitantes` (`idvisitante`, `fecha`, `ip`, `explorador`, `so`) VALU
 (9, '2019-04-15 07:11:25', '::1', 'CHROME', 'WIN');
 
 --
--- Índices para tablas volcadas
+-- ï¿½ndices para tablas volcadas
 --
 
 --

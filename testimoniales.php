@@ -2,10 +2,15 @@
 	if(count($testim) > 0){
 ?>
 <div class="container">
-	<h4 class="title-style-1 wow fadeInRight">&Uacute;ltimos testimoniales</h4>
-    <h2 class="wow fadeScale">Nuestros Clientes</h2>
-         
-    <div class="owl-carousel owl-style-3" data-items="1" data-margin="200" data-autoplay="true" data-nav="true" data-dots="true" data-smart-speed="400" data-animation-in="fadeIn" data-animation-out="fadeOut">
+	<h3 class="title-style-1 wow fadeInRight">&Uacute;ltimos testimoniales
+		<span>
+			<a href="#" id="anadirTestimonial" data-toggle="modal" data-target="#mtestimonial">
+				<i class="fa fa-plus"></i>
+			</a>
+		</span>
+	</h3>  
+    <div class="owl-carousel owl-style-3" data-items="1" data-margin="200" data-autoplay="true" data-nav="true" 
+		 data-dots="true" data-smart-speed="400" data-animation-in="fadeIn" data-animation-out="fadeOut">
             
 		<?php
 		foreach($testim as $idT => $dataT){

@@ -5,8 +5,14 @@ if(count($pregun) > 0){
 	<div class="container">
 		<div class="row row-30 justify-content-center align-items-md-center">
 			<div class="col-md-7 col-xl-6">
-				<h2 class="title-style-1 wow fadeInRight">Preguntas Frecuentes</h2>
-				<!--<h2 class="text-spacing-20 wow fadeInRight" data-wow-delay=".1s">FAQ</h2>-->
+				<h3 class="title-style-1 wow fadeInRight">Preguntas Frecuentes 
+					<span>
+						<a href="#" id="anadirPregunta" data-toggle="modal" data-target="#mpregunta">
+							<i class="fa fa-plus"></i>
+						</a>
+					</span>
+				</h3>
+				<!--<h6 class="text-spacing-20 wow fadeInRight tdCenter" data-wow-delay=".1s">Realizar pregunta </h6>-->
 				<div class="card-group-custom card-group-custom-1 card-group-corporate" id="accordion<?=$accordion?>" role="tablist" aria-multiselectable="false">
 				<?php
 					$conP = 2;
