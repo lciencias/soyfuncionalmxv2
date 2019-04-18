@@ -72,7 +72,7 @@
 			<!-- New Products-->
 			<section class="section section-xxl bg-default">
 			<?php
-				require_once($pathSis."productos.php");
+				require_once($pathSis."productos2.php");
 			?>
 			</section>
 			<!-- Testimoniales -->

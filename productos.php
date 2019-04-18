@@ -1,65 +1,68 @@
 <div class="container">
 	<h4 class="title-style-1 wow fadeInLeft"></h4>
 	<h2 class="wow fadeScale">Productos</h2>
+	
 	<div class="isotope-wrap">
+		
 		<div class="isotope-filters">
 			<button class="isotope-filters-toggle button button-sm button-icon button-icon-right button-default-outline" data-custom-toggle=".isotope-filters-list" data-custom-toggle-hide-on-blur="true">
 				<span class="icon mdi mdi-chevron-down"></span>Filter
 			</button>
 			<div class="isotope-filters-list-wrap">
 				<ul class="isotope-filters-list">
-					<li><a class="active" href="#" data-isotope-filter="*">Todos</a></li>
 					<?php
 						$arrayType = array();
 						if(count($categs) > 0){
 							foreach($categs as $idC => $dataC){
-								$arrayType[$idC] = "Type".$dataC['id'];
+								$id = $dataC['id'];
+								$arrayType[$id] = $dataC['nombre'];
 					?>
-						<li><a href="#" data-isotope-filter="<?=$arrayType[$idC]?>"><?=$dataC['nombre']?></a></li>	
+						<li>
+							<a href="#" data-isotope-filter="<?=$id?>">
+								<?=$dataC['nombre']?>
+							</a>
+						</li>	
 					<?php
+					
 							}
 						}
 					?>
 				</ul>
 			</div>
 		</div>
+
+
+
 		<div class="row row-30 row-lg-50 isotope">
 		<?php
 			foreach($arrayType as $idCat => $categoria){
-				if($idCat > 0){
+				if($idCat > 0 && array_key_exists($idCat, $prods) ){
 				$prodCategoria = $prods[$idCat];
 		?>
-			<div class="col-sm-6 col-md-4 col-lg-3 isotope-item" data-filter="<?=$categoria?>">
+			<div class="col-sm-3 col-md-3 col-lg-3 isotope-item" data-filter="<?=$idCat?>">
 				<article class="product wow fadeInRight">
 				<?php
 					foreach($prodCategoria as $idProd => $dataP){
 				?>
-					<div class="product-body">
-						<div class="product-figure">
-							<img src="<?=$dataP['web']?>" alt="<?=$dataP['producto']?>" width="150" height="150"/>
+					<div class="product-body" style="height:320px;border:2px solid #777;">
+						<br/>
+						<div class="product-figure" style="border:0px;background-color:#ffffff;">
+							<img src="<?=$dataP['web']?>" alt="<?=$dataP['producto']?>" width="180" height="150"/>
 						</div>
-						<h5 class="product-title" syle="font-size:16px;"><a href="<?=$pathWeb?>single-product.php"><?=$dataP['producto']?></a></h5>
+						<h6 class="product-title" ><a href="<?=$pathWeb?>single-product.php"><?=$dataP['producto']?></a></h6>
 						<div class="product-price-wrap">
 							<div class="product-price product-price">Calor&iacute;as: <?=$dataP['caloria']?></div>
-							<br/><br/>
+							<br/>
 							<div class="product-price">Precio: <?=$dataP['precio']?></div>
-							</div>
 						</div>
-						<!--<span class="product-badge product-badge-sale">Sale</span>-->
-						<div class="product-button-wrap">
-							<div class="product-button">
-								<a class="button button-secondary button-zakaria fl-bigmug-line-search74" href="single-product.html"></a>
-							</div>
-							<div class="product-button">
-								<a class="button button-primary button-zakaria fl-bigmug-line-shopping202" href="cart-page.html"></a>
-							</div>
-						</div>
+					</div>
 				<?php
 					}
 				?>
 				</article>
 			</div>
 			<?php
+				
 				}
 			}
 			?>					

@@ -5,7 +5,7 @@ if($_SESSION['visitante'] == ""){
 }
 header('Content-Type: text/html; charset=ISO-8859-1');
 set_time_limit (0);
-error_reporting(-1);
+error_reporting(0);
 error_reporting(E_ALL ^ E_NOTICE ^ E_WARNING ^ E_PARSE);
 ini_set('memory_limit', -1);
 date_default_timezone_set("America/Mexico_City");
