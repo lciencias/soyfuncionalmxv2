@@ -202,7 +202,7 @@ $(function() {
                 var orden = $("#orden").val();
                 var fileImg = $("#fileImgProd")[0].files[0];
                 var idT = $("#idT").val();
-                if (parseInt(idcategoria) > 0 && producto.length >= 6 && caloria.length >= 3 &&
+                if (parseInt(idcategoria) > 0 && producto.length >= 4 && caloria.length >= 3 &&
                     precio.length >= 2 && parseInt(orden) > 0 && parseInt(idT) === 4) {
                     swal({
                         title: "Desea guardar el registro?",
@@ -685,7 +685,7 @@ $(function() {
                         success: function(data) {
                             $('#procesando').html("");
                             if (parseInt(data.regs.idslide) > 0) {
-                                $("#myModalLabel").html("Actualiza Usuario");
+                                $("#myModalLabel").html("Actualiza Banner");
                                 $("#idT").val(tmp[2]);
                                 $("#id").val(data.regs.idslide);
                                 $("#nombre").val(data.regs.nombre);
@@ -726,7 +726,7 @@ $(function() {
                         success: function(data) {
                             $('#procesando').html("");
                             if (parseInt(data.regs.id) > 0) {
-                                $("#myModalLabel").html("Actualiza Usuario");
+                                $("#myModalLabel").html("Actualiza Categoria");
                                 $("#idT").val(tmp[2]);
                                 $("#id").val(data.regs.id);
                                 $("#nombreC").val(data.regs.nombre);
@@ -763,7 +763,7 @@ $(function() {
                         success: function(data) {
                             $('#procesando').html("");
                             if (parseInt(data.regs.id) > 0) {
-                                $("#myModalLabel").html("Actualiza Usuario");
+                                $("#myModalLabel").html("Actualiza Producto");
                                 $("#idT").val(tmp[2]);
                                 $("#id").val(data.regs.id);
                                 $("#idcategoria").val(data.regs.idcategoria);
@@ -804,7 +804,7 @@ $(function() {
                         success: function(data) {
                             $('#procesando').html("");
                             if (parseInt(data.regs.id) > 0) {
-                                $("#myModalLabel").html("Actualiza Usuario");
+                                $("#myModalLabel").html("Actualiza Testimonial");
                                 $("#idT").val(tmp[2]);
                                 $("#id").val(data.regs.id);
                                 $("#nombreVisitante").val(data.regs.nombre);
@@ -842,7 +842,7 @@ $(function() {
                         success: function(data) {
                             $('#procesando').html("");
                             if (parseInt(data.regs.id) > 0) {
-                                $("#myModalLabel").html("Actualiza Usuario");
+                                $("#myModalLabel").html("Actualiza Pregunta");
                                 $("#idT").val(tmp[2]);
                                 $("#id").val(data.regs.id);
                                 $("#pregunta").val(data.regs.pregunta);

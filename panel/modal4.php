@@ -11,7 +11,7 @@ if ($_SESSION && $_SESSION['userId'] > 0){
             </div>
             <form enctype="multipart/form-data" action="<?=$_SERVER['PHP_SELF']?>" method="post" name="formaProducto" id="validateFormProducto" autocomplete="off" data-toogle="validator" role="form">
                 <input type="hidden" name="idT" id="idT" value="<?=$idT?>">
-                <input type="text" name="id" id="id" value="0">    
+                <input type="hidden" name="id" id="id" value="0">    
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-md-6">

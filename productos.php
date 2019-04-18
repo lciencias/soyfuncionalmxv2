@@ -26,6 +26,7 @@
 		<div class="row row-30 row-lg-50 isotope">
 		<?php
 			foreach($arrayType as $idCat => $categoria){
+				if($idCat > 0){
 				$prodCategoria = $prods[$idCat];
 		?>
 			<div class="col-sm-6 col-md-4 col-lg-3 isotope-item" data-filter="<?=$categoria?>">
@@ -35,12 +36,13 @@
 				?>
 					<div class="product-body">
 						<div class="product-figure">
-							<img src="<?=$dataP['web']?>" alt="<?=$dataP['producto']?>" width="220" height="160"/>
+							<img src="<?=$dataP['web']?>" alt="<?=$dataP['producto']?>" width="150" height="150"/>
 						</div>
-						<h5 class="product-title"><a href="<?=$pathWeb?>single-product.php"><?=$dataP['producto']?></a></h5>
+						<h5 class="product-title" syle="font-size:16px;"><a href="<?=$pathWeb?>single-product.php"><?=$dataP['producto']?></a></h5>
 						<div class="product-price-wrap">
-							<div class="product-price product-price-old"><?=$dataP['caloria']?></div>
-								<div class="product-price"><?=$dataP['precio']?></div>
+							<div class="product-price product-price">Calor&iacute;as: <?=$dataP['caloria']?></div>
+							<br/><br/>
+							<div class="product-price">Precio: <?=$dataP['precio']?></div>
 							</div>
 						</div>
 						<!--<span class="product-badge product-badge-sale">Sale</span>-->
@@ -58,6 +60,7 @@
 				</article>
 			</div>
 			<?php
+				}
 			}
 			?>					
 			<div class="col-1"></div>

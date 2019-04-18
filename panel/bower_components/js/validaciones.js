@@ -215,9 +215,9 @@ $(document).ready(function() {
                             message: 'El campo es s&oacute;lo para letras'
                         },
                         stringLength: {
-                            min: 6,
+                            min: 4,
                             max: 150,
-                            message: 'Minimo 6 y maximo 150 caracteres'
+                            message: 'Minimo 4 y maximo 150 caracteres'
                         }
                     }
                 },
