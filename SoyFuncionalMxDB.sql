@@ -1,21 +1,14 @@
--- phpMyAdmin SQL Dump
--- version 4.8.5
--- https://www.phpmyadmin.net/
---
--- Servidor: 127.0.0.1
--- Tiempo de generaci�n: 15-04-2019 a las 22:36:15
--- Versi�n del servidor: 10.1.38-MariaDB
--- Versi�n de PHP: 7.3.3
+-- Versión de PHP: 7.0.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
 START TRANSACTION;
 
 --
--- Base de datos: `soyfuncionalmx`
+-- Base de datos: `soyfuncionalmxv2`
 --
-CREATE DATABASE IF NOT EXISTS `soyfuncionalmx` DEFAULT CHARACTER SET latin1 COLLATE latin1_spanish_ci;
-USE `soyfuncionalmx`;
+CREATE DATABASE IF NOT EXISTS `soyfuncionalmxv2` DEFAULT CHARACTER SET latin1 COLLATE latin1_spanish_ci;
+USE `soyfuncionalmxv2`;
 
 -- --------------------------------------------------------
 
@@ -67,7 +60,8 @@ INSERT INTO `acceso` (`idacceso`, `usuario`, `fecha`, `status`, `ip`, `explorado
 (25, 'lciencias@gmail.com', '2019-04-14 09:23:28', 1, '::1', 'CHROME', 'WIN', 1),
 (26, 'lciencias@gmail.com', '2019-04-14 09:38:30', 2, '::1', 'CHROME', 'WIN', 1),
 (27, 'lciencias@gmail.com', '2019-04-15 07:11:26', 1, '::1', 'CHROME', 'WIN', 1),
-(28, 'lciencias@gmail.com', '2019-04-15 09:22:15', 2, '::1', 'CHROME', 'WIN', 1);
+(28, 'lciencias@gmail.com', '2019-04-15 09:22:15', 2, '::1', 'CHROME', 'WIN', 1),
+(29, 'lciencias@gmail.com', '2019-04-17 23:27:21', 1, '::1', 'CHROME', 'MAC', 1);
 
 -- --------------------------------------------------------
 
@@ -113,7 +107,7 @@ INSERT INTO `categorias` (`id`, `nombre`, `fecha`, `orden`, `status`) VALUES
 (1, 'Proteina', '2019-04-06 00:27:20', 1, 1),
 (2, 'Vegetales', '2019-04-06 00:27:20', 2, 1),
 (3, 'Carbohidratos', '2019-04-06 00:27:20', 3, 1),
-(4, 'Crudit�s', '2019-04-06 00:27:20', 4, 1),
+(4, 'Cruditis', '2019-04-06 00:27:20', 4, 1),
 (5, 'Fruta', '2019-04-06 00:27:20', 5, 1),
 (6, 'Grasas', '2019-04-06 00:27:20', 6, 1),
 (7, 'Salsas', '2019-04-06 00:27:20', 7, 1),
@@ -156,7 +150,7 @@ CREATE TABLE `imagen` (
 --
 
 INSERT INTO `imagen` (`idimagen`, `idusuario`, `archivo`, `ruta`, `fecha`, `status`, `web`) VALUES
-(1, 1, 'logoCiencias.png', 'c:/xampp/htdocs/soyfuncionalmxv2/panel/img/banners/logoCiencias.png', '2019-04-12 12:31:42', 1, 'http://localhost/soyfuncionalmxv2/panel/img/banners/logoCiencias.png'),
+(1, 1, 'no-image.jpg', 'c:/xampp/htdocs/soyfuncionalmxv2/panel/img/banners/no-image.jpg', '2019-04-17 23:54:03', 1, 'http://localhost/soyfuncionalmxv2/panel/img/banners/no-image.jpg'),
 (3, 1, 'slide-3.jpg', 'c:/xampp/htdocs/soyfuncionalmxv2/panel/img/banners/slide-3.jpg', '2019-04-12 09:40:45', 1, 'http://localhost/soyfuncionalmxv2/panel/img/banners/slide-3.jpg'),
 (4, 1, 'slide-3.jpg', 'c:/xampp/htdocs/soyfuncionalmxv2/panel/img/banners/slide-3.jpg', '2019-04-12 09:40:45', 1, 'http://localhost/soyfuncionalmxv2/panel/img/banners/slide-3.jpg'),
 (5, 1, 'slide-2.jpg', 'c:/xampp/htdocs/soyfuncionalmxv2/panel/img/banners/slide-2.jpg', '2019-04-12 09:41:24', 1, 'http://localhost/soyfuncionalmxv2/panel/img/banners/slide-2.jpg'),
@@ -280,7 +274,27 @@ INSERT INTO `imagen` (`idimagen`, `idusuario`, `archivo`, `ruta`, `fecha`, `stat
 (123, 1, 'slide-2.jpg', 'c:/xampp/htdocs/soyfuncionalmxv2/panel/img/banners/slide-2.jpg', '2019-04-12 23:40:25', 1, 'http://localhost/soyfuncionalmxv2/panel/img/banners/slide-2.jpg'),
 (124, 1, 'slide-2.jpg', 'c:/xampp/htdocs/soyfuncionalmxv2/panel/img/banners/slide-2.jpg', '2019-04-12 23:40:25', 1, 'http://localhost/soyfuncionalmxv2/panel/img/banners/slide-2.jpg'),
 (125, 1, 'AAArhqS.jpg', 'c:/xampp/htdocs/soyfuncionalmxv2/panel/img/banners/AAArhqS.jpg', '2019-04-13 00:06:24', 1, 'http://localhost/soyfuncionalmxv2/panel/img/banners/AAArhqS.jpg'),
-(126, 1, 'AAArhqS.jpg', 'c:/xampp/htdocs/soyfuncionalmxv2/panel/img/banners/AAArhqS.jpg', '2019-04-13 00:06:48', 1, 'http://localhost/soyfuncionalmxv2/panel/img/banners/AAArhqS.jpg');
+(126, 1, 'AAArhqS.jpg', 'c:/xampp/htdocs/soyfuncionalmxv2/panel/img/banners/AAArhqS.jpg', '2019-04-13 00:06:48', 1, 'http://localhost/soyfuncionalmxv2/panel/img/banners/AAArhqS.jpg'),
+(127, 1, 'elote.jpg', '/Applications/XAMPP/htdocs/soyfuncionalmxv2/panel/img/banners/elote.jpg', '2019-04-17 23:35:55', 1, 'http://localhost/soyfuncionalmxv2/panel/img/banners/elote.jpg'),
+(128, 1, 'molidapavo.jpg', '/Applications/XAMPP/htdocs/soyfuncionalmxv2/panel/img/banners/molidapavo.jpg', '2019-04-17 23:36:12', 1, 'http://localhost/soyfuncionalmxv2/panel/img/banners/molidapavo.jpg'),
+(129, 1, 'lentejas.jpg', '/Applications/XAMPP/htdocs/soyfuncionalmxv2/panel/img/banners/lentejas.jpg', '2019-04-17 23:36:27', 1, 'http://localhost/soyfuncionalmxv2/panel/img/banners/lentejas.jpg'),
+(130, 1, 'lechuga.jpg', '/Applications/XAMPP/htdocs/soyfuncionalmxv2/panel/img/banners/lechuga.jpg', '2019-04-17 23:36:57', 1, 'http://localhost/soyfuncionalmxv2/panel/img/banners/lechuga.jpg'),
+(131, 1, 'pavo.jpeg', '/Applications/XAMPP/htdocs/soyfuncionalmxv2/panel/img/banners/pavo.jpeg', '2019-04-17 23:39:19', 1, 'http://localhost/soyfuncionalmxv2/panel/img/banners/pavo.jpeg'),
+(132, 1, 'vegetalesmixtosros.jpg', '/Applications/XAMPP/htdocs/soyfuncionalmxv2/panel/img/banners/vegetalesmixtosros.jpg', '2019-04-17 23:39:44', 1, 'http://localhost/soyfuncionalmxv2/panel/img/banners/vegetalesmixtosros.jpg'),
+(133, 1, 'verdurasmixtas.jpg', '/Applications/XAMPP/htdocs/soyfuncionalmxv2/panel/img/banners/verdurasmixtas.jpg', '2019-04-17 23:40:08', 1, 'http://localhost/soyfuncionalmxv2/panel/img/banners/verdurasmixtas.jpg'),
+(134, 1, 'arroz.jpg', '/Applications/XAMPP/htdocs/soyfuncionalmxv2/panel/img/banners/arroz.jpg', '2019-04-17 23:40:52', 1, 'http://localhost/soyfuncionalmxv2/panel/img/banners/arroz.jpg'),
+(135, 1, 'apio.jpg', '/Applications/XAMPP/htdocs/soyfuncionalmxv2/panel/img/banners/apio.jpg', '2019-04-17 23:41:49', 1, 'http://localhost/soyfuncionalmxv2/panel/img/banners/apio.jpg'),
+(136, 1, 'espinaca.jpg', '/Applications/XAMPP/htdocs/soyfuncionalmxv2/panel/img/banners/espinaca.jpg', '2019-04-17 23:42:11', 1, 'http://localhost/soyfuncionalmxv2/panel/img/banners/espinaca.jpg'),
+(137, 1, 'montereyjack.jpg', '/Applications/XAMPP/htdocs/soyfuncionalmxv2/panel/img/banners/montereyjack.jpg', '2019-04-17 23:42:29', 1, 'http://localhost/soyfuncionalmxv2/panel/img/banners/montereyjack.jpg'),
+(138, 1, 'quinoa.jpg', '/Applications/XAMPP/htdocs/soyfuncionalmxv2/panel/img/banners/quinoa.jpg', '2019-04-17 23:42:54', 1, 'http://localhost/soyfuncionalmxv2/panel/img/banners/quinoa.jpg'),
+(139, 1, 'pepino.jpg', '/Applications/XAMPP/htdocs/soyfuncionalmxv2/panel/img/banners/pepino.jpg', '2019-04-17 23:43:16', 1, 'http://localhost/soyfuncionalmxv2/panel/img/banners/pepino.jpg'),
+(140, 1, 'arrachera.jpg', '/Applications/XAMPP/htdocs/soyfuncionalmxv2/panel/img/banners/arrachera.jpg', '2019-04-17 23:43:32', 1, 'http://localhost/soyfuncionalmxv2/panel/img/banners/arrachera.jpg'),
+(141, 1, 'vegetalesmixtosros.jpg', '/Applications/XAMPP/htdocs/soyfuncionalmxv2/panel/img/banners/vegetalesmixtosros.jpg', '2019-04-17 23:44:00', 1, 'http://localhost/soyfuncionalmxv2/panel/img/banners/vegetalesmixtosros.jpg'),
+(142, 1, 'frijoles.jpg', '/Applications/XAMPP/htdocs/soyfuncionalmxv2/panel/img/banners/frijoles.jpg', '2019-04-17 23:44:18', 1, 'http://localhost/soyfuncionalmxv2/panel/img/banners/frijoles.jpg'),
+(143, 1, 'verdurasmixtas.jpg', '/Applications/XAMPP/htdocs/soyfuncionalmxv2/panel/img/banners/verdurasmixtas.jpg', '2019-04-17 23:44:58', 1, 'http://localhost/soyfuncionalmxv2/panel/img/banners/verdurasmixtas.jpg'),
+(144, 1, 'pimiento.jpg', '/Applications/XAMPP/htdocs/soyfuncionalmxv2/panel/img/banners/pimiento.jpg', '2019-04-17 23:45:17', 1, 'http://localhost/soyfuncionalmxv2/panel/img/banners/pimiento.jpg'),
+(145, 1, 'quesofeta.jpg', '/Applications/XAMPP/htdocs/soyfuncionalmxv2/panel/img/banners/quesofeta.jpg', '2019-04-17 23:45:33', 1, 'http://localhost/soyfuncionalmxv2/panel/img/banners/quesofeta.jpg'),
+(146, 1, 'cremaverduras.jpg', '/Applications/XAMPP/htdocs/soyfuncionalmxv2/panel/img/banners/cremaverduras.jpg', '2019-04-17 23:45:48', 1, 'http://localhost/soyfuncionalmxv2/panel/img/banners/cremaverduras.jpg');
 
 -- --------------------------------------------------------
 
@@ -353,7 +367,10 @@ INSERT INTO `preguntas` (`id`, `pregunta`, `fecha`, `status`, `respuesta`) VALUE
 (1, 'Que servicios de entrega trabaja', '2019-04-13 00:30:50', 0, 'En las delegaciones Alvaro Obregon y  Miguel Hidalgo el servicio es gratuito en otras delagaciones la entrega se realiza en sucursal'),
 (2, 'Pregunta Dos', '2019-04-12 12:52:32', 1, 'Respuesta 2'),
 (3, 'Pregunta Tres', '2019-04-12 17:33:57', 1, 'Respuesta de la pregunta tres'),
-(4, 'Pregunta Cuatro', '2019-04-12 21:03:32', 0, 'Esta es la respuesta de la pregunta cuatro');
+(4, 'Pregunta Cuatro', '2019-04-12 21:03:32', 0, 'Esta es la respuesta de la pregunta cuatro'),
+(5, 'Cuanto tiempo se tarda en llevar el pedido', '2019-04-17 22:34:03', 0, ''),
+(6, 'dsdsadasdsadsa', '2019-04-17 22:49:55', 0, ''),
+(7, 'wdsdsdasdasda', '2019-04-17 22:50:59', 0, '');
 
 -- --------------------------------------------------------
 
@@ -379,32 +396,32 @@ CREATE TABLE `productos` (
 --
 
 INSERT INTO `productos` (`id`, `idcategoria`, `producto`, `caloria`, `precio`, `idimagen`, `fecha`, `status`, `orden`) VALUES
-(1, 1, 'Arrachera', '50 grms', 30.00, 1, '2019-04-06 00:37:44', 1, 1),
+(1, 1, 'Arrachera', '50 grms', 30.00, 140, '2019-04-17 23:43:32', 1, 1),
 (2, 1, 'Pechuga de Pollo', '50 grms', 15.00, 1, '2019-04-06 00:37:44', 1, 1),
 (3, 1, 'Molida de Cerdo', '50 grms', 25.00, 1, '2019-04-06 00:37:44', 1, 1),
-(4, 1, 'Medall�n At�n', '50 grms', 50.00, 1, '2019-04-06 00:37:44', 1, 1),
-(5, 1, 'At�n en Agua', '50 grms', 15.00, 1, '2019-04-06 00:37:44', 1, 2),
-(6, 1, 'Salm�n', '50 grms', 60.00, 1, '2019-04-06 00:37:44', 1, 1),
-(7, 1, 'Molida de Pavo', '50 grms', 25.00, 1, '2019-04-06 00:37:44', 1, 1),
-(8, 1, 'Pavo Horneado', '50 grms', 20.00, 1, '2019-04-06 00:37:44', 1, 1),
+(4, 1, 'Medallon Atun', '50 grms', 50.00, 1, '2019-04-06 00:37:44', 1, 1),
+(5, 1, 'Atun en Agua', '50 grms', 15.00, 1, '2019-04-06 00:37:44', 1, 2),
+(6, 1, 'Salmon', '50 grms', 60.00, 1, '2019-04-06 00:37:44', 1, 1),
+(7, 1, 'Molida de Pavo', '50 grms', 25.00, 128, '2019-04-17 23:36:12', 1, 1),
+(8, 1, 'Pavo Horneado', '50 grms', 20.00, 131, '2019-04-17 23:39:19', 1, 1),
 (9, 1, 'Huevo Cocido', '1', 10.00, 1, '2019-04-06 00:37:44', 1, 1),
 (10, 1, 'Tofu', '100 grms', 25.00, 1, '2019-04-06 00:37:44', 1, 1),
 (11, 1, 'Requeson', '30 grms', 6.00, 1, '2019-04-06 00:37:44', 1, 1),
 (12, 1, 'Queso Cabra', '30 grms', 15.00, 1, '2019-04-06 00:37:44', 1, 1),
-(13, 1, 'Queso Feta', '30 grms', 15.00, 1, '2019-04-06 00:37:44', 1, 1),
-(14, 1, 'Monterrey Jack', '30 grms', 9.00, 1, '2019-04-06 00:37:44', 1, 1),
+(13, 1, 'Queso Feta', '30 grms', 15.00, 145, '2019-04-17 23:45:33', 1, 1),
+(14, 1, 'Monterrey Jack', '30 grms', 9.00, 137, '2019-04-17 23:42:29', 1, 1),
 (15, 1, 'Mozarella', '30 grms', 9.00, 1, '2019-04-06 00:37:44', 1, 1),
 (16, 2, 'Sopa de Verduras', '1 tz', 15.00, 1, '2019-04-06 00:37:44', 1, 1),
-(17, 2, 'Crema de Verduras', '1 tz', 15.00, 1, '2019-04-06 00:37:44', 1, 1),
+(17, 2, 'Crema de Verduras', '1 tz', 15.00, 146, '2019-04-17 23:45:48', 1, 1),
 (18, 2, 'Vegetales Verdes al Vapor', '1 tz', 15.00, 1, '2019-04-06 00:37:44', 1, 1),
-(19, 2, 'Vegetales Verdes Rostizados', '1 tz', 15.00, 1, '2019-04-06 00:37:44', 1, 1),
-(20, 2, 'Vegetales Mixtos al Vapor', '1 tz', 15.00, 1, '2019-04-06 00:37:44', 1, 1),
-(21, 2, 'Vegetales Mixtos Rostizados', '1 tz', 15.00, 1, '2019-04-06 00:37:44', 1, 1),
-(22, 3, 'Arroz', '1/3 Tz', 5.00, 1, '2019-04-06 00:37:44', 1, 1),
-(23, 3, 'Quinoa', '1/3 Tz', 10.00, 1, '2019-04-06 00:37:44', 1, 2),
-(24, 3, 'Frijoles', '1/4 tz', 5.00, 1, '2019-04-06 00:37:44', 1, 3),
-(25, 3, 'Lentejas', '1/4 tz', 5.00, 1, '2019-04-06 00:37:44', 1, 4),
-(26, 3, 'Elote', '1/2 tz', 5.00, 1, '2019-04-06 00:37:44', 1, 5),
+(19, 2, 'Vegetales Verdes Rostizados', '1 tz', 15.00, 141, '2019-04-17 23:44:00', 1, 1),
+(20, 2, 'Vegetales Mixtos al Vapor', '1 tz', 15.00, 143, '2019-04-17 23:44:58', 1, 1),
+(21, 2, 'Vegetales Mixtos Rostizados', '1 tz', 15.00, 132, '2019-04-17 23:39:44', 1, 1),
+(22, 3, 'Arroz', '1/3 Tz', 5.00, 134, '2019-04-17 23:40:52', 1, 1),
+(23, 3, 'Quinoa', '1/3 Tz', 10.00, 138, '2019-04-17 23:42:54', 1, 2),
+(24, 3, 'Frijoles', '1/4 tz', 5.00, 142, '2019-04-17 23:44:18', 1, 3),
+(25, 3, 'Lentejas', '1/4 tz', 5.00, 129, '2019-04-17 23:36:27', 1, 4),
+(26, 3, 'Elote', '1/2 tz', 5.00, 127, '2019-04-17 23:35:55', 1, 5),
 (27, 3, 'Fusilli', '1/4 tz', 5.00, 1, '2019-04-06 00:37:44', 1, 6),
 (28, 3, 'Camote', '1/2 Tz', 8.00, 1, '2019-04-06 00:37:44', 1, 7),
 (29, 3, 'Papa Mediana', '1/3 pz', 5.00, 1, '2019-04-06 00:37:44', 1, 8),
@@ -413,16 +430,16 @@ INSERT INTO `productos` (`id`, `idcategoria`, `producto`, `caloria`, `precio`, `
 (32, 3, 'Salmas', '1 Paquete', 5.00, 1, '2019-04-06 00:37:44', 1, 11),
 (33, 3, 'Veguicheez', '1', 15.00, 1, '2019-04-06 00:37:44', 1, 12),
 (34, 3, 'Kipes Vegetarianos', '2 pz', 50.00, 1, '2019-04-06 00:37:44', 1, 13),
-(35, 4, 'Lechuga', '2.5 tz', 10.00, 1, '2019-04-06 00:37:44', 1, 1),
-(36, 4, 'Espinaca', '2.5', 10.00, 1, '2019-04-06 00:37:44', 1, 2),
-(37, 4, 'Pepino', '1 tz', 10.00, 1, '2019-04-06 00:37:44', 1, 3),
-(38, 4, 'Apio', '1/2 tz', 10.00, 1, '2019-04-06 00:37:44', 1, 4),
-(39, 4, 'Pimiento', '1/2 tz', 10.00, 1, '2019-04-06 00:37:44', 1, 5),
+(35, 4, 'Lechuga', '2.5 tz', 10.00, 130, '2019-04-17 23:36:57', 1, 1),
+(36, 4, 'Espinaca', '2.5', 10.00, 136, '2019-04-17 23:42:11', 1, 2),
+(37, 4, 'Pepino', '1 tz', 10.00, 139, '2019-04-17 23:43:16', 1, 3),
+(38, 4, 'Apio', '1/2 tz', 10.00, 135, '2019-04-17 23:41:49', 1, 4),
+(39, 4, 'Pimiento', '1/2 tz', 10.00, 144, '2019-04-17 23:45:17', 1, 5),
 (40, 4, 'Jitomate Uva', '1/2 tz', 10.00, 1, '2019-04-06 00:37:44', 1, 6),
-(41, 4, 'Champi�ones', '1 tz', 10.00, 1, '2019-04-06 00:37:44', 1, 7),
+(41, 4, 'Champi?ones', '1 tz', 10.00, 1, '2019-04-06 00:37:44', 1, 7),
 (42, 4, 'Zanahoria Rallada', '1/4 tz', 10.00, 1, '2019-04-06 00:37:44', 1, 8),
 (43, 5, 'Arandanos Deshidratados', '1/4 tz', 10.00, 1, '2019-04-06 00:37:44', 1, 1),
-(44, 5, 'Manzana Peque�a', '1', 10.00, 1, '2019-04-06 00:37:44', 1, 5),
+(44, 5, 'Manzana Peque?a', '1', 10.00, 1, '2019-04-06 00:37:44', 1, 5),
 (45, 5, 'Fresa', '1 tz', 20.00, 1, '2019-04-06 00:37:44', 1, 3),
 (46, 5, 'Melon', '1/4 pz', 10.00, 1, '2019-04-06 00:37:44', 1, 4),
 (47, 5, 'Papaya', '1 tz', 10.00, 1, '2019-04-06 00:37:44', 1, 5),
@@ -436,11 +453,11 @@ INSERT INTO `productos` (`id`, `idcategoria`, `producto`, `caloria`, `precio`, `
 (55, 6, 'Aguacate', '1/4 pz', 5.00, 1, '2019-04-06 00:37:44', 1, 6),
 (56, 6, 'Vinagreta Fresa', '1/4 tz', 5.00, 1, '2019-04-06 00:37:44', 1, 7),
 (57, 6, 'Mostaza Miel', '1/4 tz', 5.00, 1, '2019-04-06 00:37:44', 1, 8),
-(58, 6, 'Bals�mico Miel', '1/4 tz', 5.00, 1, '2019-04-06 00:37:44', 1, 9),
+(58, 6, 'Bals?mico Miel', '1/4 tz', 5.00, 1, '2019-04-06 00:37:44', 1, 9),
 (59, 6, 'Soya - Crema Cacahuate', '1/4 tz', 5.00, 1, '2019-04-06 00:37:44', 1, 10),
 (60, 6, 'Aceite Oliva + Vinagre Manzana', '1/4 tz', 5.00, 1, '2019-04-06 00:37:44', 1, 11),
 (61, 6, 'Almendras', '1/4 tz', 5.00, 1, '2019-04-06 00:37:44', 1, 13),
-(62, 6, 'Ajonjol�', '1/4 tz', 5.00, 1, '2019-04-06 00:37:44', 1, 14),
+(62, 6, 'Ajonjoli', '1/4 tz', 5.00, 1, '2019-04-06 00:37:44', 1, 14),
 (63, 6, 'Semillas de Girasol', '1/4 tz', 5.00, 1, '2019-04-06 00:37:44', 1, 15),
 (64, 6, 'Pepitas de Calabaza', '1/4 tz', 5.00, 1, '2019-04-06 00:37:44', 1, 16),
 (65, 7, 'Salsa Verde', '1/4 tz', 5.00, 1, '2019-04-06 00:37:44', 1, 1),
@@ -523,7 +540,7 @@ INSERT INTO `slide` (`idslide`, `nombre`, `fecha`, `status`, `orden`, `texto_cor
 (4, 'Banner Tres', '2019-04-12 21:39:03', 1, 2, '', '', '', '', 7, 8),
 (5, 'Banner Cuatro', '2019-04-12 23:26:43', 1, 5, 'Texto Peque&ntilde;o', 'Texto Grande', 'Texto Boton', 'guardaDatos.php', 9, 10),
 (6, 'Banner Cinco Cambios', '2019-04-12 23:40:25', 1, 2, 'Texto Pequeno Banner 5 Cambios', 'Texto Grande Banner 5 Cambios', 'Texto Boton Banner 5 cambios', 'texto Mediano Banner 5 Cambios', 123, 124),
-(7, 'Banner Cuatro', '2019-04-12 23:28:09', 1, 5, 'Texto Peque�o', 'Texto Grande', 'Texto Boton', 'Texto Mediano', 13, 14);
+(7, 'Banner Cuatro', '2019-04-12 23:28:09', 1, 5, 'Texto Peque?o', 'Texto Grande', 'Texto Boton', 'Texto Mediano', 13, 14);
 
 -- --------------------------------------------------------
 
@@ -545,8 +562,12 @@ CREATE TABLE `testimoniales` (
 --
 
 INSERT INTO `testimoniales` (`id`, `nombre`, `fecha`, `status`, `testimonial`) VALUES
-(1, 'Luis Antonio Hernandez', '2019-04-13 00:20:48', 1, 'Es mi primer pedido y todo estuvo sensacional, la atenci�n es muy cordial y de mucha calidad'),
-(2, 'Laura Villegas', '2019-04-13 00:20:11', 1, 'Muy buen servicio, los alimentos muy ricos nutritivos y econ�micos');
+(1, 'Luis Antonio Hernandez', '2019-04-13 00:20:48', 1, 'Es mi primer pedido y todo estuvo sensacional, la atenci?n es muy cordial y de mucha calidad'),
+(2, 'Laura Villegas', '2019-04-13 00:20:11', 1, 'Muy buen servicio, los alimentos muy ricos nutritivos y econ?micos'),
+(3, 'awsws', '2019-04-17 22:37:38', 0, 'sdsadasdas'),
+(4, 'Javier Solis', '2019-04-17 22:40:27', 0, 'Es un servicio 100% profesional'),
+(5, 'AAAAAAA', '2019-04-17 22:43:57', 0, 'AASSADASDDAS'),
+(6, 'dasddas', '2019-04-17 22:49:46', 0, 'dasdasdasdasdsadasd');
 
 -- --------------------------------------------------------
 
@@ -652,10 +673,11 @@ INSERT INTO `visitantes` (`idvisitante`, `fecha`, `ip`, `explorador`, `so`) VALU
 (6, '2019-04-12 09:37:11', '::1', 'CHROME', 'WIN'),
 (7, '2019-04-13 00:00:15', '::1', 'CHROME', 'WIN'),
 (8, '2019-04-14 09:23:25', '::1', 'CHROME', 'WIN'),
-(9, '2019-04-15 07:11:25', '::1', 'CHROME', 'WIN');
+(9, '2019-04-15 07:11:25', '::1', 'CHROME', 'WIN'),
+(10, '2019-04-17 23:27:12', '::1', 'CHROME', 'MAC');
 
 --
--- �ndices para tablas volcadas
+-- Índices para tablas volcadas
 --
 
 --
@@ -753,7 +775,7 @@ ALTER TABLE `visitantes`
 -- AUTO_INCREMENT de la tabla `acceso`
 --
 ALTER TABLE `acceso`
-  MODIFY `idacceso` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `idacceso` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- AUTO_INCREMENT de la tabla `categorias`
@@ -771,7 +793,7 @@ ALTER TABLE `estado`
 -- AUTO_INCREMENT de la tabla `imagen`
 --
 ALTER TABLE `imagen`
-  MODIFY `idimagen` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=127;
+  MODIFY `idimagen` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=147;
 
 --
 -- AUTO_INCREMENT de la tabla `pedidos`
@@ -789,7 +811,7 @@ ALTER TABLE `pedidos_productos`
 -- AUTO_INCREMENT de la tabla `preguntas`
 --
 ALTER TABLE `preguntas`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de la tabla `productos`
@@ -807,7 +829,7 @@ ALTER TABLE `slide`
 -- AUTO_INCREMENT de la tabla `testimoniales`
 --
 ALTER TABLE `testimoniales`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `users`
@@ -825,7 +847,7 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de la tabla `visitantes`
 --
 ALTER TABLE `visitantes`
-  MODIFY `idvisitante` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `idvisitante` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- Restricciones para tablas volcadas
@@ -849,3 +871,4 @@ ALTER TABLE `pedidos_productos`
 --
 ALTER TABLE `productos`
   ADD CONSTRAINT `productos_ibfk_1` FOREIGN KEY (`idcategoria`) REFERENCES `categorias` (`id`);
+COMMIT;
