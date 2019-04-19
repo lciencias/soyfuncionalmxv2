@@ -15,10 +15,10 @@ if(trim(strtolower($_SERVER['SERVER_NAME'])) == "localhost"){
     $pathSis = "/Applications/XAMPP/htdocs/soyfuncionalmxv2/panel/"; 
 	$pathSys = "/Applications/XAMPP/htdocs/soyfuncionalmxv2/panel/";        
 	
-	/*$pathWeb = "http://localhost/soyfuncionalmxv2/panel/";
+	$pathWeb = "http://localhost/soyfuncionalmxv2/panel/";
     $pathSis = "/xampp/htdocs/soyfuncionalmxv2/panel/"; 
     $pathSys = "/xampp/htdocs/soyfuncionalmxv2/panel/";        
-	*/
+	
     $exito    = 1;
 }
 

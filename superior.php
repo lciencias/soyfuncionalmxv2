@@ -6,8 +6,11 @@
 					<button class="rd-navbar-toggle" data-rd-navbar-toggle=".rd-navbar-nav-wrap"><span></span></button>
 					<div class="rd-navbar-brand">
 						<a class="brand" href="<?=$pathWeb?>">
-							<img class="brand-logo-dark"  src="<?=$pathWeb?>images/logo-default-249x52.png" alt="" width="249" height="52"/>
-							<img class="brand-logo-light" src="<?=$pathWeb?>images/logo-inverse-249x52.png" alt="" width="249" height="52"/>
+							<p>
+								<span style="font-family: kalam, cursive;font-size: 45px;color:#e7e76a;">Soy</span>
+							 	<span style="font-family: kalam, cursive;font-size: 45px;color:#002857;">Funcional MX</span></p> 
+							<!--img class="brand-logo-dark"  src="<?=$pathWeb?>images/soyfuncionalmx.png" alt=""/>-->
+							<!--<img class="brand-logo-light" src="<?=$pathWeb?>images/logo-inverse-249x52.png" alt="" width="500" height="52"/>-->
 						</a>
 					</div>
 				</div>

@@ -1,7 +1,7 @@
 <div class="container">
 	<h4 class="title-style-1 wow fadeInLeft"></h4>
 	<h2 class="wow fadeScale">Productos</h2>
-	<div class="isotope-wrap">
+	<div class="isotope-wrap ">
         <div class="isotope-filters-list-wrap">   
             <?php
             $tmp = "";
@@ -14,7 +14,7 @@
                     }
                     $arrayType[$id] = $dataC['nombre'];
                     echo'<li role="presentation" class="'.$tmp.'">
-                            <a href="#tab'.$dataC['id'].'" aria-controls="tab'.$dataC['id'].'" role="tab" data-toggle="tab">
+                            <a href="#tab'.$dataC['id'].'" data-isotope-filter="tab'.$dataC['id'].'" aria-controls="tab'.$dataC['id'].'" role="tab" data-toggle="tab">
                             '.$dataC['nombre'].'
                             </a>
                         </li>';

@@ -1,4 +1,8 @@
 <?php
+#Color Azul        = #002857
+#Color Amarillo    = #e7e76a
+#Color gris fuerte = #56555a
+#Color gris suave  = #b8b6b9
 session_start();
 if($_SESSION['visitante'] == ""){
     $_SESSION['visitante'] = rand(99999990,9999999999);
@@ -15,11 +19,11 @@ $exito = 0;
 
 if(trim(strtolower($_SERVER['SERVER_NAME'])) == "localhost"){
  //   $pathWeb = "http://localhost/soyfuncionalmx/";
-    $pathSis = "/Applications/XAMPP/htdocs/soyfuncionalmxv2/"; 
-    $pathSys = "/Applications/XAMPP/htdocs/soyfuncionalmxv2/";        
+ //   $pathSis = "/Applications/XAMPP/htdocs/soyfuncionalmxv2/"; 
+ //   $pathSys = "/Applications/XAMPP/htdocs/soyfuncionalmxv2/";        
     $pathWeb = "http://localhost/soyfuncionalmxv2/";
-   /* $pathSis = "c:/xampp/htdocs/soyfuncionalmxv2/"; 
-    $pathSys = "c:/xampp/htdocs/soyfuncionalmxv2/";*/
+    $pathSis = "c:/xampp/htdocs/soyfuncionalmxv2/"; 
+    $pathSys = "c:/xampp/htdocs/soyfuncionalmxv2/";
     $exito    = 1;
 }
 if($exito == 1){

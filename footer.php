@@ -60,11 +60,14 @@
                 <!-- RD Mailform-->
                 <form class="rd-form rd-mailform rd-form-inline rd-form-inline-2" data-form-output="form-output-global" data-form-type="subscribe" method="post" action="bat/rd-mailform.php">
                   <div class="form-wrap">
+                    <span id="bprocesando"></span>
                     <input class="form-input" id="subscribe-form-2-email" type="email" name="email" data-constraints="@Email @Required"/>
                     <label class="form-label" for="subscribe-form-2-email">Teclea tu correo electr&oacute;nico</label>
                   </div>
                   <div class="form-button">
-                    <button class="button button-icon-2 button-zakaria button-primary" type="submit"><span class="fl-bigmug-line-paper122"></span></button>
+                    <button class="button button-icon-2 button-zakaria button-primary" type="button" id="guardaBoletin"  name="guardaBoletin">
+                      <span class="fl-bigmug-line-paper122"></span>
+                    </button>
                   </div>
                 </form>
 			  </div>

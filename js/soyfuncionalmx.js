@@ -155,6 +155,52 @@ $(document).ready(function() {
         return false;
     });
 
+
+    //Evento boletin
+    $(document).on("click", "#guardaBoletin", function(e) {
+        $('#bprocesando').css({ 'color': '#800000' });
+        var email = $("#subscribe-form-2-email").val();
+        var sessionId = $("#sessionId").val();
+        if (String(sessionId) !== "" && String(email).length > 6) {
+            var url = "guardaBoletin.php";
+            var formData = new FormData();
+            formData.append("email", email);
+            formData.append("sessionId", sessionId);
+            $.ajax({
+                type: 'POST',
+                url: url,
+                data: formData,
+                processData: false,
+                contentType: false,
+                dataType: 'json',
+                beforeSend: function() {
+                    $('#bprocesando').html(procesando);
+                },
+                success: function(data) {
+                    $('#bprocesando').html("");
+                    if (parseInt(data.exito) === 1) {
+                        $("#subscribe-form-2-email").val('');
+                        $('#bprocesando').css({ 'color': '#4B8A08' });
+                        setTimeout(function() {
+                            $('#bprocesando').html("En breve recibir\u00E1s el bolet\u00EDn.");
+                        }, 4000);
+                    } else {
+                        $('#bprocesando').css({ 'color': '#B40431' });
+                        $('#bprocesando').html("Error al guardar la pregunta");
+                    }
+                    return false;
+                },
+                error: function(xhr, ajaxOptions, thrownError) {
+                    return false;
+                },
+                complete: function() {}
+            });
+        } else {
+            $("#bprocesando").html("Por favor teclea correctamente el correo electr\u00F3nico");
+        }
+        return false;
+    });    
+    
 });
 
 $(window).on("load", function() {
