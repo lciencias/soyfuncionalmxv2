@@ -181,8 +181,9 @@ $(document).ready(function() {
                     if (parseInt(data.exito) === 1) {
                         $("#subscribe-form-2-email").val('');
                         $('#bprocesando').css({ 'color': '#4B8A08' });
+                        $('#bprocesando').html("En breve recibir\u00E1s el bolet\u00EDn.");
                         setTimeout(function() {
-                            $('#bprocesando').html("En breve recibir\u00E1s el bolet\u00EDn.");
+                            $('#bprocesando').html("");
                         }, 4000);
                     } else {
                         $('#bprocesando').css({ 'color': '#B40431' });
@@ -199,8 +200,8 @@ $(document).ready(function() {
             $("#bprocesando").html("Por favor teclea correctamente el correo electr\u00F3nico");
         }
         return false;
-    });    
-    
+    });
+
 });
 
 $(window).on("load", function() {

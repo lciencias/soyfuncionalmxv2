@@ -18,12 +18,12 @@ $panelTitle = "Soy Funcional MX";
 $exito = 0;
 
 if(trim(strtolower($_SERVER['SERVER_NAME'])) == "localhost"){
- //   $pathWeb = "http://localhost/soyfuncionalmx/";
- //   $pathSis = "/Applications/XAMPP/htdocs/soyfuncionalmxv2/"; 
- //   $pathSys = "/Applications/XAMPP/htdocs/soyfuncionalmxv2/";        
     $pathWeb = "http://localhost/soyfuncionalmxv2/";
+    $pathSis = "/Applications/XAMPP/htdocs/soyfuncionalmxv2/"; 
+    $pathSys = "/Applications/XAMPP/htdocs/soyfuncionalmxv2/";        
+ /*   $pathWeb = "http://localhost/soyfuncionalmxv2/";
     $pathSis = "c:/xampp/htdocs/soyfuncionalmxv2/"; 
-    $pathSys = "c:/xampp/htdocs/soyfuncionalmxv2/";
+    $pathSys = "c:/xampp/htdocs/soyfuncionalmxv2/";*/
     $exito    = 1;
 }
 if($exito == 1){
