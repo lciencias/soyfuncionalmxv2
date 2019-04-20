@@ -26,6 +26,20 @@ class InsertaBoletin extends Comunes{
         }
 	}
 	
+	private function buscar(){
+		$localizado = false;
+		try{
+			$sql = "SELECT a.id FROM ".$this->tabla." as a 
+					WHERE a.email = '".$this->data['email']."' LIMIT 1;";
+			$res = $this->db->sql_query ($sql);			
+			if ($this->db->sql_numrows ($res) > 0){
+				$localizado = true;	
+			}
+		}catch (\Exception $e){
+			$this->writeLog($e->getMessage(), Comunes::ERROR);
+		}	
+		return $localizado;	
+	}
 	private function guardar(){
         $fecha = date("Y-m-d H:i:s");
         $this->mensaje = Comunes::MSGERROR;
@@ -36,12 +50,14 @@ class InsertaBoletin extends Comunes{
                 if(count($this->data) > 0){			
                     foreach($this->data as $key => $value){
                         $this->data[$key] = $this->eliminaCaracteresInvalidos($value);
-                    }
-                    $ins = "INSERT INTO ".$this->tabla."(email,fecha,status)
-                            VALUES ('".$this->data['email']."','".$fecha."','".Comunes::SAVE."');";				
-                    $this->db->sql_query($ins);
-                    $this->mensaje = Comunes::MSGSUCESS;
-                    $this->exito   = Comunes::SAVE;
+					}
+					if(!$this->buscar()){
+						$ins = "INSERT INTO ".$this->tabla."(email,fecha,status)
+						VALUES ('".$this->data['email']."','".$fecha."','".Comunes::SAVE."');";				
+						$this->db->sql_query($ins);
+					}
+					$this->mensaje = Comunes::MSGSUCESS;
+					$this->exito   = Comunes::SAVE;
                 }
             }
             catch(\Exception $e){

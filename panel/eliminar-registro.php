@@ -17,6 +17,7 @@ if(isset($_POST) && ((int)$_POST['id'] > 0) && ((int) $_POST['idModulo'] > 0) ){
 	include_once ($_SESSION['pathCla']."Producto.class.php");
 	include_once ($_SESSION['pathCla']."Testimonial.class.php");
 	include_once ($_SESSION['pathCla']."Preguntas.class.php");
+	include_once ($_SESSION['pathCla']."Boletin.class.php");
 	$url = "admin.php?idT=".$_POST['idModulo']."&idS=0&".$db->url();
 	switch((int)$_POST['idModulo']){
 		case 1:
@@ -46,6 +47,9 @@ if(isset($_POST) && ((int)$_POST['id'] > 0) && ((int) $_POST['idModulo'] > 0) ){
 		case 7:
 			$pregunta = new Pregunta($db,$_SESSION,$_POST,$_POST['id'],Comunes::DELETE);
 			$array = array('exito' => $pregunta->obtenExito(),'msg' => $pregunta->obtenMensaje(), 'url' => $url);
+		case 8:
+			$boletin = new Boletin($db,$_SESSION,$_POST,$_POST['id'],Comunes::DELETE);
+			$array = array('exito' => $boletin->obtenExito(),'msg' => $boletin->obtenMensaje(), 'url' => $url);
 			break;
 	}
 }

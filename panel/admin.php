@@ -12,6 +12,7 @@ include_once ($pathCla."Producto.class.php");
 include_once ($pathCla."Pedidos.class.php");
 include_once ($pathCla."Testimonial.class.php");
 include_once ($pathCla."Preguntas.class.php");
+include_once ($pathCla."Boletin.class.php");
 $objeto    = null;
 $registros = array();
 $total     = 0;
@@ -23,7 +24,7 @@ $idT = (int) $_REQUEST['idT'] + 0;
 $db  = new Conexion( $_dbhost, $_dbuname, $_dbpass, $_dbname, $persistency = true );
 $ext = $db->url(); 
 $modalId   = "modal".$idT;
-if($idT > 0 && $idT < 8){
+if($idT > 0 && $idT < 9){
     $objetoI    = new Inicio( $db,$_SESSION,$_REQUEST,Comunes::LISTAR,Comunes::LISTAR );
     $_SESSION['pendientesT'] =  $objetoI->obtenTotal();
     $_SESSION['pendientes']  =  $objetoI->obtenRegistros();
@@ -102,7 +103,16 @@ switch($idT){
         $table      = $objeto->obtenBuffer();
         $total      = count($registros);
         $titulo     = "Listado de Preguntas";
-        $tituloBoton= "Alta de Pregunta";
+        $tituloBoton= "";
+        break;
+    case 8:
+        $objeto     = new Boletin( $db,$_SESSION,$_REQUEST,Comunes::LISTAR,Comunes::LISTAR );
+        $registros  = $objeto->obtenRegistros();
+        $bread      = $objeto->obtenBreadcrumb();
+        $table      = $objeto->obtenBuffer();
+        $total      = count($registros);
+        $titulo     = "Listado de correos electr&oacute;nicos del bolet&iacute;n";
+        $tituloBoton= "";
         break;
     default:
         $objeto    = new Inicio($db);

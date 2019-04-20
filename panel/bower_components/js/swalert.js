@@ -435,7 +435,7 @@ $(function() {
                     var titulo = "Desea mostrar la pregunta?";
                     var tituloB = "Mostrar Pregunta";
                 }
-                if (parseInt(tmp[1]) > 0 && parseInt(tmp[2]) > 0) {
+                if (parseInt(tmp[1]) > 0 && parseInt(tmp[2]) > 0 && parseInt(tmp[2]) < 9) {
                     dataString = 'id=' + tmp[1] + "&idModulo=" + tmp[2];
                     swal({
                         title: titulo,
