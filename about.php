@@ -1,7 +1,10 @@
 <div class="container">
 	<div class="row row-30 align-items-center justify-content-center justify-content-xl-between">
 		<div class="col-sm-6 col-md-5 col-lg-6 wow fadeInLeft">
-			<img src="<?=$pathWeb?>images/about-576x537.jpg" alt="" width="576" height="537"/>
+			<div style="margin: 20px;border:2px solid #ff0000;">
+			<img src="<?=$pathWeb?>images/youtube.jpg" alt="" width="576" />
+			</div>
+			
 		</div>
         <div class="col-md-7 col-lg-6 col-xl-5">
 			<h2 class="title-style-1 wow fadeInRight">Sobre nosotros</h2>

@@ -25,7 +25,7 @@ if(count($pregun) > 0){
 					<article class="card card-custom card-corporate wow fadeInRight" data-wow-delay=".<?=$contP?>s">
 						<div class="card-header" role="tab">
 							<div class="card-title">
-								<a id="accordion<?=$accordion?>-card-head-<?=$conP?>" data-toggle="collapse" data-parent="#accordion<?=$accordion?>" href="#accordion<?=$accordion?>-card-body-<?=$conP?>" aria-controls="accordion<?=$accordion?>-card-body-<?=$conP?>" aria-expanded="<?=$tmp?>" role="button"><?=$dataP['pregunta']?>
+								<a id="accordion<?=$accordion?>-card-head-<?=$conP?>" data-toggle="collapse" data-parent="#accordion<?=$accordion?>" href="#accordion<?=$accordion?>-card-body-<?=$conP?>" aria-controls="accordion<?=$accordion?>-card-body-<?=$conP?>" aria-expanded="<?=$tmp?>" role="button"><?=utf8_encode($dataP['pregunta'])?>
 									<div class="card-arrow">
 										<div class="icon"></div>
 									</div>
@@ -34,7 +34,7 @@ if(count($pregun) > 0){
 						</div>
 						<div class="collapse" id="accordion<?=$accordion?>-card-body-<?=$conP?>" aria-labelledby="accordion<?=$accordion?>-card-head-<?=$conP?>" data-parent="#accordion<?=$accordion?>" role="tabpanel">
 							<div class="card-body">
-								<p><?=$dataP['respuesta']?></p>
+								<p><?=utf8_encode($dataP['respuesta'])?></p>
 							</div>
 						</div>
 					</article>

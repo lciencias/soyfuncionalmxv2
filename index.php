@@ -102,7 +102,5 @@
 		</div>
 		<div class="snackbars" id="form-output-global"></div>
 <?php
-	#require_once($pathSis."mtestimonial.php");
-	#require_once($pathSis."mpregunta.php");
 	require_once($pathSis."scripts.php");
 ?>

@@ -1,6 +1,6 @@
 <ul class="rd-navbar-nav">
-    <li class="rd-nav-item active"><a class="rd-nav-link" href="<?$pathWeb?>">Inicio</a></li>
-    <li class="rd-nav-item"><a class="rd-nav-link" href="#">Productos</a>
+    <li class="rd-nav-item active"><a class="rd-nav-link" href="<?=$pathWeb?>index.php">Inicio</a></li>
+    <li class="rd-nav-item"><a class="rd-nav-link" href="<?=$pathWeb?>pindex.php">Productos</a>
 	<?php
 			if(count($categs)  > 0){
 		?>
@@ -9,7 +9,7 @@
 				foreach($categs as $catId => $dataCat){
 		?>
 					<li class="rd-dropdown-item">
-						<a class="rd-dropdown-link" href="<?=$pathWeb?>productos.php?idCat=<?=($catId+1)?>&<?=$db->url()?>">
+						<a class="rd-dropdown-link" href="<?=$pathWeb?>pindex.php?idCat=<?=($catId+1)?>&<?=$db->url()?>">
 							<?=$dataCat['nombre']?>
 						</a>
 					</li>
@@ -23,5 +23,5 @@
         
 
 	</li>
-    <li class="rd-nav-item"><a class="rd-nav-link" href="grid-shop.html">Arma tu plato</a></li>
+    <li class="rd-nav-item"><a class="rd-nav-link" href="grid-shop.php">Arma tu plato</a></li>
 </ul>

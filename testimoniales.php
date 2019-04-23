@@ -26,8 +26,8 @@
 						</div>
 					</div>
 					<div class="unit-body">
-						<div class="quote-modern-author"><?=$dataT['nombre']?></div>
-						<div class="quote-modern-status"><?=$dataT['cliente']?></div>
+						<div class="quote-modern-author"><?=utf8_encode($dataT['nombre'])?></div>
+						<div class="quote-modern-status"><?=utf8_encode($dataT['cliente'])?></div>
 					</div>
 				</div>
 			</article>

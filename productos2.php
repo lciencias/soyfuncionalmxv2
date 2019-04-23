@@ -1,6 +1,13 @@
+<?php
+    $idCatTmp = 0;
+    if(isset($_REQUEST['idCat'])){
+        $idCatTmp = (int) $_REQUEST['idCat'] -1;
+    }
+    $titulo   = trim($categs[$idCatTmp]['nombre']);
+?>
 <div class="container">
-	<h4 class="title-style-1 wow fadeInLeft"></h4>
-	<h2 class="wow fadeScale">Productos</h2>
+    <h2 class="title-style-1 wow fadeInLeft">Productos</h2>
+    <h4 class="title-style-1 wow fadeInRight"><?=$titulo?></h4>
 	<div class="isotope-wrap ">
         <div class="isotope-filters-list-wrap">   
             <?php
@@ -9,21 +16,26 @@
                 echo'<ul class="isotope-filters-list nav nav-tabs">';
                 foreach($categs as $idC => $dataC){
                     $tmp = "";
-                    if($idC == 0){
+                    if($idC == $idCatTmp){
                         $tmp = "active";
-                    }
-                    $arrayType[$id] = $dataC['nombre'];
-                    echo'<li role="presentation" class="'.$tmp.'">
+                        echo'<li role="presentation" class="'.$tmp.'">
+                            <a href="#tab'.$dataC['id'].'" data-isotope-filter="tab'.$dataC['id'].'" aria-controls="tab'.$dataC['id'].'" role="tab" data-toggle="tab">
+                            <span class="product-price" style=" text-transform:uppercase;">'.$dataC['nombre'].'</span>
+                            </a>
+                        </li>';
+                    }else{
+                        echo'<li role="presentation" class="'.$tmp.'">
                             <a href="#tab'.$dataC['id'].'" data-isotope-filter="tab'.$dataC['id'].'" aria-controls="tab'.$dataC['id'].'" role="tab" data-toggle="tab">
                             '.$dataC['nombre'].'
                             </a>
                         </li>';
+                    }
                 }
                 echo'</ul>
                 <div class="tab-content">';
                 foreach($categs as $idC => $dataC){
                     $tmp = "";
-                    if($idC == 0){
+                    if($idC == $idCatTmp){
                         $tmp = " active ";
                     }
                     $prodCategoria = $prods[$dataC['id']];

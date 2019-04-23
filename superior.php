@@ -5,7 +5,7 @@
 				<div class="rd-navbar-panel">
 					<button class="rd-navbar-toggle" data-rd-navbar-toggle=".rd-navbar-nav-wrap"><span></span></button>
 					<div class="rd-navbar-brand">
-						<a class="brand" href="<?=$pathWeb?>">
+						<a class="brand" href="<?=$pathWeb?>index.php">
 							<p>
 								<span style="font-family: kalam, cursive;font-size: 45px;color:#e7e76a;">Soy</span>
 							 	<span style="font-family: kalam, cursive;font-size: 45px;color:#002857;">Funcional MX</span></p> 
