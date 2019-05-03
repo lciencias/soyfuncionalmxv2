@@ -6620,7 +6620,15 @@ textarea.textarea-lg {
 	letter-spacing: 0;
 	color: #7fd02c;
 }
-
+.product-caloria {
+	display: inline-block;
+	vertical-align: middle;
+	font-size: 15px;
+	line-height: 1;
+	font-weight: 700;
+	letter-spacing: 0;
+	color: #002857;
+}
 .product-price-old {
 	font-weight: 400;
 	text-decoration: line-through;

@@ -6,6 +6,8 @@
   include_once($pathCla."Producto.class.php");
   include_once($pathCla."Populares.class.php");
   include_once($pathSis."panel/DBconfig.php");
+  $cat = "idCat";
+  $idCat = 0;
   
   $db     = new Conexion ( $_dbhost, $_dbuname, $_dbpass, $_dbname, $_port );
   $categ  = new Categoria($db,$_SESSION,$_REQUEST,Comunes::LISTAR,Comunes::WEB);
@@ -14,8 +16,10 @@
   $prods  = $prod->obtenRegistros();
   $pop    = new Populares($db,$_SESSION,$_REQUEST,Comunes::LISTAR,Comunes::WEB);
   $popul  = $pop->obtenRegistros();
-//  echo"<pre>";
-//  print_r($popul);die("coun:  ".count($popul));
+  if(isset($_REQUEST[$cat]) && (int) $_REQUEST[$cat] > 0){
+    $idCat = (int) $_REQUEST[$cat];
+  }
+  $productos = $prods[($idCat+1)];
   include_once("header.php");
 ?>
 <body>
@@ -63,46 +67,46 @@
             <div class="col-lg-4 col-xl-3">
               <div class="aside row row-30 row-md-50 justify-content-md-between">
                 <div class="aside-item col-12">
-                  <h6 class="aside-title">Fechas</h6>
+                  <h6 class="aside-title">Fecha del pedido</h6>
                   <!-- RD Range-->
-                  <div class="rd-range" data-min="0" data-max="999" data-min-diff="100" data-start="[10, 250]" data-step="1" data-tooltip="false" data-input=".rd-range-input-value-1" data-input-2=".rd-range-input-value-2"></div>
                   <div class="group-xs group-justify">
-                    <div>
-                      <button class="button button-sm button-primary button-zakaria" type="button">Filter</button>
-                    </div>
-                    <div>
-                      <div class="rd-range-wrap">
-                        <div class="rd-range-title">Price:</div>
-                        <div class="rd-range-form-wrap"><span>$</span>
-                          <input class="rd-range-input rd-range-input-value-1" id="test" type="text" name="value-1">
+  
+                    <div class="form-group">
+                      <div class="input-group date">
+                        <div class="input-group-addon">
+                          <i class="fa fa-calendar"></i>&nbsp;&nbsp;
                         </div>
-                        <div class="rd-range-divider"></div>
-                        <div class="rd-range-form-wrap"><span>$</span>
-                          <input class="rd-range-input rd-range-input-value-2" type="text" name="value-2">
-                        </div>
+                        <input type="text" class="form-control required datepicker"
+                         id="fechaInicio" value="<?=$_SESSION['fecha']?>" maxlength="10">
                       </div>
                     </div>
+                  
+                    
                   </div>
                 </div>
                 <div class="aside-item col-sm-6 col-md-5 col-lg-12">
                   <h6 class="aside-title">Categor&iacute;as</h6>
                   <ul class="list-shop-filter">
                   <?php
+                    $contadorCat = 0;
                     foreach($categs as $idC => $dataC){
                       $totalProd = count($prods[$dataC['id']]);
-
+                      $tmp = "";
+                      if( (int) $idC == (int) $idCat){
+                        $tmp = "checked ";
+                      }
                   ?>
                     <li>
                       <label class="checkbox-inline">
-                        <input name="input-group-radio" value="<?=$dataC['id']?>" 
-                        type="checkbox"><?=$dataC['nombre']?>
+                        <input name="idCat" <?=$tmp?> value="<?=$dataC['id']?>" 
+                        type="checkbox" onclick="location='<?=$pathWeb?>grid-shop.php?idCat=<?=$contadorCat?>'"><?=$dataC['nombre']?>
                       </label><span class="list-shop-filter-number">(<?=$totalProd?>)</span>
                     </li>
                   <?php
+                    $contadorCat++;
                     }
                   ?>
                   </ul>
-                  <!-- RD Search Form-->
                 </div>
                 <?php
                 if(count($popul) > 0){
@@ -140,173 +144,34 @@
             </div>
             <div class="col-lg-8 col-xl-9">
               <div class="row row-30 row-lg-50">
+                <?php
+                if(count($productos) > 0){
+                  foreach($productos as $idProd => $producto){
+                ?>                  
+                
                 <div class="col-sm-6 col-md-4 col-lg-6 col-xl-4">
                   <!-- Product-->
                   <article class="product">
                     <div class="product-body">
-                      <div class="product-figure"><img src="images/product-1-220x160.png" alt="" width="220" height="160"/>
+                      <div class="product-figure"><img src="<?=$producto['web']?>" alt="" style="width:220px;height:160px;"/>
                       </div>
-                      <h5 class="product-title"><a href="single-product.html">Bananas</a></h5>
+                      <h5 class="product-title"><a href="<?=$pathWeb?>single-product.php"><?=$producto['producto']?></a></h5>
                       <div class="product-price-wrap">
-                        <div class="product-price product-price-old">$30.00</div>
-                        <div class="product-price">$23.00</div>
+                        <div class="product-caloria">Calorias: <?=$producto['caloria']?></div><br/>
+                        <div class="product-price">Precio: <?=$producto['precio']?></div>
                       </div>
-                    </div><span class="product-badge product-badge-sale">Sale</span>
+                    </div><!--<span class="product-badge product-badge-sale"></span>-->
                     <div class="product-button-wrap">
-                      <div class="product-button"><a class="button button-secondary button-zakaria fl-bigmug-line-search74" href="single-product.html"></a></div>
-                      <div class="product-button"><a class="button button-primary button-zakaria fl-bigmug-line-shopping202" href="cart-page.html"></a></div>
+                      <!--<div class="product-button"><a class="button button-secondary button-zakaria fl-bigmug-line-search74" href="<?=$pathWeb?>single-product.php"></a></div>-->
+                      <div class="product-button"><a class="button button-primary button-zakaria fl-bigmug-line-shopping202" href="<?=$pathWeb?>cart-page.php"></a></div>
                     </div>
                   </article>
                 </div>
-                <div class="col-sm-6 col-md-4 col-lg-6 col-xl-4">
-                  <!-- Product-->
-                  <article class="product">
-                    <div class="product-body">
-                      <div class="product-figure"><img src="images/product-2-191x132.png" alt="" width="191" height="132"/>
-                      </div>
-                      <h5 class="product-title"><a href="single-product.html">Potatoes</a></h5>
-                      <div class="product-price-wrap">
-                        <div class="product-price">$13.00</div>
-                      </div>
-                    </div><span class="product-badge product-badge-new">New</span>
-                    <div class="product-button-wrap">
-                      <div class="product-button"><a class="button button-secondary button-zakaria fl-bigmug-line-search74" href="single-product.html"></a></div>
-                      <div class="product-button"><a class="button button-primary button-zakaria fl-bigmug-line-shopping202" href="cart-page.html"></a></div>
-                    </div>
-                  </article>
-                </div>
-                <div class="col-sm-6 col-md-4 col-lg-6 col-xl-4">
-                  <!-- Product-->
-                  <article class="product">
-                    <div class="product-body">
-                      <div class="product-figure"><img src="images/product-3-238x158.png" alt="" width="238" height="158"/>
-                      </div>
-                      <h5 class="product-title"><a href="single-product.html">Carrots</a></h5>
-                      <div class="product-price-wrap">
-                        <div class="product-price">$17.00</div>
-                      </div>
-                    </div>
-                    <div class="product-button-wrap">
-                      <div class="product-button"><a class="button button-secondary button-zakaria fl-bigmug-line-search74" href="single-product.html"></a></div>
-                      <div class="product-button"><a class="button button-primary button-zakaria fl-bigmug-line-shopping202" href="cart-page.html"></a></div>
-                    </div>
-                  </article>
-                </div>
-                <div class="col-sm-6 col-md-4 col-lg-6 col-xl-4">
-                  <!-- Product-->
-                  <article class="product">
-                    <div class="product-body">
-                      <div class="product-figure"><img src="images/product-4-204x125.png" alt="" width="204" height="125"/>
-                      </div>
-                      <h5 class="product-title"><a href="single-product.html">Bread</a></h5>
-                      <div class="product-price-wrap">
-                        <div class="product-price">$11.00</div>
-                      </div>
-                    </div><span class="product-badge product-badge-new">New</span>
-                    <div class="product-button-wrap">
-                      <div class="product-button"><a class="button button-secondary button-zakaria fl-bigmug-line-search74" href="single-product.html"></a></div>
-                      <div class="product-button"><a class="button button-primary button-zakaria fl-bigmug-line-shopping202" href="cart-page.html"></a></div>
-                    </div>
-                  </article>
-                </div>
-                <div class="col-sm-6 col-md-4 col-lg-6 col-xl-4">
-                  <!-- Product-->
-                  <article class="product">
-                    <div class="product-body">
-                      <div class="product-figure"><img src="images/product-5-204x156.png" alt="" width="204" height="156"/>
-                      </div>
-                      <h5 class="product-title"><a href="single-product.html">Strawberries</a></h5>
-                      <div class="product-price-wrap">
-                        <div class="product-price">$15.00</div>
-                      </div>
-                    </div>
-                    <div class="product-button-wrap">
-                      <div class="product-button"><a class="button button-secondary button-zakaria fl-bigmug-line-search74" href="single-product.html"></a></div>
-                      <div class="product-button"><a class="button button-primary button-zakaria fl-bigmug-line-shopping202" href="cart-page.html"></a></div>
-                    </div>
-                  </article>
-                </div>
-                <div class="col-sm-6 col-md-4 col-lg-6 col-xl-4">
-                  <!-- Product-->
-                  <article class="product">
-                    <div class="product-body">
-                      <div class="product-figure"><img src="images/product-6-237x156.png" alt="" width="237" height="156"/>
-                      </div>
-                      <h5 class="product-title"><a href="single-product.html">Cucumbers</a></h5>
-                      <div class="product-price-wrap">
-                        <div class="product-price product-price-old">$32.00</div>
-                        <div class="product-price">$22.00</div>
-                      </div>
-                    </div><span class="product-badge product-badge-sale">Sale</span>
-                    <div class="product-button-wrap">
-                      <div class="product-button"><a class="button button-secondary button-zakaria fl-bigmug-line-search74" href="single-product.html"></a></div>
-                      <div class="product-button"><a class="button button-primary button-zakaria fl-bigmug-line-shopping202" href="cart-page.html"></a></div>
-                    </div>
-                  </article>
-                </div>
-                <div class="col-sm-6 col-md-4 col-lg-6 col-xl-4">
-                  <!-- Product-->
-                  <article class="product">
-                    <div class="product-body">
-                      <div class="product-figure"><img src="images/product-7-210x168.png" alt="" width="210" height="168"/>
-                      </div>
-                      <h5 class="product-title"><a href="single-product.html">Sweet peppers</a></h5>
-                      <div class="product-price-wrap">
-                        <div class="product-price">$14.00</div>
-                      </div>
-                    </div><span class="product-badge product-badge-new">New</span>
-                    <div class="product-button-wrap">
-                      <div class="product-button"><a class="button button-secondary button-zakaria fl-bigmug-line-search74" href="single-product.html"></a></div>
-                      <div class="product-button"><a class="button button-primary button-zakaria fl-bigmug-line-shopping202" href="cart-page.html"></a></div>
-                    </div>
-                  </article>
-                </div>
-                <div class="col-sm-6 col-md-4 col-lg-6 col-xl-4">
-                  <!-- Product-->
-                  <article class="product">
-                    <div class="product-body">
-                      <div class="product-figure"><img src="images/product-8-210x133.png" alt="" width="210" height="133"/>
-                      </div>
-                      <h5 class="product-title"><a href="single-product.html">Bagels</a></h5>
-                      <div class="product-price-wrap">
-                        <div class="product-price">$10.00</div>
-                      </div>
-                    </div>
-                    <div class="product-button-wrap">
-                      <div class="product-button"><a class="button button-secondary button-zakaria fl-bigmug-line-search74" href="single-product.html"></a></div>
-                      <div class="product-button"><a class="button button-primary button-zakaria fl-bigmug-line-shopping202" href="cart-page.html"></a></div>
-                    </div>
-                  </article>
-                </div>
-                <div class="col-sm-6 col-md-4 col-lg-6 col-xl-4">
-                  <!-- Product-->
-                  <article class="product">
-                    <div class="product-body">
-                      <div class="product-figure"><img src="images/product-9-185x155.png" alt="" width="185" height="155"/>
-                      </div>
-                      <h5 class="product-title"><a href="single-product.html">Galia melons</a></h5>
-                      <div class="product-price-wrap">
-                        <div class="product-price">$18.00</div>
-                      </div>
-                    </div>
-                    <div class="product-button-wrap">
-                      <div class="product-button"><a class="button button-secondary button-zakaria fl-bigmug-line-search74" href="single-product.html"></a></div>
-                      <div class="product-button"><a class="button button-primary button-zakaria fl-bigmug-line-shopping202" href="cart-page.html"></a></div>
-                    </div>
-                  </article>
-                </div>
-              </div>
-              <div class="pagination-wrap">
-                <!-- Bootstrap Pagination-->
-                <nav aria-label="Page navigation">
-                  <ul class="pagination">
-                    <li class="page-item page-item-control disabled"><a class="page-link" href="#" aria-label="Previous"><span class="icon" aria-hidden="true"></span></a></li>
-                    <li class="page-item active"><span class="page-link">1</span></li>
-                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                    <li class="page-item page-item-control"><a class="page-link" href="#" aria-label="Next"><span class="icon" aria-hidden="true"></span></a></li>
-                  </ul>
-                </nav>
+                <?php
+                  }
+                }
+                ?>
+
               </div>
             </div>
           </div>
@@ -318,5 +183,5 @@
     </div>
     <div class="snackbars" id="form-output-global"></div>
     <?php
-	    require_once($pathSis."scripts.php");
+	    require_once($pathSis."scriptsDate.php");
     ?>

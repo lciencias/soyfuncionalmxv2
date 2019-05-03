@@ -27,7 +27,7 @@ if(count($sliders) > 0){
 						if(trim($data['texto_boton']) != ""){
 					?>
 							<div class="button-wrap" data-caption-animate="fadeInUp" data-caption-delay="300">
-								<a class="button button-lg button-primary button-zakaria" href="grid-shop.html"><?=$data['texto_boton']?></a>
+								<a class="button button-lg button-primary button-zakaria" href="<?=$pathWeb?>grid-shop.php"><?=$data['texto_boton']?></a>
 							</div>
 					<?php
 						}

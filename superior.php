@@ -22,25 +22,25 @@
 						<button class="rd-navbar-basket fl-bigmug-line-shopping202" data-rd-navbar-toggle=".cart-inline"><span>2</span></button>
 						<div class="cart-inline">
 							<div class="cart-inline-header">
-								<h5 class="cart-inline-title">In cart:<span> 2</span> Products</h5>
-								<h6 class="cart-inline-title">Total price:<span> $43</span></h6>
+								<h5 class="cart-inline-title">Pedido:<span> 2</span> Productos</h5>
+								<h6 class="cart-inline-title">Importe:<span> $ 30</span></h6>
 							</div>
 							<div class="cart-inline-body">
 								<div class="cart-inline-item">
 									<div class="unit unit-spacing-sm align-items-center">
 										<div class="unit-left">
-											<a class="cart-inline-figure" href="<?=$pathWeb?>single-product.html">
-												<img src="<?=$pathWeb?>images/product-mini-6-100x90.png" alt="" width="100" height="90"/>
+											<a class="cart-inline-figure" href="<?=$pathWeb?>single-product.php">
+												<img src="<?=$pathWeb?>panel/img/banners/arroz.jpg" style="width:100px; height:90px;" alt="" />
 											</a>
 										</div>
 										<div class="unit-body">
-											<h6 class="cart-inline-name"><a href="single-product.html">Oranges</a></h6>
+											<h6 class="cart-inline-name"><a href="<?=$pathWeb?>single-product.php">Arroz</a></h6>
 											<div>	
 												<div class="group-xs group-middle">
 													<div class="table-cart-stepper">
 														<input class="form-input" type="number" data-zeros="true" value="1" min="1" max="1000"/>
 													</div>
-													<h6 class="cart-inline-title">$20.00</h6>
+													<h6 class="cart-inline-title">$5.00</h6>
 												 </div>
 											</div>
 										</div>
@@ -49,18 +49,18 @@
 								<div class="cart-inline-item">
 									<div class="unit unit-spacing-sm align-items-center">
 										<div class="unit-left">
-											<a class="cart-inline-figure" href="<?=$pathWeb?>single-product.html">
-												<img src="<?=$pathWeb?>images/product-mini-7-100x90.png" alt="" width="100" height="90"/>
+											<a class="cart-inline-figure" href="<?=$pathWeb?>single-product.php">
+												<img src="<?=$pathWeb?>panel/img/banners/molidapavo.jpg" style="width:100px; height:90px;" alt="" />
 											</a>
 										</div>
 										<div class="unit-body">
-											<h6 class="cart-inline-name"><a href="single-product.html">Bananas</a></h6>
+											<h6 class="cart-inline-name"><a href="<?=$pathWeb?>single-product.php">Molida de Pavo</a></h6>
 											<div>
 												<div class="group-xs group-middle">
 													<div class="table-cart-stepper">
 														<input class="form-input" type="number" data-zeros="true" value="1" min="1" max="1000"/>
 													</div>
-													<h6 class="cart-inline-title">$23.00</h6>
+													<h6 class="cart-inline-title">$25.00</h6>
 												</div>
 											</div>
 										</div>
@@ -69,13 +69,13 @@
 							</div>
 							<div class="cart-inline-footer">
 								<div class="group-sm">
-									<a class="button button-default-outline-2 button-zakaria" href="<?=$pahWeb?>cart-page.html">Go to cart</a>
-									<a class="button button-primary button-zakaria" href="checkout.html">Checkout</a>
+									<!--<a class="button button-default-outline-2 button-zakaria" href="<?=$pahWeb?>cart-page.php">Agregar</a>-->
+									<a class="button button-primary button-zakaria" href="<?=$pathWeb?>cart-page.php">Enviar Pedido</a>
 								</div>
 							</div>
 						</div>
 					</div>
-					<a class="rd-navbar-basket rd-navbar-basket-mobile fl-bigmug-line-shopping202 rd-navbar-fixed-element-2" href="cart-page.html">
+					<a class="rd-navbar-basket rd-navbar-basket-mobile fl-bigmug-line-shopping202 rd-navbar-fixed-element-2" href="<?=$pathWeb?>cart-page.php">
 						<span>2</span>
 					</a>
 					<button class="rd-navbar-project-hamburger rd-navbar-project-hamburger-open rd-navbar-fixed-element-1" type="button" data-multitoggle=".rd-navbar-main" data-multitoggle-blur=".rd-navbar-wrap" data-multitoggle-isolate="data-multitoggle-isolate">
