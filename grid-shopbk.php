@@ -8,6 +8,7 @@
   include_once($pathSis."panel/DBconfig.php");
   $cat = "idCat";
   $idCat = 0;
+  
   $db     = new Conexion ( $_dbhost, $_dbuname, $_dbpass, $_dbname, $_port );
   $categ  = new Categoria($db,$_SESSION,$_REQUEST,Comunes::LISTAR,Comunes::WEB);
   $categs = $categ->obtenRegistros();
@@ -18,23 +19,13 @@
   if(isset($_REQUEST[$cat]) && (int) $_REQUEST[$cat] > 0){
     $idCat = (int) $_REQUEST[$cat];
   }
-  echo"<pre>";
-  print_r($_SESSION);
-  echo"<pre>";
-  foreach($prods as $data){
-    foreach($data as $ind => $data2)
-      echo"<pre>";print_r($data2);echo"</pre>";
-  }
-  echo"</pre>";
-  echo"<pre>";print_r($prods);
+  $productos = $prods[($idCat+1)];
 
   include_once("header.php");
 ?>
 <body>
 	<input type="hidden" id="baseUrl" name="baseUrl" value="<?=$pathWeb?>" />
-	<input type="hidden" id="sessionId" name="sesionId" value="<?=$_SESSION['visitante']?>" />
-  <input type="hidden" id="catId" name="catId" value="<?=( $idCat + 1 )?>" />
-  <div class="preloader">
+	<input type="hidden" id="sessionId" name="sesionId" value="<?=$_SESSION['visitante']?>" />		<div class="preloader">
     <div class="preloader-body">
         <div class="cssload-bell">
           <div class="cssload-circle">
@@ -78,16 +69,20 @@
               <div class="aside row row-30 row-md-50 justify-content-md-between">
                 <div class="aside-item col-12">
                   <h6 class="aside-title">Fecha del pedido</h6>
-                  <div class="group-xs group-justify">  
+                  <!-- RD Range-->
+                  <div class="group-xs group-justify">
+  
                     <div class="form-group">
                       <div class="input-group date">
                         <div class="input-group-addon">
                           <i class="fa fa-calendar"></i>&nbsp;&nbsp;
                         </div>
-                        <input type="text" style="width:120px;" class="form-control required datepicker"
+                        <input type="text" class="form-control required datepicker"
                          id="fechaInicio" value="<?=$_SESSION['fecha']?>" maxlength="10">
                       </div>
                     </div>
+                  
+                    
                   </div>
                 </div>
                 <div class="aside-item col-sm-6 col-md-5 col-lg-12">
@@ -97,17 +92,16 @@
                     $contadorCat = 0;
                     foreach($categs as $idC => $dataC){
                       $totalProd = count($prods[$dataC['id']]);
-                      $tmp = "  ";
+                      $tmp = "";
                       if( (int) $idC == (int) $idCat){
-                        $tmp = " checked ";
+                        $tmp = "checked ";
                       }
                   ?>
                     <li>
                       <label class="checkbox-inline">
-                        <input type="checkbox" name="idCat" id="<?=$dataC['id']?>" value="<?=$dataC['id']?>" 
-                        class="seleccionCategoria" <?=$tmp?>><?=$dataC['nombre']?>
-                      </label>
-                       <span class="list-shop-filter-number">(<?=$totalProd?>)</span>
+                        <input name="idCat" <?=$tmp?> value="<?=$dataC['id']?>" 
+                        type="checkbox" onclick="location='<?=$pathWeb?>grid-shop.php?idCat=<?=$contadorCat?>'"><?=$dataC['nombre']?>
+                      </label><span class="list-shop-filter-number">(<?=$totalProd?>)</span>
                     </li>
                   <?php
                     $contadorCat++;
@@ -150,18 +144,15 @@
               </div>
             </div>
             <div class="col-lg-8 col-xl-9">
-              <div class="alert alert-success" id="aviso" role="alert" style="background-color:#fff;color:#fff;border:0px;"></div>
-              <div class="row row-30 row-lg-50" id="cuadroGr">
+              <div class="row row-30 row-lg-50">
                 <?php
-                  foreach($categs as $idCategoria => $dataCategoria){
-                    $productos = $prods[($idCategoria + 1)];
-                    foreach($productos as $idProd => $producto){
+                if(count($productos) > 0){
+                  foreach($productos as $idProd => $producto){
                 ?>                                  
-                <div class="col-sm-6 col-md-4 col-lg-6 col-xl-4 cuadrados cuadro<?=($idCategoria + 1)?>">
+                <div class="col-sm-6 col-md-4 col-lg-6 col-xl-4">
                   <article class="product">
                     <div class="product-body">
-                      <div class="product-figure">
-                        <img src="<?=$producto['web']?>" alt="" style="width:220px;height:160px;"/>
+                      <div class="product-figure"><img src="<?=$producto['web']?>" alt="" style="width:220px;height:160px;"/>
                       </div>
                       <h5 class="product-title"><a href="<?=$pathWeb?>single-product.php"><?=$producto['producto']?></a></h5>
                       <div class="product-price-wrap">
@@ -170,12 +161,10 @@
                       </div>
                     </div>
                     <div class="product-button-wrap">
-                      <div class="product-button">
-                        <a id="prod-<?=$idProd?>" class="button button-primary button-zakaria fl-bigmug-line-shopping202 seleccionaProducto" href="#"></a>
-                      </div>
+                      <div class="product-button"><a class="button button-primary button-zakaria fl-bigmug-line-shopping202" href="<?=$pathWeb?>cart-page.php"></a></div>
                     </div>
                   </article>
-                </div>  
+                </div>
                 <?php
                   }
                 }

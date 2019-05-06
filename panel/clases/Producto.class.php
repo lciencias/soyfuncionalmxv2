@@ -234,7 +234,8 @@ class Producto extends Comunes{
 					FROM categorias a 
 					INNER JOIN productos b on b.idcategoria = a.id 
 					LEFT JOIN  imagen as c on c.idimagen = b.idimagen 
-					WHERE a.status = '".Comunes::SAVE."' AND b.status = '".Comunes::SAVE."' ORDER BY a.orden,b.orden;";
+					WHERE a.status = '".Comunes::SAVE."' AND b.status = '".Comunes::SAVE."' 
+					ORDER BY a.orden,b.producto;";
 			$res = $this->db->sql_query ($sql);			
 			$this->totalProductos = $this->db->sql_numrows ($res);
 			if ($this->db->sql_numrows ($res) > 0){

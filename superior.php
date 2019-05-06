@@ -14,15 +14,30 @@
 						</a>
 					</div>
 				</div>
-                <div class="rd-navbar-nav-wrap">
+        <div class="rd-navbar-nav-wrap">
 					<?php require_once($pathSis."menu.php"); ?>
-                </div>
-                <div class="rd-navbar-main-element">
+        </div>
+       <div class="rd-navbar-main-element">
+					<?php
+					if( (int) $_SESSION['noPedidos'] > 0){
+						$cantidad = 0;
+
+
+						foreach($prods as $data){
+							print_r($data);
+							echo"<br>id: ".$data['idproducto'];
+							if( (int) $data['idproducto'] == 1){
+								echo"<pre>";
+								print_r($data);
+								echo"</pre>";	
+							}
+						}
+					?>
 					<div class="rd-navbar-basket-wrap">
-						<button class="rd-navbar-basket fl-bigmug-line-shopping202" data-rd-navbar-toggle=".cart-inline"><span>2</span></button>
-						<div class="cart-inline">
+						<button class="rd-navbar-basket fl-bigmug-line-shopping202" data-rd-navbar-toggle=".cart-inline"><span><?=$_SESSION['noPedidos']?></span></button>
+						<div class="cart-inline">							
 							<div class="cart-inline-header">
-								<h5 class="cart-inline-title">Pedido:<span> 2</span> Productos</h5>
+								<h5 class="cart-inline-title">No. de Pedido:<span> <?=$_SESSION['visitante']?></span></h5>
 								<h6 class="cart-inline-title">Importe:<span> $ 30</span></h6>
 							</div>
 							<div class="cart-inline-body">
@@ -46,38 +61,21 @@
 										</div>
 									</div>
 								</div>
-								<div class="cart-inline-item">
-									<div class="unit unit-spacing-sm align-items-center">
-										<div class="unit-left">
-											<a class="cart-inline-figure" href="<?=$pathWeb?>single-product.php">
-												<img src="<?=$pathWeb?>panel/img/banners/molidapavo.jpg" style="width:100px; height:90px;" alt="" />
-											</a>
-										</div>
-										<div class="unit-body">
-											<h6 class="cart-inline-name"><a href="<?=$pathWeb?>single-product.php">Molida de Pavo</a></h6>
-											<div>
-												<div class="group-xs group-middle">
-													<div class="table-cart-stepper">
-														<input class="form-input" type="number" data-zeros="true" value="1" min="1" max="1000"/>
-													</div>
-													<h6 class="cart-inline-title">$25.00</h6>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
+
 							</div>
 							<div class="cart-inline-footer">
 								<div class="group-sm">
-									<!--<a class="button button-default-outline-2 button-zakaria" href="<?=$pahWeb?>cart-page.php">Agregar</a>-->
 									<a class="button button-primary button-zakaria" href="<?=$pathWeb?>cart-page.php">Enviar Pedido</a>
 								</div>
 							</div>
 						</div>
 					</div>
 					<a class="rd-navbar-basket rd-navbar-basket-mobile fl-bigmug-line-shopping202 rd-navbar-fixed-element-2" href="<?=$pathWeb?>cart-page.php">
-						<span>2</span>
+						<span><?=count($_SESSION['noPedidos'])?></span>
 					</a>
+					<?php
+					}
+					?>
 					<button class="rd-navbar-project-hamburger rd-navbar-project-hamburger-open rd-navbar-fixed-element-1" type="button" data-multitoggle=".rd-navbar-main" data-multitoggle-blur=".rd-navbar-wrap" data-multitoggle-isolate="data-multitoggle-isolate">
 						<span class="project-hamburger">
 							<span class="project-hamburger-line"></span>

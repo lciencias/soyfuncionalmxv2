@@ -8,8 +8,16 @@ var decimales = /[0-9\.]/;
 var fecha = /[0-9\-]/;
 var url = /^(http|https)\:\/\/[a-z0-9\.-]+\.[a-z]{2,4}/;
 var procesando = " P r o c e s a n d o . . . . ";
-
+var catId = 0;
 $(document).ready(function() {
+
+
+    if ($("#catId") !== undefined && parseInt($("#catId").val()) > 0) {
+        catId = $("#catId").val();
+        $(".cuadrados").hide();
+        $(".cuadro" + catId).show();
+    }
+
     $(document).delegate(".numeros", "keypress", function(e) {
         tecla = (document.all) ? e.keyCode : e.which;
         if (tecla == 0 || tecla == 8) {
@@ -57,6 +65,18 @@ $(document).ready(function() {
         }
         tecla_final = String.fromCharCode(tecla);
         return decimales.test(tecla_final);
+    });
+
+    $(document).on("click", ".seleccionCategoria", function(e) {
+        var idCat = $(this).attr('id');
+        if (parseInt(idCat) > 0) {
+            $(".cuadrados").hide();
+            $(".seleccionCategoria").each(function(i) {
+                if ($(this).prop('checked')) {
+                    $(".cuadro" + (i + 1)).show();
+                }
+            });
+        }
     });
 
     $(document).on("click", "#guardaTestimonial", function(e) {
@@ -200,6 +220,50 @@ $(document).ready(function() {
             $("#bprocesando").html("Por favor teclea correctamente el correo electr\u00F3nico");
         }
         return false;
+    });
+
+
+    $(document).on("click", ".seleccionaProducto", function(e) {
+        var sessionId = $("#sessionId").val();
+        var prodc = $(this).attr('id');
+        var fecha = $("#fechaInicio").val();
+        var tmp = prodc.split("-");
+        var idProd = tmp[1];
+        if (String(sessionId) !== "" && fecha !== "" && fecha.length === 10 && parseInt(idProd) > 0) {
+            var url = "agregaProducto.php";
+            var formData = new FormData();
+            formData.append("idProd", idProd);
+            formData.append("fecha", fecha);
+            formData.append("sessionId", sessionId);
+            $.ajax({
+                type: 'POST',
+                url: url,
+                data: formData,
+                processData: false,
+                contentType: false,
+                dataType: 'json',
+                beforeSend: function() {
+                    $('#aviso').css({ "background-color": "#FFFFFF", "color": "#98bf44", "border": "2px solid #DDDDDD" });
+                    $('#aviso').html(procesando);
+                },
+                success: function(data) {
+                    $('#aviso').html("");
+                    if (parseInt(data.exito) === 1) {
+                        $('#aviso').css({ "background-color": "#98bf44", "color": "#ffffff", "border": "2px solid #DDDDDD" });
+                        $('#aviso').html("Producto Agregado");
+                    } else {
+                        $('#aviso').css({ "background-color": "#f5543f", "color": "#ffffff", "border": "2px solid #DDDDDD" });
+                        $('#aviso').html("Error: el producto NO se agrego");
+                    }
+                    return false;
+                },
+                error: function(xhr, ajaxOptions, thrownError) {
+                    return false;
+                },
+                complete: function() {}
+            });
+        }
+        // return false;
     });
 
 });
