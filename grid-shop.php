@@ -18,16 +18,6 @@
   if(isset($_REQUEST[$cat]) && (int) $_REQUEST[$cat] > 0){
     $idCat = (int) $_REQUEST[$cat];
   }
-  echo"<pre>";
-  print_r($_SESSION);
-  echo"<pre>";
-  foreach($prods as $data){
-    foreach($data as $ind => $data2)
-      echo"<pre>";print_r($data2);echo"</pre>";
-  }
-  echo"</pre>";
-  echo"<pre>";print_r($prods);
-
   include_once("header.php");
 ?>
 <body>

@@ -10,9 +10,6 @@ if ( $_SESSION['visitante'] == $_POST['sessionId'] && (int) $_POST['idProd'] > 0
       include_once($pathWeb."panel/clases/Comunes.class.php");
       $fecha = $_POST['fecha'];
       if(isset($_SESSION)){
-        if(array_key_exists("noPedidos",$_SESSION)){
-          $_SESSION['noPedidos'] = $_SESSION['noPedidos'] + 1 ;
-        }
         array_push($_SESSION['productos'], $fecha."|".$_POST['idProd']); 
       }
       $array = array('exito' => Comunes::SAVE,'msg' => $_SESSION);

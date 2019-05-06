@@ -19,17 +19,33 @@
         </div>
        <div class="rd-navbar-main-element">
 					<?php
-					if( (int) $_SESSION['noPedidos'] > 0){
+					$precio = 0;
+					$fechas        = array();
+					$pedidosXfecha = array();
+					$productos = array();
+					$productosPedidos = array();
+					$pedidos = 0;
+					if($_SESSION){
 						$cantidad = 0;
+						$productosSeleccionados = array();
+						foreach( $_SESSION['productos'] as $data){
+							$tmp = explode('|',$data);
+							if( !in_array($tmp[0], $fechas) ){
+								$fechas[] = $tmp[0];
+							}
+							$pedidosXfecha[$tmp[0]] =  $pedidosXfecha[$tmp[0]] + 1;
+							$productos[] = $tmp[1];
+						}
+						$_SESSION['noPedidos'] = count($fechas);
+						foreach($productos as $idProdTmp){
 
-
-						foreach($prods as $data){
-							print_r($data);
-							echo"<br>id: ".$data['idproducto'];
-							if( (int) $data['idproducto'] == 1){
-								echo"<pre>";
-								print_r($data);
-								echo"</pre>";	
+							foreach($prods as $data){
+								foreach($data as $dataProd){
+									if((int) $idProdTmp == (int) $dataProd['idproducto']){
+										$precio = (double) $precio + (double) $dataProd['precio']; 
+										$productosPedidos[] = $dataProd;
+									}
+								}
 							}
 						}
 					?>
@@ -38,37 +54,56 @@
 						<div class="cart-inline">							
 							<div class="cart-inline-header">
 								<h5 class="cart-inline-title">No. de Pedido:<span> <?=$_SESSION['visitante']?></span></h5>
-								<h6 class="cart-inline-title">Importe:<span> $ 30</span></h6>
+								<h6 class="cart-inline-title">Importe:<span> $ <?=number_format($precio, 2, '.', '');?></span></h6>
 							</div>
-							<div class="cart-inline-body">
-								<div class="cart-inline-item">
-									<div class="unit unit-spacing-sm align-items-center">
-										<div class="unit-left">
-											<a class="cart-inline-figure" href="<?=$pathWeb?>single-product.php">
-												<img src="<?=$pathWeb?>panel/img/banners/arroz.jpg" style="width:100px; height:90px;" alt="" />
-											</a>
-										</div>
-										<div class="unit-body">
-											<h6 class="cart-inline-name"><a href="<?=$pathWeb?>single-product.php">Arroz</a></h6>
-											<div>	
-												<div class="group-xs group-middle">
-													<div class="table-cart-stepper">
-														<input class="form-input" type="number" data-zeros="true" value="1" min="1" max="1000"/>
-													</div>
-													<h6 class="cart-inline-title">$5.00</h6>
-												 </div>
+							<?php
+							foreach($productosPedidos as $prodPedido){
+							?>
+								<div class="cart-inline-body">
+									<div class="cart-inline-item">
+										<div class="unit unit-spacing-sm align-items-center">
+											<div class="unit-left">
+												<a class="cart-inline-figure" href="<?=$pathWeb?>single-product.php">
+													<img src="<?=$prodPedido['web']?>" style="width:100px; height:90px;" alt="<?=$prodPedido['producto']?>" />
+												</a>
+											</div>
+											<div class="unit-body">
+												<h6 class="cart-inline-name">
+													<a href="<?=$pathWeb?>single-product.php"><?=$prodPedido['producto']?></a>
+												</h6>
+												<div style="" >	
+													<div class="group-xs group-middle form-inline">
+														<div class="" >
+															<button type="button" id="menos-<?=$prodPedido['idproducto']?>" class="btn btn-default menos" style="width:40px;">
+																<i class="fa fa-minus" aria-hidden="true"></i>
+															</button>
+															<input class ="form-control" style="width:40px;"
+																		 type ="text" id="cantidad-<?=$prodPedido['idproducto']?>" 
+																		value="1" />
+															<button type="button" id="mas-<?=$prodPedido['idproducto']?>" class="btn btn-default mas" style="width:40px;">
+																<i class="fa fa-plus" aria-hidden="true"></i>
+															</button>
+														</div>
+														<h6 class="cart-inline-title" id="importe-<?=$prodPedido['idproducto']?>">
+													<?=$prodPedido['precio']?>
+												</h6>
+													</div>									
+												</div>
+												
 											</div>
 										</div>
 									</div>
 								</div>
-
-							</div>
+							<?php
+							}
+							?>
 							<div class="cart-inline-footer">
 								<div class="group-sm">
 									<a class="button button-primary button-zakaria" href="<?=$pathWeb?>cart-page.php">Enviar Pedido</a>
 								</div>
 							</div>
 						</div>
+
 					</div>
 					<a class="rd-navbar-basket rd-navbar-basket-mobile fl-bigmug-line-shopping202 rd-navbar-fixed-element-2" href="<?=$pathWeb?>cart-page.php">
 						<span><?=count($_SESSION['noPedidos'])?></span>
