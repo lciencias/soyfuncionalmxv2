@@ -75,7 +75,7 @@
                           <i class="fa fa-calendar"></i>&nbsp;&nbsp;
                         </div>
                         <input type="text" style="width:120px;" class="form-control required datepicker"
-                         id="fechaInicio" value="<?=$_SESSION['fecha']?>" maxlength="10">
+                         id="fechaInicio" value="<?=$_SESSION['fechaPedido']?>" maxlength="10">
                       </div>
                     </div>
                   </div>

@@ -269,33 +269,40 @@ $(document).ready(function() {
     $(document).on("click", ".menos", function(e) {
         var div = $(this).attr('id');
         var tmp = div.split("-");
-        var valor = $("#cantidad-" + tmp[1]).val();
+        var valor   = parseInt  ($("#cantidad-" + tmp[1]).val());
+        var unitario = parseFloat($("#unitario-" + tmp[1]).val());
         if (valor > 1) {
             valor = valor - 1;
+        }else{
+            valor = 1;
         }
-        $("#cantidad-" + tmp[1]).val(valor);
-        alert(div + "   menos");
+        $("#cantidad-" + tmp[1]).val(String(valor));
+        $("#importe-" + tmp[1]).val(String((unitario * valor).toFixed(2)));
     });
 
     $(document).on("click", ".mas", function(e) {
         var div = $(this).attr('id');
         var tmp = div.split("-");
-        var valor = parseInt($("#cantidad-" + tmp[1]).val());
-        var importe = parseFloat($("#importe-" + tmp[1]).text());
-        alert(div + "   mas" + "   importe:  " + importe);
+        var valor   = parseInt  ($("#cantidad-" + tmp[1]).val());
+        var unitario = parseFloat($("#unitario-" + tmp[1]).val());
         if (valor >= 1) {
             valor = valor + 1;
         } else {
             valor = 1;
         }
-        importe = importe * valor;
         $("#cantidad-" + tmp[1]).val(String(valor));
-        $("#importe-" + tmp[1]).val(String(importe));
-
-
-
+        $("#importe-" + tmp[1]).val(String((unitario * valor).toFixed(2)));
     });
 
+    $( ".elimina" ).mouseover(function() {
+        $("#ayuda").html("Eliminar producto");
+    });
+    $( ".menos" ).mouseover(function() {
+        $("#ayuda").html("Decrementar cantidad de producto");
+    });
+    $( ".mas" ).mouseover(function() {
+        $("#ayuda").html("Incrementar cantidad de producto");
+    });
 });
 
 $(window).on("load", function() {

@@ -17,11 +17,9 @@ if($_SESSION[$visitante] == ""){
     if(date("H") > 13){
         $fechaPedido = date("d-m-Y",strtotime($fecha_actual."+ 1 days")); 
     }
-    $_SESSION['noPedidos'] = 0;
     $_SESSION['productos'] = array();
     $_SESSION['fechaPedido'] = $fechaPedido;
-    //$idUsuarioWeb     = $_SESSION[$visitante]."|".$fechaPedido;
-    //$_SESSION['id']   = $idUsuarioWeb;
+    $_SESSION['noPedidos'] = count($_SESSION['productos']);
 }
 $site       = "Soy Funcional MX";
 $panelTitle = "Soy Funcional MX";
@@ -30,9 +28,9 @@ if(trim(strtolower($_SERVER['SERVER_NAME'])) == "localhost"){
     $pathWeb = "http://localhost/soyfuncionalmxv2/";
     $pathSis = "/Applications/XAMPP/htdocs/soyfuncionalmxv2/"; 
     $pathSys = "/Applications/XAMPP/htdocs/soyfuncionalmxv2/";        
-    $pathWeb = "http://localhost/soyfuncionalmxv2/";
+   /* $pathWeb = "http://localhost/soyfuncionalmxv2/";
     $pathSis = "c:/xampp/htdocs/soyfuncionalmxv2/"; 
-    $pathSys = "c:/xampp/htdocs/soyfuncionalmxv2/";
+    $pathSys = "c:/xampp/htdocs/soyfuncionalmxv2/";*/
     $exito    = 1;
 }
 if($exito == 1){

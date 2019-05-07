@@ -18,14 +18,15 @@
 					<?php require_once($pathSis."menu.php"); ?>
         </div>
        <div class="rd-navbar-main-element">
-					<?php
+			<?php
 					$precio = 0;
 					$fechas        = array();
 					$pedidosXfecha = array();
 					$productos = array();
 					$productosPedidos = array();
 					$pedidos = 0;
-					if($_SESSION){
+					$_SESSION['noPedidos'] = count($_SESSION['productos']);
+					if($_SESSION && (int) $_SESSION['noPedidos'] > 0){
 						$cantidad = 0;
 						$productosSeleccionados = array();
 						foreach( $_SESSION['productos'] as $data){
@@ -36,9 +37,7 @@
 							$pedidosXfecha[$tmp[0]] =  $pedidosXfecha[$tmp[0]] + 1;
 							$productos[] = $tmp[1];
 						}
-						$_SESSION['noPedidos'] = count($fechas);
 						foreach($productos as $idProdTmp){
-
 							foreach($prods as $data){
 								foreach($data as $dataProd){
 									if((int) $idProdTmp == (int) $dataProd['idproducto']){
@@ -55,6 +54,7 @@
 							<div class="cart-inline-header">
 								<h5 class="cart-inline-title">No. de Pedido:<span> <?=$_SESSION['visitante']?></span></h5>
 								<h6 class="cart-inline-title">Importe:<span> $ <?=number_format($precio, 2, '.', '');?></span></h6>
+								<span id="ayuda" style="font-size:14px;color:#ff0000;font-weight:bold;"></span>
 							</div>
 							<?php
 							foreach($productosPedidos as $prodPedido){
@@ -71,24 +71,37 @@
 												<h6 class="cart-inline-name">
 													<a href="<?=$pathWeb?>single-product.php"><?=$prodPedido['producto']?></a>
 												</h6>
-												<div style="" >	
+												
 													<div class="group-xs group-middle form-inline">
-														<div class="" >
+														<table style="width:100px;">
+															<tr>
+															<td>
 															<button type="button" id="menos-<?=$prodPedido['idproducto']?>" class="btn btn-default menos" style="width:40px;">
 																<i class="fa fa-minus" aria-hidden="true"></i>
 															</button>
-															<input class ="form-control" style="width:40px;"
+															</td>
+															<td>
+															<input class ="form-control" style="width:40px;font-size:12px;"
 																		 type ="text" id="cantidad-<?=$prodPedido['idproducto']?>" 
 																		value="1" />
+															</td>
+															<td>
 															<button type="button" id="mas-<?=$prodPedido['idproducto']?>" class="btn btn-default mas" style="width:40px;">
 																<i class="fa fa-plus" aria-hidden="true"></i>
 															</button>
-														</div>
-														<h6 class="cart-inline-title" id="importe-<?=$prodPedido['idproducto']?>">
-													<?=$prodPedido['precio']?>
-												</h6>
+															</td>
+															<td>
+															<input type="hidden" id="unitario-<?=$prodPedido['idproducto']?>" value="<?=$prodPedido['precio']?>">
+															<input type="text" id="importe-<?=$prodPedido['idproducto']?>" class="form-control" value="<?=$prodPedido['precio']?>" style="border:0px;background-color:#fff;width:80px;font-size:12px;">
+															</td>
+															<td>
+															<button type="button" id="eliminar-<?=$prodPedido['idproducto']?>" class="btn btn-default elimina" style="width:40px;">
+																<i class="fa fa-times" aria-hidden="true"></i>
+															</button>
+															</td>
+															</tr>
+														</table>
 													</div>									
-												</div>
 												
 											</div>
 										</div>

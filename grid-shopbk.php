@@ -8,7 +8,6 @@
   include_once($pathSis."panel/DBconfig.php");
   $cat = "idCat";
   $idCat = 0;
-  
   $db     = new Conexion ( $_dbhost, $_dbuname, $_dbpass, $_dbname, $_port );
   $categ  = new Categoria($db,$_SESSION,$_REQUEST,Comunes::LISTAR,Comunes::WEB);
   $categs = $categ->obtenRegistros();
@@ -20,7 +19,6 @@
     $idCat = (int) $_REQUEST[$cat];
   }
   $productos = $prods[($idCat+1)];
-
   include_once("header.php");
 ?>
 <body>
@@ -78,7 +76,8 @@
                           <i class="fa fa-calendar"></i>&nbsp;&nbsp;
                         </div>
                         <input type="text" class="form-control required datepicker"
-                         id="fechaInicio" value="<?=$_SESSION['fecha']?>" maxlength="10">
+                         id="fechaInicio" value="<?=$_SESSION['fechaPedido']?>" 
+                         maxlength="10">
                       </div>
                     </div>
                   
