@@ -11,8 +11,9 @@ if ( $_SESSION['visitante'] == $_POST['sessionId'] && (int) $_POST['idProd'] > 0
       $fecha = $_POST['fecha'];
       if(isset($_SESSION)){
         array_push($_SESSION['productos'], $fecha."|".$_POST['idProd']); 
+        $_SESSION['fechaPedido'] = $fecha;
       }
-      $_SESSION['noPedidos'] = count(_SESSION['productos']);
+      $_SESSION['noPedidos'] = count($_SESSION['productos']);
       $array = array('exito' => Comunes::SAVE,'msg' => $_SESSION);
 }
 die(json_encode($array));

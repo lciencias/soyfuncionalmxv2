@@ -58,6 +58,10 @@ class Producto extends Comunes{
 			case Comunes::ORDENAR:
 				$this->ordenar();
 				break;
+				case Comunes::WEB2:
+				$this->listarProductoWebArray();
+				break;
+
 		}
 	}
 	
@@ -227,6 +231,27 @@ class Producto extends Comunes{
 		}	
 	}
 	
+	private function listarProductoWebArray(){
+		$this->registros = array();
+		try{
+			$sql = "SELECT b.id as idproducto,b.producto,b.caloria,b.precio,b.idimagen,c.web,c.ruta 
+					FROM productos b  
+					LEFT JOIN  imagen as c on c.idimagen = b.idimagen 
+					WHERE  b.status = '".Comunes::SAVE."' 
+					ORDER BY b.id;";
+					
+			$res = $this->db->sql_query ($sql);			
+			$this->totalProductos = $this->db->sql_numrows ($res);
+			if ($this->db->sql_numrows ($res) > 0){
+				while($row = $this->db->sql_fetchass($res)){
+					$this->registros[$row['idproducto']] = $row;
+				}				
+			}
+			$this->totalProductos++;
+		}catch (\Exception $e){
+			$this->writeLog($e->getMessage(), Comunes::ERROR);
+		}		
+	}
 	private function listarCategoriaProductoWebArray(){
 		$this->registros = array();
 		try{
@@ -247,7 +272,6 @@ class Producto extends Comunes{
 		}catch (\Exception $e){
 			$this->writeLog($e->getMessage(), Comunes::ERROR);
 		}		
-
 	}
 
 

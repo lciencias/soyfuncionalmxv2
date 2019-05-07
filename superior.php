@@ -49,74 +49,9 @@
 						}
 					?>
 					<div class="rd-navbar-basket-wrap">
-						<button class="rd-navbar-basket fl-bigmug-line-shopping202" data-rd-navbar-toggle=".cart-inline"><span><?=$_SESSION['noPedidos']?></span></button>
-						<div class="cart-inline">							
-							<div class="cart-inline-header">
-								<h5 class="cart-inline-title">No. de Pedido:<span> <?=$_SESSION['visitante']?></span></h5>
-								<h6 class="cart-inline-title">Importe:<span> $ <?=number_format($precio, 2, '.', '');?></span></h6>
-								<span id="ayuda" style="font-size:14px;color:#ff0000;font-weight:bold;"></span>
-							</div>
-							<?php
-							foreach($productosPedidos as $prodPedido){
-							?>
-								<div class="cart-inline-body">
-									<div class="cart-inline-item">
-										<div class="unit unit-spacing-sm align-items-center">
-											<div class="unit-left">
-												<a class="cart-inline-figure" href="<?=$pathWeb?>single-product.php">
-													<img src="<?=$prodPedido['web']?>" style="width:100px; height:90px;" alt="<?=$prodPedido['producto']?>" />
-												</a>
-											</div>
-											<div class="unit-body">
-												<h6 class="cart-inline-name">
-													<a href="<?=$pathWeb?>single-product.php"><?=$prodPedido['producto']?></a>
-												</h6>
-												
-													<div class="group-xs group-middle form-inline">
-														<table style="width:100px;">
-															<tr>
-															<td>
-															<button type="button" id="menos-<?=$prodPedido['idproducto']?>" class="btn btn-default menos" style="width:40px;">
-																<i class="fa fa-minus" aria-hidden="true"></i>
-															</button>
-															</td>
-															<td>
-															<input class ="form-control" style="width:40px;font-size:12px;"
-																		 type ="text" id="cantidad-<?=$prodPedido['idproducto']?>" 
-																		value="1" />
-															</td>
-															<td>
-															<button type="button" id="mas-<?=$prodPedido['idproducto']?>" class="btn btn-default mas" style="width:40px;">
-																<i class="fa fa-plus" aria-hidden="true"></i>
-															</button>
-															</td>
-															<td>
-															<input type="hidden" id="unitario-<?=$prodPedido['idproducto']?>" value="<?=$prodPedido['precio']?>">
-															<input type="text" id="importe-<?=$prodPedido['idproducto']?>" class="form-control" value="<?=$prodPedido['precio']?>" style="border:0px;background-color:#fff;width:80px;font-size:12px;">
-															</td>
-															<td>
-															<button type="button" id="eliminar-<?=$prodPedido['idproducto']?>" class="btn btn-default elimina" style="width:40px;">
-																<i class="fa fa-times" aria-hidden="true"></i>
-															</button>
-															</td>
-															</tr>
-														</table>
-													</div>									
-												
-											</div>
-										</div>
-									</div>
-								</div>
-							<?php
-							}
-							?>
-							<div class="cart-inline-footer">
-								<div class="group-sm">
-									<a class="button button-primary button-zakaria" href="<?=$pathWeb?>cart-page.php">Enviar Pedido</a>
-								</div>
-							</div>
-						</div>
-
+					<a href="<?=$pathWeb?>cart-page.php" class="rd-navbar-basket fl-bigmug-line-shopping202" target="_self">
+							<span id="totalPedidos"><?=$_SESSION['noPedidos']?></span>
+					</a>
 					</div>
 					<a class="rd-navbar-basket rd-navbar-basket-mobile fl-bigmug-line-shopping202 rd-navbar-fixed-element-2" href="<?=$pathWeb?>cart-page.php">
 						<span><?=count($_SESSION['noPedidos'])?></span>

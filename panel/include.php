@@ -10,15 +10,16 @@ $panelTitle = "<h1>Panel de Control <small>Soy Funcional MX</small></h1>";
 $exito = 0;
 
 if(trim(strtolower($_SERVER['SERVER_NAME'])) == "localhost"){
-    $pathWeb = "http://localhost/soyfuncionalmxv2/panel/";
-    $pathSis = "/Applications/XAMPP/htdocs/soyfuncionalmxv2/panel/"; 
-    $pathSys = "/Applications/XAMPP/htdocs/soyfuncionalmxv2/panel/";        
-   
-    /*$pathWeb = "http://localhost/soyfuncionalmxv2/panel/";
-    $pathSis = "c:/xampp/htdocs/soyfuncionalmxv2/panel/"; 
-    $pathSys = "c:/xampp/htdocs/soyfuncionalmxv2/panel/";*/
-         
-    $exito    = 1;
+    if(PHP_OS != "WINNT"){
+        $pathWeb = "http://localhost/soyfuncionalmxv2/panel/";
+        $pathSis = "/Applications/XAMPP/htdocs/soyfuncionalmxv2/panel/"; 
+        $pathSys = "/Applications/XAMPP/htdocs/soyfuncionalmxv2/panel/";        
+    }else{
+        $pathWeb = "http://localhost/soyfuncionalmxv2/panel/";
+        $pathSis = "c:/xampp/htdocs/soyfuncionalmxv2/panel/"; 
+        $pathSys = "c:/xampp/htdocs/soyfuncionalmxv2/panel/";
+    }
+   $exito    = 1;
 }
 if($exito == 1){
     $pathCss = $pathWeb;

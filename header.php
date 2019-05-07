@@ -7,6 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <link rel="icon" href="<?=$pathWeb?>images/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="<?=$pathCss?>bootstrap.css">
+    <link rel="stylesheet" href="<?=$pathCss?>bootstrap.min.css">
     <link rel="stylesheet" href="<?=$pathCss?>fonts.css">
     <link rel="stylesheet" href="<?=$pathCss?>datepicker.css">
     <link rel="stylesheet" href="<?=$pathCss?>styleOri.css" id="main-styles-link">

@@ -249,8 +249,10 @@ $(document).ready(function() {
                 success: function(data) {
                     $('#aviso').html("");
                     if (parseInt(data.exito) === 1) {
+                        $("#totalPedidos").html(data.msg.noPedidos);
                         $('#aviso').css({ "background-color": "#98bf44", "color": "#ffffff", "border": "2px solid #DDDDDD" });
                         $('#aviso').html("Producto Agregado");
+
                     } else {
                         $('#aviso').css({ "background-color": "#f5543f", "color": "#ffffff", "border": "2px solid #DDDDDD" });
                         $('#aviso').html("Error: el producto NO se agrego");
@@ -269,42 +271,53 @@ $(document).ready(function() {
     $(document).on("click", ".menos", function(e) {
         var div = $(this).attr('id');
         var tmp = div.split("-");
-        var valor   = parseInt  ($("#cantidad-" + tmp[1]).val());
+        var valor = parseInt($("#cantidad-" + tmp[1]).val());
         var unitario = parseFloat($("#unitario-" + tmp[1]).val());
+        var importeTotal = parseFloat($("#importeTotal").val());
         if (valor > 1) {
             valor = valor - 1;
-        }else{
+        } else {
             valor = 1;
         }
         $("#cantidad-" + tmp[1]).val(String(valor));
+        var subtotal = parseFloat(unitario * valor);
         $("#importe-" + tmp[1]).val(String((unitario * valor).toFixed(2)));
+        importeTotal = importeTotal - subtotal;
+        $("#importeTotal").val(importeTotal);
+        $("#txtImporteTotal").html(String(importeTotal).toFixed(2));
     });
 
     $(document).on("click", ".mas", function(e) {
         var div = $(this).attr('id');
         var tmp = div.split("-");
-        var valor   = parseInt  ($("#cantidad-" + tmp[1]).val());
+        var valor = parseInt($("#cantidad-" + tmp[1]).val());
         var unitario = parseFloat($("#unitario-" + tmp[1]).val());
+        var importeTotal = parseFloat($("#importeTotal").val());
         if (valor >= 1) {
             valor = valor + 1;
         } else {
             valor = 1;
         }
         $("#cantidad-" + tmp[1]).val(String(valor));
+        var subtotal = parseFloat(unitario * valor);
         $("#importe-" + tmp[1]).val(String((unitario * valor).toFixed(2)));
+        importeTotal = importeTotal + subtotal;
+        $("#importeTotal").val(importeTotal);
+        $("#txtImporteTotal").html(String(importeTotal).toFixed(2));
+
     });
 
-    $( ".elimina" ).mouseover(function() {
+    $(".elimina").mouseover(function() {
         $("#ayuda").html("Eliminar producto");
     });
-    $( ".menos" ).mouseover(function() {
+    $(".menos").mouseover(function() {
         $("#ayuda").html("Decrementar cantidad de producto");
     });
-    $( ".mas" ).mouseover(function() {
+    $(".mas").mouseover(function() {
         $("#ayuda").html("Incrementar cantidad de producto");
     });
 });
 
 $(window).on("load", function() {
     console.log("window loaded");
-});
+})
