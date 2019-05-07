@@ -197,7 +197,7 @@ function numeroPedido($prods, $session){
         No. de Pedido:<span> '.$session['visitante'].'</span>
       </h5>
       <h6 class="cart-inline-title" id="impPedido">
-        <input type="text" id="importeTotal" value="'.$importe.'">
+        <input type="hidden" id="importeTotal" value="'.$importe.'">
         Importe:&nbsp;<span id="txtImporteTotal">&nbsp;$&nbsp;'.number_format($importe, 2, '.', '').'</span>
       </h6>
       <span id="ayuda" style="font-size:14px;color:#ff0000;font-weight:bold;"></span>

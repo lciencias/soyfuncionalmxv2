@@ -280,31 +280,33 @@ $(document).ready(function() {
             valor = 1;
         }
         $("#cantidad-" + tmp[1]).val(String(valor));
-        var subtotal = parseFloat(unitario * valor);
         $("#importe-" + tmp[1]).val(String((unitario * valor).toFixed(2)));
-        importeTotal = importeTotal - subtotal;
+        importeTotal = importeTotal - unitario;
+        importeTotalS = String(importeTotal.toFixed(2));
         $("#importeTotal").val(importeTotal);
-        $("#txtImporteTotal").html(String(importeTotal).toFixed(2));
+        $("#txtImporteTotal").html(importeTotalS);
     });
 
     $(document).on("click", ".mas", function(e) {
         var div = $(this).attr('id');
         var tmp = div.split("-");
-        var valor = parseInt($("#cantidad-" + tmp[1]).val());
+        var cantidad = parseInt($("#cantidad-" + tmp[1]).val());
         var unitario = parseFloat($("#unitario-" + tmp[1]).val());
         var importeTotal = parseFloat($("#importeTotal").val());
-        if (valor >= 1) {
-            valor = valor + 1;
-        } else {
-            valor = 1;
-        }
-        $("#cantidad-" + tmp[1]).val(String(valor));
-        var subtotal = parseFloat(unitario * valor);
-        $("#importe-" + tmp[1]).val(String((unitario * valor).toFixed(2)));
-        importeTotal = importeTotal + subtotal;
-        $("#importeTotal").val(importeTotal);
-        $("#txtImporteTotal").html(String(importeTotal).toFixed(2));
+        console.log("unitario:  " + unitario);
+        console.log("cantidad:  " + cantidad);
 
+        if (cantidad >= 1) {
+            cantidad = cantidad + 1;
+        } else {
+            cantidad = 1;
+        }
+        $("#cantidad-" + tmp[1]).val(String(cantidad));
+        $("#importe-" + tmp[1]).val(String((unitario * cantidad).toFixed(2)));
+        importeTotal = importeTotal + unitario;
+        importeTotalS = String(importeTotal.toFixed(2));
+        $("#importeTotal").val(importeTotal);
+        $("#txtImporteTotal").html(importeTotalS);
     });
 
     $(".elimina").mouseover(function() {
