@@ -265,7 +265,7 @@ $(document).ready(function() {
                 complete: function() {}
             });
         }
-        // return false;
+        return false;
     });
 
     $(document).on("click", ".menos", function(e) {
@@ -309,14 +309,55 @@ $(document).ready(function() {
         $("#txtImporteTotal").html(importeTotalS);
     });
 
+    $(document).on("click", "#enviarPedido", function(e) {
+        var sessionId = $("#sessionId").val();
+        if (String(sessionId) !== "") {
+            console.log("enviar Correo");
+            var url = "enviaPedido.php";
+            var formData = new FormData();
+            formData.append("sessionId", sessionId);
+            $.ajax({
+                type: 'POST',
+                url: url,
+                data: formData,
+                processData: false,
+                contentType: false,
+                dataType: 'json',
+                beforeSend: function() {
+                    //$('#aviso').css({ "background-color": "#FFFFFF", "color": "#98bf44", "border": "2px solid #DDDDDD" });
+                    //$('#aviso').html(procesando);
+                },
+                success: function(data) {
+                    //$('#aviso').html("");
+                    if (parseInt(data.exito) === 1) {
+                        //$("#totalPedidos").html(data.msg.noPedidos);
+                        //$('#aviso').css({ "background-color": "#98bf44", "color": "#ffffff", "border": "2px solid #DDDDDD" });
+                        //$('#aviso').html("Producto Agregado");
+                        console.log("se ha enviado el pedido");
+                    } else {
+                        console.log("Error al enviar el pedido");
+                        //$('#aviso').css({ "background-color": "#f5543f", "color": "#ffffff", "border": "2px solid #DDDDDD" });
+                        //$('#aviso').html("Error: el producto NO se agrego");
+                    }
+                    return false;
+                },
+                error: function(xhr, ajaxOptions, thrownError) {
+                    return false;
+                },
+                complete: function() {}
+            });
+        }
+        return false;
+    });
+
     $(".elimina").mouseover(function() {
-        $("#ayuda").html("Eliminar producto");
+        //$("#ayuda").html("Eliminar producto");
     });
     $(".menos").mouseover(function() {
-        $("#ayuda").html("Decrementar cantidad de producto");
+        //$("#ayuda").html("Decrementar cantidad de producto");
     });
     $(".mas").mouseover(function() {
-        $("#ayuda").html("Incrementar cantidad de producto");
+        //$("#ayuda").html("Incrementar cantidad de producto");
     });
 });
 

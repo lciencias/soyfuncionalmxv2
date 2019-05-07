@@ -51,7 +51,7 @@
           require_once($pathSis."superior.php");
         ?>
 		    </header>
-        <section class="breadcrumbs-custom">
+        <!--<section class="breadcrumbs-custom">
         <div class="parallax-container" data-parallax-img="<?=$pathWeb?>images/breadcrumbs-bg.jpg">
           <div class="breadcrumbs-custom-body parallax-content context-dark darken-overlay">
             <div class="container">
@@ -59,9 +59,9 @@
             </div>
           </div>
         </div>
-      </section>
+      </section>-->
       <!-- Section Shop-->
-      <section class="section section-xxl bg-default text-md-left">
+      <section class="text-md-left">
         <div class="container">
           <div class="row row-50">
             <div class="col-lg-4 col-xl-3">

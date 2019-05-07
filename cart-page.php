@@ -50,14 +50,121 @@
     </section>-->
     <section>
       <div class="container">
-      <?php
-        $fechas = obtenFechas($_SESSION);
-        $buffer = numeroPedido($prods, $_SESSION);
-        $buffer.= generaTabs($fechas);
-        $buffer.= contenidos($fechas, $prods, $_SESSION, $pathweb);
-        $buffer.= botonEnviarPedido($pathWeb);
-        echo $buffer;
-      ?>
+        <div id="accordion">
+          <div class="card">
+            <div class="card-header" id="headingOne">
+              <h5 class="mb-0">
+                <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                  Resum&eacute;n de pedido solicitado
+                </button>
+              </h5>
+            </div>
+            <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+              <div class="card-body">
+              <?php
+                $fechas = obtenFechas($_SESSION);
+                $buffer = numeroPedido($prods, $_SESSION);
+                $buffer.= generaTabs($fechas);
+                $buffer.= contenidos($fechas, $prods, $_SESSION, $pathweb);
+                $buffer.= botonEnviarPedido($pathWeb);
+                echo $buffer;
+              ?>        
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header" id="headingTwo">
+              <h5 class="mb-0">
+                <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                  Direcci&oacute;n de envi&oacute;n
+                </button>
+              </h5>
+            </div>
+            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+              <div class="card-body">
+              <div class="container">
+          <div class="row row-50 justify-content-center">
+            <div class="col-md-10 col-lg-6">
+              <h3 class="font-weight-medium">Direcci&oacute;n de env&iacute;o</h3>
+              <form class="rd-form rd-mailform form-checkout">
+                <div class="row row-30">
+                  <div class="col-sm-6">
+                    <div class="form-wrap">
+                      <input class="form-input" id="checkout-first-name-1" type="text" name="name" data-constraints="@Required"/>
+                      <label class="form-label" for="checkout-first-name-1">Nombre(s)</label>
+                    </div>
+                  </div>
+                  <div class="col-sm-6">
+                    <div class="form-wrap">
+                      <input class="form-input" id="checkout-last-name-1" type="text" name="name" data-constraints="@Required"/>
+                      <label class="form-label" for="checkout-last-name-1">Apellidos</label>
+                    </div>
+                  </div>
+                  
+                  <div class="col-12">
+                    <div class="form-wrap">
+                      <input class="form-input" id="checkout-address-1" type="text" name="name" data-constraints="@Required"/>
+                      <label class="form-label" for="checkout-address-1">Direcci&oacute;n</label>
+                    </div>
+                  </div>
+                  <div class="col-12">
+                    <div class="form-wrap">
+                      <select name="delegacion" id="delegacion" class="form-control">
+                      <option value="0">Delegaci&oacute;n</option>
+                      <option value="1">&Aacute;lvaro Obreg&oacute;n</option>
+                      <option value="3">Coyoac&aacute;n</option>
+                      <option value="16">Miguel Hidalgo</option>
+                      </select>
+                      <!--<label class="form-label" for="checkout-address-del">Delegaci&oacute;n     </label>-->
+                    </div>
+                  </div>
+                  <div class="col-sm-6">
+                    <div class="form-wrap">
+                      <input class="form-input" id="checkout-email-1" type="email" name="email" data-constraints="@Email @Required"/>
+                      <label class="form-label" for="checkout-email-1">Correo Electr&oacute;nico</label>
+                    </div>
+                  </div>
+                  <div class="col-sm-6">
+                    <div class="form-wrap">
+                      <input class="form-input" id="checkout-phone-1" type="text" name="phone" data-constraints="@Numeric"/>
+                      <label class="form-label" for="checkout-phone-1">Celular</label>
+                    </div>
+                  </div>
+                </div>
+                <label class="checkbox-inline text-transform-capitalize">
+                  <!--<input name="input-checkbox-1" value="checkbox-1" type="checkbox"/>My Billing Address and Shipping Address are the same-->
+                  (En caso de que no te encuentres en las delegaciones listadas, por favor comunicate al Tel:  55 51 31 86 96)
+                </label>
+              </form>
+            </div>
+            <div class="col-md-10 col-lg-6">
+            <h3 class="font-weight-medium">Importe</h3>
+              <div class="table-custom-responsive">
+                <table class="table-custom table-custom-primary table-checkout">
+                  <tbody>
+                    <tr>
+                      <td>Subtotal</td>
+                      <td>$43</td>
+                    </tr>
+                    <tr>
+                      <td>Importe</td>
+                      <td>Gratis</td>
+                    </tr>
+                    <tr>
+                      <td>Total</td>
+                      <td>$43</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>  
+            </div>
+          </div>
+        </div>
+      
+            </div>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
     <?php
@@ -138,7 +245,7 @@ function generaTabla($datas, $session, $pathWeb, $fecha){
         $precioDia = $precioDia + ($data['precio'] * $data['cantidad']) + 0.00;
       }
       $buffer .= '<h6 class="cart-inline-title" id="pedidofecha-'.$fecha.'">
-        Importe del d&iacute;a:<span> $ '.number_format($precioDia, 2, '.', '').'</span>
+      <span style="color:#e7e76a;">Importe del d&iacute;a: </span><span style="color:#002857;"> $ '.number_format($precioDia, 2, '.', '').'</span>
       </h6>
       <input type="hidden" id="importedia-'.$fecha.'" value="'.number_format($precioDia, 2, '.', '').'">
       </span></h6></div>';
@@ -154,7 +261,7 @@ function generaTabs($arrayFechas){
       $tmp = ($contador == 0) ? " class='active' " : " ";
       $buf .= '<li '.$tmp.'>
           <a href="#hometab'.$contador.'" role="tab" data-toggle="tab">
-          <span style="color:#002857">Pedido del d&iacute;a: <b>'.$fecha.'</b></span></a>
+          <span style="color:#002857">D&iacute;a: <b>'.$fecha.'</b></span></a>
           </li>';
       $contador++;
     }
@@ -191,24 +298,26 @@ function obtenFechas($session){
 
 function numeroPedido($prods, $session){
   $importe = calculaImporte($prods, $session);
-  $buf = '						
-    <div class="cart-inline-header">
-      <h5 class="cart-inline-title" id="noPedido">
-        No. de Pedido:<span> '.$session['visitante'].'</span>
-      </h5>
-      <h6 class="cart-inline-title" id="impPedido">
-        <input type="hidden" id="importeTotal" value="'.$importe.'">
-        Importe:&nbsp;<span id="txtImporteTotal">&nbsp;$&nbsp;'.number_format($importe, 2, '.', '').'</span>
-      </h6>
-      <span id="ayuda" style="font-size:14px;color:#ff0000;font-weight:bold;"></span>
-    </div>';
+  $buf = '<div class="row">
+            <div class="col-md-6">
+              <h5 class="cart-inline-title" id="noPedido">
+                <span style="color:#002857;">No. de Pedido: '.$session['visitante'].'</span>
+              </h5><br>      
+            </div>
+            <div class="col-md-6">
+              <h6 class="cart-inline-title" id="impPedido">
+                <input type="hidden" id="importeTotal" value="'.$importe.'">
+                <span style="color:#e7e76a;">Importe Total: </span><span style="color:#002857;" id="txtImporteTotal">&nbsp;$&nbsp;'.number_format($importe, 2, '.', '').'</span>
+              </h6><br>
+            </div>
+          </div>';
     return $buf;
 }
 
 function botonEnviarPedido($pathWeb){
   $buf = '<div class="cart-inline-footer">
             <div class="group-sm">
-              <a class="button button-primary button-zakaria" href="'.$pathWeb.'cart-page.php">Enviar Pedido</a>
+              <button type="button" class="button button-primary button-zakaria" id="enviarPedido">Enviar Pedido</button>
             </div>
         </div>';
   return $buf;
