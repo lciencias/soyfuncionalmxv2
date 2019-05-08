@@ -20327,3 +20327,9 @@ body:not(.lg-from-hash) .lg-outer.lg-start-zoom .lg-item.lg-complete .lg-object 
     --color-stop-1: #e9da5d;
     --color-stop-2: #76aa6f
 }
+
+.errorCampo{
+    font-size:11px;
+    color:#ff0000;
+    font-family:Arial-Helvetica;
+}

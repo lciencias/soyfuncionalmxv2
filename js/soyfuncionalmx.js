@@ -282,12 +282,12 @@ $(document).ready(function() {
         }
         $("#cantidad-" + tmp[1]).val(String(valor));
         $("#importe-" + tmp[1]).val(String((unitario * valor).toFixed(2)));
-        importeTotal = importeTotal - unitario;
-        importeTotalS = String(importeTotal.toFixed(2));
-
-        importeDia = importeDia - unitario;
-        importeDiaS = String(importeDia.toFixed(2));
-
+        if (valor > 1) {
+            importeTotal = importeTotal - unitario;
+            importeDia = importeDia - unitario;
+        }
+         importeTotalS = String(importeTotal.toFixed(2));
+        importeDiaS = String(importeDia.toFixed(2));         
         $("#importedia-" + tabSeleccionado).val(importeDia);
         $("#simportedia-" + tabSeleccionado).html(importeDiaS);
 
@@ -321,12 +321,90 @@ $(document).ready(function() {
         $("#txtImporteTotal").html(importeTotalS);
     });
 
+    $(document).on("change", "#name", function(e) {
+        var nombre  = $("#name").val();
+        $("#errorNombre").html("");
+        if(String(nombre) === "" || String(nombre).length < 6){
+            $("#errorNombre").html("El campo nombre debe contener al menos 6 caracteres");
+            return false;
+        }
+    });
+
+    $(document).on("change", "#email", function(e) {
+        $("#errorEmail").html("");
+        var email   = $("#email").val();
+        if(String(email) === "" || String(email).length < 6){
+            $("#errorEmail").html("El campo email debe contener al menos 6 caracteres");
+            return false;
+        }
+        if(!valEmail(email)){
+            $("#errorEmail").html("Favor de teclear un correo electronico valido.");
+            return false;
+        }
+    });
+
+    $(document).on("change", "#phone", function(e) {
+        $("#errorPhone").html("");
+        var phone   = $("#phone").val();
+        alert("phone change:  "+phone);
+        if(String(phone) === "" || phone.length !== 10){
+            $("#errorPhone").html("El campo telefono debe contener 10 numeros");
+            return false;
+        }
+    });
+
+    $(document).on("change", "#address", function(e) {
+        $("#errorAddress").html("");
+        var address   = $("#address").val();
+        if(String(address) === "" || String(address).length < 11){
+            $("#errorAddress").html("El campo domicilio debe contener al menos 10 caracteres");
+            return false;
+        }
+    });
+
+
     $(document).on("click", "#enviarPedido", function(e) {
         var sessionId = $("#sessionId").val();
+        var nombre  = $("#name").val();
+        var email   = $("#email").val();
+        var phone   = $("#phone").val();
+        var address = $("#address").val();
+        var delegacion = $("#delegacion").val();
+        $("#errorNombre").html("");
+        $("#errorEmail").html("");
+        $("#errorPhone").html("");
+        $("#errorAddress").html("");
+        if(String(nombre) === "" || String(nombre).length < 6){
+            $("#errorNombre").html("El campo nombre debe contener al menos 6 caracteres");
+            return false;
+        }
+        if(String(email) === "" || String(email).length < 6){
+            $("#errorEmail").html("El campo email debe contener al menos 6 caracteres");
+            return false;
+        }
+        if(!valEmail(email)){
+            $("#errorEmail").html("Favor de teclear un correo electronico valido.");
+            return false;
+        }
+        alert("phone click:  "+phone);
+        if(String(phone) === "" || phone.length !== 10){
+            $("#errorPhone").html("El campo telefono debe contener 10 numeros");
+            return false;
+        }
+        if(String(address) === "" || String(address).length < 11){
+            $("#errorAddress").html("El campo domicilio debe contener al menos 10 caracteres");
+            return false;
+        }
+        alert("Enviar Pedido");
         if (String(sessionId) !== "") {
             console.log("enviar Correo");
             var url = "enviaPedido.php";
             var formData = new FormData();
+            formData.append("nombre", nombre);
+            formData.append("email", email);
+            formData.append("phone", phone);
+            formData.append("address", address);
+            formData.append("delegacion", delegacion);
             formData.append("sessionId", sessionId);
             $.ajax({
                 type: 'POST',
@@ -372,6 +450,11 @@ $(document).ready(function() {
         //$("#ayuda").html("Incrementar cantidad de producto");
     });
 
+    $(document).on("click", "#continuarPedido", function(e) {
+        var url = baseurl+"grid-shop.php";
+        location.href  = url;
+    });
+    
     if ($("#fechainicial") !== undefined) {
         tabSeleccionado = $("#fechainicial").val();
     }
@@ -384,3 +467,24 @@ $(document).ready(function() {
 $(window).on("load", function() {
     console.log("window loaded");
 })
+
+function valEmail(txt){
+    var b=/^[^@\s]+@[^@\.\s]+(\.[^@\.\s]+)+$/
+    return b.test(txt)
+}
+/*********************************
+ 	&Aacute; 	\u00C1
+ 	&aacute; 	\u00E1
+ 	&Eacute; 	\u00C9
+ 	&eacute; 	\u00E9
+ 	&Iacute; 	\u00CD
+ 	&iacute; 	\u00ED
+ 	&Oacute; 	\u00D3
+ 	&oacute; 	\u00F3
+ 	&Uacute; 	\u00DA
+ 	&uacute; 	\u00FA
+	&Uuml; 	\u00DC
+ 	&uuml; 	\u00FC
+ 	&Ntilde; 	\u00D1
+ 	&ntilde; 	\u00F1
+******************************/

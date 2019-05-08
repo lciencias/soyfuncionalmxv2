@@ -61,9 +61,9 @@
           </li>
         </ul> 
         <div class="tab-content">
-          <div class="tab-pane active" id="resumen">
+          <div class="tab-pane active" id="resumen" style="text-align:center;">
             <?php
-              $buffer = generaTabs($fechas);
+              $buffer = "<br><span style='color:#002857;font-size:20px;'>Pedidos por d&iacute;a</span><br>".generaTabs($fechas);
               $buffer.= contenidos($fechas, $prods, $_SESSION, $pathweb);
               echo $buffer;
             ?>        
@@ -77,7 +77,7 @@
               </div>
               <div class="col-md-6">
                 <?php
-                  echo importe($_SESSION['importe'] , $envio);
+                  echo importe($_SESSION['importe'] , $envio, $pathWeb);
                 ?>  
               </div>
             </div>
@@ -181,7 +181,7 @@ function generaTabs($arrayFechas){
       
       $buf .= '<li '.$tmp.'>
           <a href="#hometab'.$contador.'" role="tab" data-toggle="tab" id="'.$fecha.'" class="selecTab">
-          <span style="color:#002857">D&iacute;a: <b>'.$fecha.'</b></span></a>
+          <span style="color:#56555a">D&iacute;a: <b>'.$fecha.'</b></span></a>
           </li>';
       $contador++;
     }
@@ -238,6 +238,7 @@ function numeroPedido($prods, $session){
 function botonEnviarPedido($pathWeb){
   $buf = '<div class="cart-inline-footer">
             <div class="group-sm">
+              <button type="button" class="button button-success button-zakaria" id="continuar">Continuar seleccionando</button>
               <button type="button" class="button button-primary button-zakaria" id="enviarPedido">Enviar Pedido</button>
             </div>
         </div>';
@@ -259,63 +260,63 @@ function calculaImporte($prods, $session){
 
 function formulario(){
   $buf = '
-    <form class="rd-form rd-mailform form-checkout">
+    <form>
       <div class="row">
-        <div class="col-sm-6">
-          <div class="form-wrap">
-            <input class="form-input" placeholder = "Nombre(s)" id="checkout-first-name-1" type="text" name="name" data-constraints="@Required"/>
-          </div>
-        </div>
-        <div class="col-sm-6">
-          <div class="form-wrap">
-            <input class="form-input" placeholder = "Apellidos" id="checkout-last-name-1" type="text" name="name" data-constraints="@Required"/>
-            
+        <div class="col-md-12">
+          <div class="form-wrap">            
+            <input class="form-input"  id="name" type="text" name="name" tabIndex="1" class="letras" maxlength="60"/>
+            <span id="errorNombre" class="errorCampo"></span>
+            <label class="form-label" for="name" >Nombre</label>
           </div>
         </div>
       </div>
       <div class="row">
-        <div class="col-sm-6">
+        <div class="col-md-6">
           <div class="form-wrap">
-            <input class="form-input" id="checkout-email-1" type="email" name="email" data-constraints="@Email @Required"/>
-            <label class="form-label" for="checkout-email-1">Correo Electr&oacute;nico</label>
+            <input class="form-input" id="email" type="email" name="email" tabIndex="2" maxlength="65" class="correo"/>
+            <span id="errorEmail" class="errorCampo"></span>
+            <label class="form-label" for="email">Correo Electr&oacute;nico</label>
           </div>
         </div>
-        <div class="col-sm-6">
+        <div class="col-md-6">
           <div class="form-wrap">
-            <input class="form-input" id="checkout-phone-1" type="text" name="phone" data-constraints="@Numeric"/>
-            <label class="form-label" for="checkout-phone-1">Celular</label>
+            <input class="form-input" id="phone" type="text" name="phone" tabIndex="3"  maxlength="10" class="numeros"/>
+            <span id="errorPhone" class="errorCampo"></span>
+            <label class="form-label" for="phone">Celular</label>
           </div>
         </div>
       </div>
       <div class="row">
-        <div class="col-6">
+        <div class="col-md-12">
           <div class="form-wrap">
-            <input class="form-input" id="checkout-address-1" type="text" name="name" data-constraints="@Required"/>
-            <label class="form-label" for="checkout-address-1">Direcci&oacute;n</label>
+            <input class="form-input" id="address" type="text" name="name" tabIndex="4"  />
+            <span id="errorAddress" class="errorCampo"></span>
+            <label class="form-label" for="address">Direcci&oacute;n</label>
           </div>
         </div>
-        <div class="col-6">
+      </div>
+      <div class="row">
+        <div class="col-md-6">
           <div class="form-wrap">
-            <select name="delegacion" id="delegacion" class="form-control">
+            <select name="delegacion" id="delegacion" class="form-control" tabIndex="5" >
               <option value="0">Delegaci&oacute;n</option>
               <option value="1">&Aacute;lvaro Obreg&oacute;n</option>
               <option value="3">Coyoac&aacute;n</option>
               <option value="16">Miguel Hidalgo</option>
             </select>
-            <label class="form-label" for="checkout-address-del">Delegaci&oacute;n</label>
+            <label class="form-label" for="delegacion">Delegaci&oacute;n</label>
           </div>
         </div>
-      </div>
-      <div class="row">
-        <div class="col-12" style="text-align:justify">
-          (En caso de que no te encuentres en las delegaciones listadas, por favor comunicate al Tel:  55 51 31 86 96)
+        <div class="col-md-6" style="text-align:justify;">
+        (En caso de que no te encuentres en las delegaciones listadas, por favor comunicate al Tel:  55 51 31 86 96)
         </div>
       </div>
-      </form>';
+    </form>';
   return $buf;
 }
 
-function importe($importe , $envio){
+function importe($importe , $envio, $pathWeb){
+  $ruta = $pathWeb."grid-shop.php";
   $buf = '
     <div class="table-custom-responsive">
       <table class="table-custom table-custom-primary table-checkout">
@@ -333,8 +334,11 @@ function importe($importe , $envio){
             <td>$&nbsp;'.number_format( ($importe + $envio ), 2, '.', '').'</td>
           </tr>
           <tr>
-            <td colspan="2" style="text-align:center;">
-            <button type="button" class="button button-primary button-zakaria" id="enviarPedido">Enviar Pedido</button>
+            <td  style="text-align:center;">
+              <button type="button" id="continuarPedido" tabIndex="6" class="button button-success button-zakaria" id="continuar">Continuar pedido</button>
+            </td>
+            <td  style="text-align:center;">
+              <button type="button" tabIndex="7" class="button button-primary button-zakaria" id="enviarPedido">Enviar Pedido</button>
             </td>
         </tbody>
       </table>
