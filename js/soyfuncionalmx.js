@@ -9,6 +9,7 @@ var fecha = /[0-9\-]/;
 var url = /^(http|https)\:\/\/[a-z0-9\.-]+\.[a-z]{2,4}/;
 var procesando = " P r o c e s a n d o . . . . ";
 var catId = 0;
+var tabSeleccionado = "";
 $(document).ready(function() {
 
 
@@ -155,7 +156,6 @@ $(document).ready(function() {
                         $('#pprocesando').css({ 'color': '#4B8A08' });
                         $('#pprocesando').html("En breve se responder\u00E1 y publicar\u00E1 tu pregunta.");
                         setTimeout(function() {
-                            console.log("Insertado");
                             $("#mpregunta").modal('hide');
                         }, 4000);
                     } else {
@@ -273,6 +273,7 @@ $(document).ready(function() {
         var tmp = div.split("-");
         var valor = parseInt($("#cantidad-" + tmp[1]).val());
         var unitario = parseFloat($("#unitario-" + tmp[1]).val());
+        var importeDia = parseFloat($("#importedia-" + tabSeleccionado).val());
         var importeTotal = parseFloat($("#importeTotal").val());
         if (valor > 1) {
             valor = valor - 1;
@@ -283,6 +284,13 @@ $(document).ready(function() {
         $("#importe-" + tmp[1]).val(String((unitario * valor).toFixed(2)));
         importeTotal = importeTotal - unitario;
         importeTotalS = String(importeTotal.toFixed(2));
+
+        importeDia = importeDia - unitario;
+        importeDiaS = String(importeDia.toFixed(2));
+
+        $("#importedia-" + tabSeleccionado).val(importeDia);
+        $("#simportedia-" + tabSeleccionado).html(importeDiaS);
+
         $("#importeTotal").val(importeTotal);
         $("#txtImporteTotal").html(importeTotalS);
     });
@@ -292,9 +300,8 @@ $(document).ready(function() {
         var tmp = div.split("-");
         var cantidad = parseInt($("#cantidad-" + tmp[1]).val());
         var unitario = parseFloat($("#unitario-" + tmp[1]).val());
+        var importeDia = parseFloat($("#importedia-" + tabSeleccionado).val());
         var importeTotal = parseFloat($("#importeTotal").val());
-        console.log("unitario:  " + unitario);
-        console.log("cantidad:  " + cantidad);
 
         if (cantidad >= 1) {
             cantidad = cantidad + 1;
@@ -305,6 +312,11 @@ $(document).ready(function() {
         $("#importe-" + tmp[1]).val(String((unitario * cantidad).toFixed(2)));
         importeTotal = importeTotal + unitario;
         importeTotalS = String(importeTotal.toFixed(2));
+
+        importeDia = importeDia + unitario;
+        importeDiaS = String(importeDia.toFixed(2));
+        $("#importedia-" + tabSeleccionado).val(importeDia);
+        $("#simportedia-" + tabSeleccionado).html(importeDiaS);
         $("#importeTotal").val(importeTotal);
         $("#txtImporteTotal").html(importeTotalS);
     });
@@ -358,6 +370,14 @@ $(document).ready(function() {
     });
     $(".mas").mouseover(function() {
         //$("#ayuda").html("Incrementar cantidad de producto");
+    });
+
+    if ($("#fechainicial") !== undefined) {
+        tabSeleccionado = $("#fechainicial").val();
+    }
+
+    $(document).on("click", ".selecTab", function(e) {
+        tabSeleccionado = $(this).attr('id');
     });
 });
 

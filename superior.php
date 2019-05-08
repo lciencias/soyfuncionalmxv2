@@ -26,7 +26,7 @@
 					$productosPedidos = array();
 					$pedidos = 0;
 					$_SESSION['noPedidos'] = count($_SESSION['productos']);
-					if($_SESSION && (int) $_SESSION['noPedidos'] > 0){
+					if($_SESSION['visitante'] != ""){
 						$cantidad = 0;
 						$productosSeleccionados = array();
 						foreach( $_SESSION['productos'] as $data){

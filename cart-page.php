@@ -7,7 +7,9 @@
   $db     = new Conexion ( $_dbhost, $_dbuname, $_dbpass, $_dbname, $_port );
   $prod   = new Producto($db,$_SESSION,$_REQUEST,Comunes::LISTAR,Comunes::WEB2);
   $prods  = $prod->obtenRegistros();
-  calculaImporte($prods, $_SESSION);
+  $envio  = 0.00;
+  $importe = calculaImporte($prods, $session);
+  $_SESSION['importe'] = $importe;
   include_once("header.php");
 ?>
 <body>
@@ -39,129 +41,45 @@
         require_once($pathSis."superior.php");
       ?>
 		</header>
-    <!--<section class="breadcrumbs-custom">
-      <div class="parallax-container" data-parallax-img="<?=$pathWeb?>images/breadcrumbs-bg.jpg">
-        <div class="breadcrumbs-custom-body parallax-content context-dark darken-overlay">
-          <div class="container">
-            <h2 class="breadcrumbs-custom-title">Pedido</h2>
-          </div>
-        </div>
-      </div>
-    </section>-->
     <section>
       <div class="container">
-        <div id="accordion">
-          <div class="card">
-            <div class="card-header" id="headingOne">
-              <h5 class="mb-0">
-                <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                  Resum&eacute;n de pedido solicitado
-                </button>
-              </h5>
-            </div>
-            <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
-              <div class="card-body">
-              <?php
-                $fechas = obtenFechas($_SESSION);
-                $buffer = numeroPedido($prods, $_SESSION);
-                $buffer.= generaTabs($fechas);
-                $buffer.= contenidos($fechas, $prods, $_SESSION, $pathweb);
-                $buffer.= botonEnviarPedido($pathWeb);
-                echo $buffer;
-              ?>        
+      <?php
+        $fechas = obtenFechas($_SESSION);
+        $buffer = numeroPedido($prods, $_SESSION);
+        echo $buffer;
+      ?>
+        <ul class="nav nav-tabs" role="tablist" id="tabs">
+          <li class="active">
+            <a href="#resumen" role="tab" data-toggle="tab">
+              <span style="color:#002857"><b>Resum&eacute;n  del Pedido</b></span>
+            </a>
+          </li>
+          <li>
+            <a href="#envio" role="tab" data-toggle="tab">
+              <span style="color:#002857">Direcci&oacute;n de envi&oacute;</b></span>
+            </a>
+          </li>
+        </ul> 
+        <div class="tab-content">
+          <div class="tab-pane active" id="resumen">
+            <?php
+              $buffer = generaTabs($fechas);
+              $buffer.= contenidos($fechas, $prods, $_SESSION, $pathweb);
+              echo $buffer;
+            ?>        
+          </div>
+          <div class="tab-pane" id="envio">
+            <div class="row row-30 justify-content-center">
+              <div class="col-md-6">
+                <?php
+                  echo formulario();
+                ?>
               </div>
-            </div>
-          </div>
-          <div class="card">
-            <div class="card-header" id="headingTwo">
-              <h5 class="mb-0">
-                <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                  Direcci&oacute;n de envi&oacute;n
-                </button>
-              </h5>
-            </div>
-            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
-              <div class="card-body">
-              <div class="container">
-          <div class="row row-50 justify-content-center">
-            <div class="col-md-10 col-lg-6">
-              <h3 class="font-weight-medium">Direcci&oacute;n de env&iacute;o</h3>
-              <form class="rd-form rd-mailform form-checkout">
-                <div class="row row-30">
-                  <div class="col-sm-6">
-                    <div class="form-wrap">
-                      <input class="form-input" id="checkout-first-name-1" type="text" name="name" data-constraints="@Required"/>
-                      <label class="form-label" for="checkout-first-name-1">Nombre(s)</label>
-                    </div>
-                  </div>
-                  <div class="col-sm-6">
-                    <div class="form-wrap">
-                      <input class="form-input" id="checkout-last-name-1" type="text" name="name" data-constraints="@Required"/>
-                      <label class="form-label" for="checkout-last-name-1">Apellidos</label>
-                    </div>
-                  </div>
-                  
-                  <div class="col-12">
-                    <div class="form-wrap">
-                      <input class="form-input" id="checkout-address-1" type="text" name="name" data-constraints="@Required"/>
-                      <label class="form-label" for="checkout-address-1">Direcci&oacute;n</label>
-                    </div>
-                  </div>
-                  <div class="col-12">
-                    <div class="form-wrap">
-                      <select name="delegacion" id="delegacion" class="form-control">
-                      <option value="0">Delegaci&oacute;n</option>
-                      <option value="1">&Aacute;lvaro Obreg&oacute;n</option>
-                      <option value="3">Coyoac&aacute;n</option>
-                      <option value="16">Miguel Hidalgo</option>
-                      </select>
-                      <!--<label class="form-label" for="checkout-address-del">Delegaci&oacute;n     </label>-->
-                    </div>
-                  </div>
-                  <div class="col-sm-6">
-                    <div class="form-wrap">
-                      <input class="form-input" id="checkout-email-1" type="email" name="email" data-constraints="@Email @Required"/>
-                      <label class="form-label" for="checkout-email-1">Correo Electr&oacute;nico</label>
-                    </div>
-                  </div>
-                  <div class="col-sm-6">
-                    <div class="form-wrap">
-                      <input class="form-input" id="checkout-phone-1" type="text" name="phone" data-constraints="@Numeric"/>
-                      <label class="form-label" for="checkout-phone-1">Celular</label>
-                    </div>
-                  </div>
-                </div>
-                <label class="checkbox-inline text-transform-capitalize">
-                  <!--<input name="input-checkbox-1" value="checkbox-1" type="checkbox"/>My Billing Address and Shipping Address are the same-->
-                  (En caso de que no te encuentres en las delegaciones listadas, por favor comunicate al Tel:  55 51 31 86 96)
-                </label>
-              </form>
-            </div>
-            <div class="col-md-10 col-lg-6">
-            <h3 class="font-weight-medium">Importe</h3>
-              <div class="table-custom-responsive">
-                <table class="table-custom table-custom-primary table-checkout">
-                  <tbody>
-                    <tr>
-                      <td>Subtotal</td>
-                      <td>$43</td>
-                    </tr>
-                    <tr>
-                      <td>Importe</td>
-                      <td>Gratis</td>
-                    </tr>
-                    <tr>
-                      <td>Total</td>
-                      <td>$43</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>  
-            </div>
-          </div>
-        </div>
-      
-            </div>
+              <div class="col-md-6">
+                <?php
+                  echo importe($_SESSION['importe'] , $envio);
+                ?>  
+              </div>
             </div>
           </div>
         </div>
@@ -245,7 +163,7 @@ function generaTabla($datas, $session, $pathWeb, $fecha){
         $precioDia = $precioDia + ($data['precio'] * $data['cantidad']) + 0.00;
       }
       $buffer .= '<h6 class="cart-inline-title" id="pedidofecha-'.$fecha.'">
-      <span style="color:#e7e76a;">Importe del d&iacute;a: </span><span style="color:#002857;"> $ '.number_format($precioDia, 2, '.', '').'</span>
+      <span style="color:#e7e76a;">Importe del d&iacute;a: </span><span style="color:#002857;" id="simportedia-'.$fecha.'"> $ '.number_format($precioDia, 2, '.', '').'</span>
       </h6>
       <input type="hidden" id="importedia-'.$fecha.'" value="'.number_format($precioDia, 2, '.', '').'">
       </span></h6></div>';
@@ -256,11 +174,13 @@ function generaTabs($arrayFechas){
   $contador = 0;
   $buf   = "";
   if(count($arrayFechas) > 0){
-    $buf .= ' <ul class="nav nav-tabs" role="tablist">';
+    $buf .= '<input type="hidden" id="fechainicial" value="'.$arrayFechas[0].'">
+     <ul class="nav nav-tabs" role="tablist" id="tabs">';
     foreach($arrayFechas as $fecha){
       $tmp = ($contador == 0) ? " class='active' " : " ";
+      
       $buf .= '<li '.$tmp.'>
-          <a href="#hometab'.$contador.'" role="tab" data-toggle="tab">
+          <a href="#hometab'.$contador.'" role="tab" data-toggle="tab" id="'.$fecha.'" class="selecTab">
           <span style="color:#002857">D&iacute;a: <b>'.$fecha.'</b></span></a>
           </li>';
       $contador++;
@@ -270,7 +190,7 @@ function generaTabs($arrayFechas){
   }
 }
 
-function contenidos($arrayFechas, $prods, $session, $pathweb){
+function contenidos($arrayFechas, $prods, $session, $pathweb){ 
   $contador = 0;
   $buf = '<div class="tab-content">';
   foreach($arrayFechas as $fecha){
@@ -298,6 +218,7 @@ function obtenFechas($session){
 
 function numeroPedido($prods, $session){
   $importe = calculaImporte($prods, $session);
+  $_SESSION['importe'] = $importe;
   $buf = '<div class="row">
             <div class="col-md-6">
               <h5 class="cart-inline-title" id="noPedido">
@@ -334,5 +255,90 @@ function calculaImporte($prods, $session){
     $importe = $importe + $producto['precio'] + 0.00;
   }
   return $importe;
+}
+
+function formulario(){
+  $buf = '
+    <form class="rd-form rd-mailform form-checkout">
+      <div class="row">
+        <div class="col-sm-6">
+          <div class="form-wrap">
+            <input class="form-input" placeholder = "Nombre(s)" id="checkout-first-name-1" type="text" name="name" data-constraints="@Required"/>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="form-wrap">
+            <input class="form-input" placeholder = "Apellidos" id="checkout-last-name-1" type="text" name="name" data-constraints="@Required"/>
+            
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-6">
+          <div class="form-wrap">
+            <input class="form-input" id="checkout-email-1" type="email" name="email" data-constraints="@Email @Required"/>
+            <label class="form-label" for="checkout-email-1">Correo Electr&oacute;nico</label>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="form-wrap">
+            <input class="form-input" id="checkout-phone-1" type="text" name="phone" data-constraints="@Numeric"/>
+            <label class="form-label" for="checkout-phone-1">Celular</label>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-6">
+          <div class="form-wrap">
+            <input class="form-input" id="checkout-address-1" type="text" name="name" data-constraints="@Required"/>
+            <label class="form-label" for="checkout-address-1">Direcci&oacute;n</label>
+          </div>
+        </div>
+        <div class="col-6">
+          <div class="form-wrap">
+            <select name="delegacion" id="delegacion" class="form-control">
+              <option value="0">Delegaci&oacute;n</option>
+              <option value="1">&Aacute;lvaro Obreg&oacute;n</option>
+              <option value="3">Coyoac&aacute;n</option>
+              <option value="16">Miguel Hidalgo</option>
+            </select>
+            <label class="form-label" for="checkout-address-del">Delegaci&oacute;n</label>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12" style="text-align:justify">
+          (En caso de que no te encuentres en las delegaciones listadas, por favor comunicate al Tel:  55 51 31 86 96)
+        </div>
+      </div>
+      </form>';
+  return $buf;
+}
+
+function importe($importe , $envio){
+  $buf = '
+    <div class="table-custom-responsive">
+      <table class="table-custom table-custom-primary table-checkout">
+        <tbody>
+          <tr>
+            <td>Subtotal</td>
+            <td>$&nbsp;'.number_format($importe, 2, '.', '').'</td>
+          </tr>
+          <tr>
+            <td>Env&iacute;o</td>
+            <td>$&nbsp;'.number_format($envio, 2, '.', '').'</td>
+          </tr>
+          <tr>
+            <td>Total</td>
+            <td>$&nbsp;'.number_format( ($importe + $envio ), 2, '.', '').'</td>
+          </tr>
+          <tr>
+            <td colspan="2" style="text-align:center;">
+            <button type="button" class="button button-primary button-zakaria" id="enviarPedido">Enviar Pedido</button>
+            </td>
+        </tbody>
+      </table>
+    </div>';
+    return $buf;
 }
 ?>
