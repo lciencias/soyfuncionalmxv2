@@ -24,58 +24,34 @@ class EnviaEmailPedido extends Comunes{
                 break;
         }
 	}
-	
-	private function buscar(){
-		$localizado = false;
-		try{
-			$sql = "SELECT a.id FROM ".$this->tabla." as a 
-					WHERE a.email = '".$this->data['email']."' LIMIT 1;";
-			$res = $this->db->sql_query ($sql);			
-			if ($this->db->sql_numrows ($res) > 0){
-				$localizado = true;	
-			}
-		}catch (\Exception $e){
-			$this->writeLog($e->getMessage(), Comunes::ERROR);
-		}	
-		return $localizado;	
-	}
-	private function guardar(){
-        $fecha = date("Y-m-d H:i:s");
-        $this->mensaje = Comunes::MSGERROR;
-        $this->exito   = Comunes::LISTAR;
-        if ( $this->session['visitante'] == $this->data['sessionId'] 
-              && trim($this->data['email']) != ""
-              && trim($this->data['nombre']) != ""
-              && trim($this->data['phone']) != ""
-              && trim($this->data['address']) != ""
-              && trim($this->data['delegacion']) != ""
-              && strlen(trim($this->data['nombre'])) > 5
-              && strlen(trim($this->data['email'])) > 5
-              && strlen(trim($this->data['phone'])) == 10
-              && strlen(trim($this->data['address'])) > 10
-              && (int) $this->data['delegacion'] >= 0 ){
-          try{
-            $this->mensaje = "El pedido no se cargo correctamente";
-            if(count($this->data) > 0){			
-              foreach($this->data as $key => $value){
-                $this->data[$key] = $this->eliminaCaracteresInvalidos($value);
-					    }
-    					if(!$this->buscar()){
-                $hoy = date("Y-m-d H:i:s");
-                $importe = $this->calculaImporte();
-				    		$ins = "INSERT INTO ".$this->tabla."(fecha_pedido,importe,status,nombre,domiciio,email,telefono,delegacion)
-                VALUES ('".$hoy."','".$importe."','".Comunes::SAVE."','".$this->data['nombre']."','".$this->data['address']."','".$this->data['email']."','".$this->data['phone']."','".$this->data['delegacion']."');";
-		    			  $this->db->sql_query($ins);
-				    	}
-					    $this->mensaje = Comunes::MSGSUCESS;
-					    $this->exito   = Comunes::SAVE;
-              }
-            }
-            catch(\Exception $e){
-                $this->mensaje = Comunes::MSGERROR;
-            }	
-        }
-	}
+
+  private function enviaCorreo(){
+    $tituloMensaje = "Pedido por Intenert ";
+    $body  = "<p>Nuevo pedido realizado por Internet</p>";
+    $body .= "<br><p>Nombre: <b>Luis antonio Hernandez nieto</b></p>";
+    $body .= "<br><p>Numero de celular: <b>55 45 43 44 50</b></p>";
+    $body .= "<br><p>Correo Electronico: <b>lciencias@gmail.com</b></p>";
+    $body .= "<br><p>Domicilio: <b>Jardines de Santa Barbara, Coyoacan Ciudad de Mexico 01020</b></p>";
+    $body .= "<br> Pedido<br>";
+    $body .= "<table style='100%'><tr><th>Cantidad</th><th>producto</th><th>Precio</th></tr>";
+    $body .= "<tr><td>1</td><td>Carne<
+		$body_html="<html><head><title>".$tituloMensaje."</title></head><body><p>".$body."</p></body></html>";
+		$emailFrom = array ("lciencias@gmail.com" => "Administrador SISEC");		
+    try
+ 		{
+ 			$transport = Swift_SmtpTransport::newInstance('smtp.df.gob.mx',25)->setUsername('pat@df.gob.mx')->setPassword('gp=a5=d8');
+ 			$mailer    = Swift_Mailer::newInstance($transport);
+ 			$message   = Swift_Message::newInstance($tituloMnesaje)->setFrom($emailFrom)->setTo($emailTo)->setBody($body_html,'text/html')->addPart($body_html,'text/plain');
+ 			if (($mailer->send($message)) > 0)
+ 			{
+ 				$this->exito = 1;
+ 			}
+ 		}
+ 		catch(Exception $e){
+ 			$this->exito = 0;
+ 			echo "Error:  ".$e->getMessage();
+     }
+  }
 	
 	private function calculaImporte(){
     return $this->session['importe'] + 0;

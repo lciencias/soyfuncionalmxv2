@@ -269,62 +269,113 @@ $(document).ready(function() {
     });
 
     $(document).on("click", ".menos", function(e) {
+        var sessionId = $("#sessionId").val();
         var div = $(this).attr('id');
         var tmp = div.split("-");
         var valor = parseInt($("#cantidad-" + tmp[1]).val());
         var unitario = parseFloat($("#unitario-" + tmp[1]).val());
         var importeDia = parseFloat($("#importedia-" + tabSeleccionado).val());
         var importeTotal = parseFloat($("#importeTotal").val());
-        if (valor > 1) {
-            valor = valor - 1;
-        } else {
-            valor = 1;
-        }
-        $("#cantidad-" + tmp[1]).val(String(valor));
-        $("#importe-" + tmp[1]).val(String((unitario * valor).toFixed(2)));
-        if (valor > 1) {
-            importeTotal = importeTotal - unitario;
-            importeDia = importeDia - unitario;
-        }
-         importeTotalS = String(importeTotal.toFixed(2));
-        importeDiaS = String(importeDia.toFixed(2));         
-        $("#importedia-" + tabSeleccionado).val(importeDia);
-        $("#simportedia-" + tabSeleccionado).html(importeDiaS);
+        if (String(sessionId) !== "") {
+            if (valor > 1) {
+                valor = valor - 1;
+            } else {
+                valor = 1;
+            }
+            $("#cantidad-" + tmp[1]).val(String(valor));
+            $("#importe-" + tmp[1]).val(String((unitario * valor).toFixed(2)));
+            if (valor > 1) {
+                importeTotal = importeTotal - unitario;
+                importeDia = importeDia - unitario;
+            }
+            importeTotalS = String(importeTotal.toFixed(2));
+            importeDiaS = String(importeDia.toFixed(2));
+            $("#importedia-" + tabSeleccionado).val(importeDia);
+            $("#simportedia-" + tabSeleccionado).html(importeDiaS);
 
-        $("#importeTotal").val(importeTotal);
-        $("#txtImporteTotal").html(importeTotalS);
+            $("#importeTotal").val(importeTotal);
+            $("#txtImporteTotal").html(importeTotalS);
+            var url = "actualizaProducto.php";
+            var formData = new FormData();
+            formData.append("idProd", tmp[1]);
+            formData.append("fecha", tabSeleccionado);
+            formData.append("cantidad", valor);
+            formData.append("sessionId", sessionId);
+            $.ajax({
+                type: 'POST',
+                url: url,
+                data: formData,
+                processData: false,
+                contentType: false,
+                dataType: 'json',
+                beforeSend: function() {},
+                success: function(data) {
+                    console.log(data.exito);
+                },
+                error: function(xhr, ajaxOptions, thrownError) {},
+                complete: function() {}
+            });
+        }
+        return false;
     });
 
     $(document).on("click", ".mas", function(e) {
+        alert("mas");
+        var sessionId = $("#sessionId").val();
         var div = $(this).attr('id');
         var tmp = div.split("-");
         var cantidad = parseInt($("#cantidad-" + tmp[1]).val());
         var unitario = parseFloat($("#unitario-" + tmp[1]).val());
         var importeDia = parseFloat($("#importedia-" + tabSeleccionado).val());
         var importeTotal = parseFloat($("#importeTotal").val());
+        if (String(sessionId) !== "") {
+            alert("session   " + sessionId);
+            if (cantidad >= 1) {
+                cantidad = cantidad + 1;
+            } else {
+                cantidad = 1;
+            }
+            $("#cantidad-" + tmp[1]).val(String(cantidad));
+            $("#importe-" + tmp[1]).val(String((unitario * cantidad).toFixed(2)));
+            importeTotal = importeTotal + unitario;
+            importeTotalS = String(importeTotal.toFixed(2));
 
-        if (cantidad >= 1) {
-            cantidad = cantidad + 1;
-        } else {
-            cantidad = 1;
+            importeDia = importeDia + unitario;
+            importeDiaS = String(importeDia.toFixed(2));
+            $("#importedia-" + tabSeleccionado).val(importeDia);
+            $("#simportedia-" + tabSeleccionado).html(importeDiaS);
+            $("#importeTotal").val(importeTotal);
+            $("#txtImporteTotal").html(importeTotalS);
+
+            var url = "actualizaProducto.php";
+            var formData = new FormData();
+            formData.append("idProd", tmp[1]);
+            formData.append("fecha", tabSeleccionado);
+            formData.append("cantidad", valor);
+            formData.append("sessionId", sessionId);
+            alert("dasdadads");
+            $.ajax({
+                type: 'POST',
+                url: url,
+                data: formData,
+                processData: false,
+                contentType: false,
+                dataType: 'json',
+                beforeSend: function() {},
+                success: function(data) {
+                    console.log(data.exito);
+                },
+                error: function(xhr, ajaxOptions, thrownError) {},
+                complete: function() {}
+            });
         }
-        $("#cantidad-" + tmp[1]).val(String(cantidad));
-        $("#importe-" + tmp[1]).val(String((unitario * cantidad).toFixed(2)));
-        importeTotal = importeTotal + unitario;
-        importeTotalS = String(importeTotal.toFixed(2));
-
-        importeDia = importeDia + unitario;
-        importeDiaS = String(importeDia.toFixed(2));
-        $("#importedia-" + tabSeleccionado).val(importeDia);
-        $("#simportedia-" + tabSeleccionado).html(importeDiaS);
-        $("#importeTotal").val(importeTotal);
-        $("#txtImporteTotal").html(importeTotalS);
+        //return false;
     });
 
     $(document).on("change", "#name", function(e) {
-        var nombre  = $("#name").val();
+        var nombre = $("#name").val();
         $("#errorNombre").html("");
-        if(String(nombre) === "" || String(nombre).length < 6){
+        if (String(nombre) === "" || String(nombre).length < 6) {
             $("#errorNombre").html("El campo nombre debe contener al menos 6 caracteres");
             return false;
         }
@@ -332,12 +383,12 @@ $(document).ready(function() {
 
     $(document).on("change", "#email", function(e) {
         $("#errorEmail").html("");
-        var email   = $("#email").val();
-        if(String(email) === "" || String(email).length < 6){
+        var email = $("#email").val();
+        if (String(email) === "" || String(email).length < 6) {
             $("#errorEmail").html("El campo email debe contener al menos 6 caracteres");
             return false;
         }
-        if(!valEmail(email)){
+        if (!valEmail(email)) {
             $("#errorEmail").html("Favor de teclear un correo electronico valido.");
             return false;
         }
@@ -345,9 +396,9 @@ $(document).ready(function() {
 
     $(document).on("change", "#phone", function(e) {
         $("#errorPhone").html("");
-        var phone   = $("#phone").val();
-        alert("phone change:  "+phone);
-        if(String(phone) === "" || phone.length !== 10){
+        var phone = $("#phone").val();
+        alert("phone change:  " + phone);
+        if (String(phone) === "" || phone.length !== 10) {
             $("#errorPhone").html("El campo telefono debe contener 10 numeros");
             return false;
         }
@@ -355,8 +406,8 @@ $(document).ready(function() {
 
     $(document).on("change", "#address", function(e) {
         $("#errorAddress").html("");
-        var address   = $("#address").val();
-        if(String(address) === "" || String(address).length < 11){
+        var address = $("#address").val();
+        if (String(address) === "" || String(address).length < 11) {
             $("#errorAddress").html("El campo domicilio debe contener al menos 10 caracteres");
             return false;
         }
@@ -365,37 +416,35 @@ $(document).ready(function() {
 
     $(document).on("click", "#enviarPedido", function(e) {
         var sessionId = $("#sessionId").val();
-        var nombre  = $("#name").val();
-        var email   = $("#email").val();
-        var phone   = $("#phone").val();
+        var nombre = $("#name").val();
+        var email = $("#email").val();
+        var phone = $("#phone").val();
         var address = $("#address").val();
         var delegacion = $("#delegacion").val();
         $("#errorNombre").html("");
         $("#errorEmail").html("");
         $("#errorPhone").html("");
         $("#errorAddress").html("");
-        if(String(nombre) === "" || String(nombre).length < 6){
+        if (String(nombre) === "" || String(nombre).length < 6) {
             $("#errorNombre").html("El campo nombre debe contener al menos 6 caracteres");
             return false;
         }
-        if(String(email) === "" || String(email).length < 6){
+        if (String(email) === "" || String(email).length < 6) {
             $("#errorEmail").html("El campo email debe contener al menos 6 caracteres");
             return false;
         }
-        if(!valEmail(email)){
+        if (!valEmail(email)) {
             $("#errorEmail").html("Favor de teclear un correo electronico valido.");
             return false;
         }
-        alert("phone click:  "+phone);
-        if(String(phone) === "" || phone.length !== 10){
+        if (String(phone) === "" || phone.length !== 10) {
             $("#errorPhone").html("El campo telefono debe contener 10 numeros");
             return false;
         }
-        if(String(address) === "" || String(address).length < 11){
+        if (String(address) === "" || String(address).length < 11) {
             $("#errorAddress").html("El campo domicilio debe contener al menos 10 caracteres");
             return false;
         }
-        alert("Enviar Pedido");
         if (String(sessionId) !== "") {
             console.log("enviar Correo");
             var url = "enviaPedido.php";
@@ -413,12 +462,8 @@ $(document).ready(function() {
                 processData: false,
                 contentType: false,
                 dataType: 'json',
-                beforeSend: function() {
-                    //$('#aviso').css({ "background-color": "#FFFFFF", "color": "#98bf44", "border": "2px solid #DDDDDD" });
-                    //$('#aviso').html(procesando);
-                },
+                beforeSend: function() {},
                 success: function(data) {
-                    //$('#aviso').html("");
                     if (parseInt(data.exito) === 1) {
                         //$("#totalPedidos").html(data.msg.noPedidos);
                         //$('#aviso').css({ "background-color": "#98bf44", "color": "#ffffff", "border": "2px solid #DDDDDD" });
@@ -440,21 +485,11 @@ $(document).ready(function() {
         return false;
     });
 
-    $(".elimina").mouseover(function() {
-        //$("#ayuda").html("Eliminar producto");
-    });
-    $(".menos").mouseover(function() {
-        //$("#ayuda").html("Decrementar cantidad de producto");
-    });
-    $(".mas").mouseover(function() {
-        //$("#ayuda").html("Incrementar cantidad de producto");
+    $(document).on("click", "#continuarPedido", function(e) {
+        var url = baseurl + "grid-shop.php";
+        location.href = url;
     });
 
-    $(document).on("click", "#continuarPedido", function(e) {
-        var url = baseurl+"grid-shop.php";
-        location.href  = url;
-    });
-    
     if ($("#fechainicial") !== undefined) {
         tabSeleccionado = $("#fechainicial").val();
     }
@@ -468,8 +503,8 @@ $(window).on("load", function() {
     console.log("window loaded");
 })
 
-function valEmail(txt){
-    var b=/^[^@\s]+@[^@\.\s]+(\.[^@\.\s]+)+$/
+function valEmail(txt) {
+    var b = /^[^@\s]+@[^@\.\s]+(\.[^@\.\s]+)+$/
     return b.test(txt)
 }
 /*********************************

@@ -8,7 +8,8 @@
   $prod   = new Producto($db,$_SESSION,$_REQUEST,Comunes::LISTAR,Comunes::WEB2);
   $prods  = $prod->obtenRegistros();
   $envio  = 0.00;
-  $importe = calculaImporte($prods, $session);
+  $importe = calculaImporte($prods, $_SESSION);
+//  $array = regresaProductos($prods, "09-05-2019",$_SESSION['productos']);
   $_SESSION['importe'] = $importe;
   include_once("header.php");
 ?>
@@ -98,13 +99,13 @@
 /** Funciones adicionales */
 function regresaProductos($prods, $fecha,$seleccion){
   $arrayTmp = array();
-  foreach($seleccion as $data){
-    $temporal = explode('|',$data);
-    $fechaP   = $temporal[0];
-    $idProd   = $temporal[1];  
-    if($fecha == $fechaP && array_key_exists($idProd, $prods)){
-        $prods[$idProd]['cantidad'] = $prods[$idProd]['cantidad'] + 1 ;
-        $arrayTmp[$idProd]          = $prods[$idProd];
+
+  foreach($seleccion as $fechaP => $data){
+    foreach ($data as $idProd => $cantidad){
+      if($fecha == $fechaP && array_key_exists($idProd, $prods)){
+        $prods[$idProd]['cantidad'] = $cantidad;
+        $arrayTmp[$idProd] = $prods[$idProd];
+      }
     }
   }
   return $arrayTmp;
@@ -207,10 +208,9 @@ function contenidos($arrayFechas, $prods, $session, $pathweb){
 
 function obtenFechas($session){
   $arrayFechas = array();
-  foreach($session['productos'] as $data){
-    $temporal = explode('|',$data);
-    if(!in_array($temporal[0], $arrayFechas)){
-      $arrayFechas[]= $temporal[0];
+  foreach($session['productos'] as $fecha => $data){
+    if(!in_array($fecha, $arrayFechas)){
+      $arrayFechas[]= $fecha;
     }
   }
   return $arrayFechas;
@@ -248,12 +248,11 @@ function botonEnviarPedido($pathWeb){
 function calculaImporte($prods, $session){
   $importe = 0.00;
   $seleccion = $session['productos'];
-  foreach($seleccion as $data){
-    $temporal = explode('|',$data);
-    $fechaP   = $temporal[0];
-    $idProd   = $temporal[1];  
-    $producto = $prods[$idProd];
-    $importe = $importe + $producto['precio'] + 0.00;
+  foreach($seleccion as $fechaP => $data){
+    foreach($data as $idProd => $cantidad){
+      $producto = $prods[$idProd];
+      $importe = $importe + ($producto['precio'] * $cantidad) + 0.00;
+    }
   }
   return $importe;
 }
