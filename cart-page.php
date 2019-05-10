@@ -7,9 +7,9 @@
   $db     = new Conexion ( $_dbhost, $_dbuname, $_dbpass, $_dbname, $_port );
   $prod   = new Producto($db,$_SESSION,$_REQUEST,Comunes::LISTAR,Comunes::WEB2);
   $prods  = $prod->obtenRegistros();
+  $_SESSION['catalogo'] = $prods;
   $envio  = 0.00;
   $importe = calculaImporte($prods, $_SESSION);
-//  $array = regresaProductos($prods, "09-05-2019",$_SESSION['productos']);
   $_SESSION['importe'] = $importe;
   include_once("header.php");
 ?>

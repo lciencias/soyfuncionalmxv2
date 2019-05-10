@@ -320,30 +320,30 @@ $(document).ready(function() {
     });
 
     $(document).on("click", ".mas", function(e) {
-        alert("mas");
         var sessionId = $("#sessionId").val();
         var div = $(this).attr('id');
         var tmp = div.split("-");
-        var cantidad = parseInt($("#cantidad-" + tmp[1]).val());
+        var valor = parseInt($("#cantidad-" + tmp[1]).val());
         var unitario = parseFloat($("#unitario-" + tmp[1]).val());
         var importeDia = parseFloat($("#importedia-" + tabSeleccionado).val());
         var importeTotal = parseFloat($("#importeTotal").val());
         if (String(sessionId) !== "") {
-            alert("session   " + sessionId);
-            if (cantidad >= 1) {
-                cantidad = cantidad + 1;
+            if (valor >= 1) {
+                valor = valor + 1;
             } else {
-                cantidad = 1;
+                valor = 1;
             }
-            $("#cantidad-" + tmp[1]).val(String(cantidad));
-            $("#importe-" + tmp[1]).val(String((unitario * cantidad).toFixed(2)));
-            importeTotal = importeTotal + unitario;
+            $("#cantidad-" + tmp[1]).val(String(valor));
+            $("#importe-" + tmp[1]).val(String((unitario * valor).toFixed(2)));
+            if (valor > 1) {
+                importeTotal = importeTotal + unitario;
+                importeDia = importeDia + unitario;
+            }
             importeTotalS = String(importeTotal.toFixed(2));
-
-            importeDia = importeDia + unitario;
             importeDiaS = String(importeDia.toFixed(2));
             $("#importedia-" + tabSeleccionado).val(importeDia);
             $("#simportedia-" + tabSeleccionado).html(importeDiaS);
+
             $("#importeTotal").val(importeTotal);
             $("#txtImporteTotal").html(importeTotalS);
 
@@ -353,7 +353,6 @@ $(document).ready(function() {
             formData.append("fecha", tabSeleccionado);
             formData.append("cantidad", valor);
             formData.append("sessionId", sessionId);
-            alert("dasdadads");
             $.ajax({
                 type: 'POST',
                 url: url,
@@ -369,7 +368,7 @@ $(document).ready(function() {
                 complete: function() {}
             });
         }
-        //return false;
+        return false;
     });
 
     $(document).on("change", "#name", function(e) {

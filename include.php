@@ -17,9 +17,9 @@ if($_SESSION[$visitante] == ""){
     if(date("H") > 13){
         $fechaPedido = date("d-m-Y",strtotime($fecha_actual."+ 1 days")); 
     }
-    $_SESSION['productos'] = array();
+    $_SESSION['productos']   = array();
     $_SESSION['fechaPedido'] = $fechaPedido;
-    $_SESSION['noPedidos'] = count($_SESSION['productos']);
+    $_SESSION['noPedidos']   = count($_SESSION['productos']);
 }
 $site       = "Soy Funcional MX";
 $panelTitle = "Soy Funcional MX";

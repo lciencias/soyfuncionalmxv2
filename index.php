@@ -14,11 +14,13 @@
   $categ  = new Categoria($db,$_SESSION,$_REQUEST,Comunes::LISTAR,Comunes::WEB);
   $categs = $categ->obtenRegistros();
   $prod   = new Producto($db,$_SESSION,$_REQUEST,Comunes::LISTAR,Comunes::WEB);
-  $prods  = $prod->obtenRegistros();
+	$prods  = $prod->obtenRegistros();
+	$prodBiz= new Producto($db,$_SESSION,$_REQUEST,Comunes::LISTAR,Comunes::WEB2);
+  $_SESSION['catalogo'] = $prodBiz->obtenRegistros();
   $testi  = new Testimonial($db,$_SESSION,$_REQUEST,Comunes::LISTAR,Comunes::WEB);
   $testim = $testi->obtenRegistros();
   $preg   = new Preguntas($db,$_SESSION,$_REQUEST,Comunes::LISTAR,Comunes::WEB);
-  $pregun = $preg->obtenRegistros();
+	$pregun = $preg->obtenRegistros();
   include_once("header.php");
 ?>
 	<body>

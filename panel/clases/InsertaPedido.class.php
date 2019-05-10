@@ -61,10 +61,10 @@ class InsertaPedido extends Comunes{
 		return $localizado;	
 	}
 	private function guardar(){
-        $fecha = date("Y-m-d H:i:s");
-        $this->mensaje = Comunes::MSGERROR;
-        $this->exito   = Comunes::LISTAR;
-        if ( $this->session['visitante'] == $this->data['sessionId'] 
+    $fecha = date("Y-m-d H:i:s");
+    $this->mensaje = Comunes::MSGERROR;
+    $this->exito   = Comunes::LISTAR;
+    if ( $this->session['visitante'] == $this->data['sessionId'] 
               && trim($this->data['email']) != ""
               && trim($this->data['nombre']) != ""
               && trim($this->data['phone']) != ""
@@ -75,31 +75,56 @@ class InsertaPedido extends Comunes{
               && strlen(trim($this->data['phone'])) == 10
               && strlen(trim($this->data['address'])) > 10
               && (int) $this->data['delegacion'] >= 0 ){
-          try{
-            $this->mensaje = "El pedido no se cargo correctamente";
-            if(count($this->data) > 0){			
-              foreach($this->data as $key => $value){
-                $this->data[$key] = $this->eliminaCaracteresInvalidos($value);
-					    }
-    					if(!$this->buscar()){
-                $hoy = date("Y-m-d H:i:s");
-                $importe = $this->calculaImporte();
-				    		$ins = "INSERT INTO ".$this->tabla."(fecha_pedido,importe,status,nombre,domiciio,email,telefono,delegacion)
-                VALUES ('".$hoy."','".$importe."','".Comunes::SAVE."','".$this->data['nombre']."','".$this->data['address']."','".$this->data['email']."','".$this->data['phone']."','".$this->data['delegacion']."');";
-		    			  $this->db->sql_query($ins);
-				    	}
-					    $this->mensaje = Comunes::MSGSUCESS;
-					    $this->exito   = Comunes::SAVE;
-              }
-            }
-            catch(\Exception $e){
-                $this->mensaje = Comunes::MSGERROR;
-            }	
-        }
+    	try{
+        $this->mensaje = "El pedido no se cargo correctamente";
+        if(count($this->data) > 0){			
+          foreach($this->data as $key => $value){
+            $this->data[$key] = $this->eliminaCaracteresInvalidos($value);
+			   	}
+					if(!$this->buscar()){
+						$hoy = date("Y-m-d H:i:s");
+						$importe = $this->calculaImporte();
+						$ins = "INSERT INTO ".$this->tabla."(fecha_pedido,importe,status,nombre,domiciio,email,telefono,delegacion)
+									VALUES ('".$hoy."','".$importe."','".Comunes::SAVE."','".$this->data['nombre']."','".$this->data['address']."','".$this->data['email']."','".$this->data['phone']."','".$this->data['delegacion']."');";
+						if($this->db->sql_query($ins)){
+							$this->guardaProductosPedidos($this->db->sql_nextid());
+						}
+					}
+					$this->mensaje = Comunes::MSGSUCESS;
+					$this->exito   = Comunes::SAVE;
+				}
+    	}	
+    	catch(\Exception $e){
+         $this->mensaje = Comunes::MSGERROR;
+      }	
+    }
 	}
 	
+	private function guardaProductosPedidos($pedidoId){
+		if(count($this->session['productos']) > 0){
+			foreach( $this->session['productos'] as $fecha => $data){
+				$hoy = date("Y-m-d H:i:s");
+				foreach($data as $idProd => $cantidad){
+					$producto = $this->productos[$idProd];
+					$importe  = ($cantidad * $this->productos['precio']) + 0;
+					$ins = "INSERT INTO pedidos_productos(id_pedido,id_producto,cantidad,unitario, importe,fecha) 
+								  VALUES ('".$pedidoId."','".$idProd."','".$cantidad."','".$producto['precio']."','".$importe."','".$hoy."');";
+					$this->db->sql_query($ins);
+				}
+			}
+		}
+	}
+
 	private function calculaImporte(){
-    return $this->session['importe'] + 0;
+		$importe = 0.00;
+  	$seleccion = $this->session['productos'];
+  	foreach($seleccion as $fechaP => $data){
+    	foreach($data as $idProd => $cantidad){
+      	$producto = $this->productos[$idProd];
+      	$importe = $importe + ($producto['precio'] * $cantidad) + 0.00;
+			}
+  	}
+  	return $importe;
   }
 	
 	public function obtenExito(){
@@ -110,7 +135,7 @@ class InsertaPedido extends Comunes{
 		return $this->mensaje;
 	}
 
-	public obtenCatalogoProductos(){
+	public function obtenCatalogoProductos(){
 		return $this->productos;
 	}
 }

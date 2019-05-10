@@ -13,6 +13,8 @@
   $categs = $categ->obtenRegistros();
   $prod   = new Producto($db,$_SESSION,$_REQUEST,Comunes::LISTAR,Comunes::WEB);
   $prods  = $prod->obtenRegistros();
+  $prodBiz= new Producto($db,$_SESSION,$_REQUEST,Comunes::LISTAR,Comunes::WEB2);
+  $_SESSION['catalogo'] = $prodBiz->obtenRegistros();
   $pop    = new Populares($db,$_SESSION,$_REQUEST,Comunes::LISTAR,Comunes::WEB);
   $popul  = $pop->obtenRegistros();
   if(isset($_REQUEST[$cat]) && (int) $_REQUEST[$cat] > 0){
