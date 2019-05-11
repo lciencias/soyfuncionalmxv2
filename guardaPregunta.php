@@ -9,10 +9,10 @@ date_default_timezone_set("America/Mexico_City");
 $array = array('exito' => 0,'msg' => 'Error al guardar la pregunta');
 if ( $_SESSION['visitante'] == $_POST['sessionId'] && trim($_POST['pregunta']) != ""  
     && strlen(trim($_POST['pregunta'])) > 3){
-    include_once($pathWeb."panel/BDconfig.php");
-    include_once($pathWeb."panel/clases/Comunes.class.php");
-    include_once($pathWeb."panel/clases/Conexion.class.php");
-    include_once($pathWeb."panel/clases/InsertaPregunta.class.php");
+    include_once($pathSys."panel/BDconfig.php");
+    include_once($pathSys."panel/clases/Comunes.class.php");
+    include_once($pathSys."panel/clases/Conexion.class.php");
+    include_once($pathSys."panel/clases/InsertaPregunta.class.php");
     $db  = new Conexion( $_dbhost, $_dbuname, $_dbpass, $_dbname, $persistency = true );
     $pregunta = new InsertaPregunta($db, $_SESSION, $_POST, Comunes::SAVE);
     $array = array('exito' => $pregunta->obtenExito(),'msg' => $pregunta->obtenMensaje());

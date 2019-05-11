@@ -7,7 +7,7 @@ ini_set('memory_limit', -1);
 date_default_timezone_set("America/Mexico_City");
 $array = array('exito' => 0,'msg' => 'Error al guardar la pregunta');
 if ( $_SESSION['visitante'] == $_POST['sessionId'] && (int) $_POST['idProd'] > 0 && strlen(trim($_POST['fecha'])) == 10){
-      include_once($pathWeb."panel/clases/Comunes.class.php");
+      include_once($pathSys."panel/clases/Comunes.class.php");
       $fecha    = $_POST['fecha'];
       $cantidad = Comunes::SAVE;
       $idProd   = (int)$_POST['idProd'];      
@@ -17,7 +17,7 @@ if ( $_SESSION['visitante'] == $_POST['sessionId'] && (int) $_POST['idProd'] > 0
       }
       $_SESSION['noPedidos'] = count($_SESSION['productos']);
       $_SESSION['importe'] = calculaImporte($_SESSION['catalogo'], $_SESSION);;
-      $array = array('exito' => Comunes::SAVE,'msg' => $_SESSION, 'importe' => $_SESSION['importe']);
+      $array = array('exito' => Comunes::SAVE,'msg' => Comunes::MSGSUCESS, 'importe' => $_SESSION['importe']);
 }
 die(json_encode($array));
 

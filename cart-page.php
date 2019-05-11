@@ -8,6 +8,7 @@
   $prod   = new Producto($db,$_SESSION,$_REQUEST,Comunes::LISTAR,Comunes::WEB2);
   $prods  = $prod->obtenRegistros();
   $_SESSION['catalogo'] = $prods;
+
   $envio  = 0.00;
   $importe = calculaImporte($prods, $_SESSION);
   $_SESSION['importe'] = $importe;

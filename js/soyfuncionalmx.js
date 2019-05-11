@@ -396,7 +396,6 @@ $(document).ready(function() {
     $(document).on("change", "#phone", function(e) {
         $("#errorPhone").html("");
         var phone = $("#phone").val();
-        alert("phone change:  " + phone);
         if (String(phone) === "" || phone.length !== 10) {
             $("#errorPhone").html("El campo telefono debe contener 10 numeros");
             return false;
@@ -445,7 +444,6 @@ $(document).ready(function() {
             return false;
         }
         if (String(sessionId) !== "") {
-            console.log("enviar Correo");
             var url = "enviaPedido.php";
             var formData = new FormData();
             formData.append("nombre", nombre);
@@ -463,21 +461,15 @@ $(document).ready(function() {
                 dataType: 'json',
                 beforeSend: function() {},
                 success: function(data) {
+                    console.log("data:  " + data.exito);
                     if (parseInt(data.exito) === 1) {
-                        //$("#totalPedidos").html(data.msg.noPedidos);
-                        //$('#aviso').css({ "background-color": "#98bf44", "color": "#ffffff", "border": "2px solid #DDDDDD" });
-                        //$('#aviso').html("Producto Agregado");
                         console.log("se ha enviado el pedido");
+                        location.href = baseurl + "logout.php";
                     } else {
                         console.log("Error al enviar el pedido");
-                        //$('#aviso').css({ "background-color": "#f5543f", "color": "#ffffff", "border": "2px solid #DDDDDD" });
-                        //$('#aviso').html("Error: el producto NO se agrego");
                     }
-                    return false;
                 },
-                error: function(xhr, ajaxOptions, thrownError) {
-                    return false;
-                },
+                error: function(xhr, ajaxOptions, thrownError) {},
                 complete: function() {}
             });
         }

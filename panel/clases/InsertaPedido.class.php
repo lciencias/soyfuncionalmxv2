@@ -2,12 +2,14 @@
 include_once ("Comunes.class.php");
 class InsertaPedido extends Comunes{
 	private $db;
-	public $session;
+	public  $session;
 	private $data;
 	private $opc;
 	private $mensaje;
 	private $exito;
 	private $productos;
+	private $usuario;
+	private $delegaciones;
 	
 	function __construct($db,$session,$data,$opc){
 		parent::__construct($session);
@@ -18,6 +20,7 @@ class InsertaPedido extends Comunes{
 		$this->tabla       = "pedidos";
 		$this->exito       = Comunes::LISTAR;
 		$this->productos   = array();
+		$this->delegaciones = array(1 => 'Alvaro Obregon', 3 => 'Coyoacan', 16 => 'Miguel Hidalgo');
 		$this->catalogoProductos();	
 		switch($this->opc){
 			case Comunes::SAVE:
@@ -49,10 +52,11 @@ class InsertaPedido extends Comunes{
 	private function buscar(){
 		$localizado = false;
 		try{
-			$sql = "SELECT a.id FROM ".$this->tabla." as a 
-					WHERE a.email = '".$this->data['email']."' LIMIT 1;";
+			$sql = "SELECT * FROM usuarios as a 
+							WHERE a.email = '".$this->data['email']."' OR telefono='".$this->data['phone']."' LIMIT 1;";
 			$res = $this->db->sql_query ($sql);			
 			if ($this->db->sql_numrows ($res) > 0){
+				$this->usuario = $this->db->sql_fetchass();
 				$localizado = true;	
 			}
 		}catch (\Exception $e){
@@ -60,6 +64,30 @@ class InsertaPedido extends Comunes{
 		}	
 		return $localizado;	
 	}
+	private function generaPassword(){
+		return substr( md5(microtime()), 1, 8);
+	}
+
+	private function insertaUsuario(){
+		
+		if(!$this->buscar()){
+			$hoy      = date("Y-m-d H:i:s");
+			$passwordS = $this->generaPassword();
+			$password  = "PASSWORD('".$passwordS."')";
+			$insUser = "INSERT INTO usuarios (nombre, email, telefono,domicilio, id_delegacion,delegacion, contrasenaS, contrasena, fecha_alta, fecha_ult_acceso, activo)
+									VALUES ('".$this->data['nombre']."','".$this->data['email']."',
+												  '".$this->data['phone']."','".$this->data['address']."',
+													'".$this->data['delegacion']."','".$this->delegaciones[$this->data['delegacion']]."',
+													'".$passwordS."',".$password.",'".$hoy."','".$hoy."','".Comunes::SAVE."');";
+			$resUser = $this->db->sql_query($insUser);
+			$idUser  = $this->db->sql_nextid();
+		}else{
+			$idUser  = $this->usuario['id'];
+		}
+		return $idUser;
+	}
+
+
 	private function guardar(){
     $fecha = date("Y-m-d H:i:s");
     $this->mensaje = Comunes::MSGERROR;
@@ -80,18 +108,20 @@ class InsertaPedido extends Comunes{
         if(count($this->data) > 0){			
           foreach($this->data as $key => $value){
             $this->data[$key] = $this->eliminaCaracteresInvalidos($value);
-			   	}
-					if(!$this->buscar()){
+					}
+					$idUser = $this->insertaUsuario(); 
+					if( (int) $idUser > 0 ){
 						$hoy = date("Y-m-d H:i:s");
 						$importe = $this->calculaImporte();
-						$ins = "INSERT INTO ".$this->tabla."(fecha_pedido,importe,status,nombre,domiciio,email,telefono,delegacion)
-									VALUES ('".$hoy."','".$importe."','".Comunes::SAVE."','".$this->data['nombre']."','".$this->data['address']."','".$this->data['email']."','".$this->data['phone']."','".$this->data['delegacion']."');";
-						if($this->db->sql_query($ins)){
-							$this->guardaProductosPedidos($this->db->sql_nextid());
-						}
+						$ins = "INSERT INTO ".$this->tabla."(fecha_pedido,importe,status,id_usuario)
+									VALUES ('".$hoy."','".$importe."','".Comunes::SAVE."','".$idUser."');";
+						$this->db->sql_query($ins);
+						$idPedido = $this->db->sql_nextid();
+						$this->guardaProductosPedidos($idPedido);
+						$this->insertaCorreo($idUser, $idPedido);
+						$this->mensaje = Comunes::MSGSUCESS;
+					  $this->exito   = Comunes::SAVE;
 					}
-					$this->mensaje = Comunes::MSGSUCESS;
-					$this->exito   = Comunes::SAVE;
 				}
     	}	
     	catch(\Exception $e){
@@ -100,13 +130,69 @@ class InsertaPedido extends Comunes{
     }
 	}
 	
+	private function construyeCuerpo(){
+		$tituloMensaje = "Pedido por Intenert ";
+		$body  = "<p>Nuevo pedido realizado por Internet</p>";
+    $body .= "<br><p>Nombre: <b>".utf8_encode($this->data['nombre'])."</b></p>";
+    $body .= "<br><p>Numero de celular: <b>".$this->data['phone']."</b></p>";
+    $body .= "<br><p>Correo Electronico: <b>".$this->data['email']."</b></p>";
+		$body .= "<br><p>Domicilio: <b>".utf8_encode($this->data['address'])."</b></p>";
+		$body .= "<br><p>Delegación: <b>".$this->delegaciones[$this->data['delegacion']]."</b></p>";
+    $body .= "<br> Pedido<br>";
+		$body .= "<table style='100%' class='table'>
+								<thead>
+									<tr>
+										<th>Cantidad</th>
+										<th>Producto</th>
+										<th>Precio Unitario</th>
+										<th>Importe</th>
+									</tr>
+								</thead>
+								<tbody>";
+		$importeTotal = 0.00;
+		$importeProdu = 0.00;
+		foreach($this->session['productos'] as $fecha => $data){
+			foreach($data as $idProd => $cantidad){
+				$producto = $this->productos[$idProd];
+				$importeProdu = ($cantidad * $producto['precio']) + 0;
+				$importeTotal = $importeTotal + $importeProdu + 0;
+				$body.= "<tr>
+									<td>".$cantidad."</td>
+									<td>".utf8_encode($producto['producto'])."</td>
+									<td>".number_format($producto['precio'],2,'.',',')."</td>
+									<td>".number_format(($importeProdu),2,'.',',')."</td>
+									</tr>";
+				}
+			}
+			$body .="</tbody>";
+			$body .="<tfoot><tr><td colspan='3'>Total:</td><td>".number_format($importeTotal,2, '.',',')."</td></tr></tfoot></table>";
+			$body_html="<html><head><title>".$tituloMensaje."</title></head><body><p>".$body."</p></body></html>";
+			return $body_html;
+	}
+
+
+	private function insertaCorreo($idUser, $idPedido){
+		$hoy = date("Y-m-d H:i:s");
+		$body  = $this->construyeCuerpo();
+		$email = "hola@soyfuncionalmx.com";
+		$copia = "lciencias@gmail.com";
+		try{
+			$insEmail = 'INSERT INTO correos (id_usuario, id_pedido, email, copia, body, estatus,fecha)
+									VALUES ("'.$idUser.'","'.$idPedido.'","'.$email.'","'.$copia.'","'.$body.'","0","'.$hoy.'");';
+			$this->db->sql_query($insEmail);
+
+		}
+		catch(Exception $e){
+			$this->mensaje = Comunes::MSGERROR;
+		}
+	}
 	private function guardaProductosPedidos($pedidoId){
 		if(count($this->session['productos']) > 0){
 			foreach( $this->session['productos'] as $fecha => $data){
 				$hoy = date("Y-m-d H:i:s");
 				foreach($data as $idProd => $cantidad){
 					$producto = $this->productos[$idProd];
-					$importe  = ($cantidad * $this->productos['precio']) + 0;
+					$importe  = ($cantidad * $producto['precio']) + 0;
 					$ins = "INSERT INTO pedidos_productos(id_pedido,id_producto,cantidad,unitario, importe,fecha) 
 								  VALUES ('".$pedidoId."','".$idProd."','".$cantidad."','".$producto['precio']."','".$importe."','".$hoy."');";
 					$this->db->sql_query($ins);

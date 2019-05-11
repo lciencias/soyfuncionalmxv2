@@ -1,62 +1,80 @@
 <?php
 include_once ("Comunes.class.php");
 class EnviaEmailPedido extends Comunes{
-	public  $session;
-	private $data;
-  private $opc;
-  private $productos;
+	public  $db;
 	private $mensaje;
 	private $exito;
+	private $registros;
 
-	
-	
-	function __construct($session, $data, $opc, $productos){
-		parent::__construct($session);
-		$this->session     = $session;
-		$this->data        = $data;
-    $this->opc         = $opc;
-    $this->productos   = $productos;
-		$this->exito       = Comunes::LISTAR;
-		
-		switch($this->opc){
-			case Comunes::SAVE:
-				$this->enviaCorreo();
-                break;
-        }
+	function __construct($db){
+		$this->db     = $db;
+		$this->exito  = Comunes::LISTAR;
+		$this->mensaje= Comunes::MSGERROR;
+		$this->procesaCorreos();
+		$this->envia();
 	}
 
-  private function enviaCorreo(){
-    $tituloMensaje = "Pedido por Intenert ";
-    $body  = "<p>Nuevo pedido realizado por Internet</p>";
-    $body .= "<br><p>Nombre: <b>Luis antonio Hernandez nieto</b></p>";
-    $body .= "<br><p>Numero de celular: <b>55 45 43 44 50</b></p>";
-    $body .= "<br><p>Correo Electronico: <b>lciencias@gmail.com</b></p>";
-    $body .= "<br><p>Domicilio: <b>Jardines de Santa Barbara, Coyoacan Ciudad de Mexico 01020</b></p>";
-    $body .= "<br> Pedido<br>";
-    $body .= "<table style='100%'><tr><th>Cantidad</th><th>producto</th><th>Precio</th></tr>";
-    $body .= "<tr><td>1</td><td>Carne<
-		$body_html="<html><head><title>".$tituloMensaje."</title></head><body><p>".$body."</p></body></html>";
-		$emailFrom = array ("lciencias@gmail.com" => "Administrador SISEC");		
-    try
- 		{
- 			$transport = Swift_SmtpTransport::newInstance('smtp.df.gob.mx',25)->setUsername('pat@df.gob.mx')->setPassword('gp=a5=d8');
- 			$mailer    = Swift_Mailer::newInstance($transport);
- 			$message   = Swift_Message::newInstance($tituloMnesaje)->setFrom($emailFrom)->setTo($emailTo)->setBody($body_html,'text/html')->addPart($body_html,'text/plain');
- 			if (($mailer->send($message)) > 0)
- 			{
- 				$this->exito = 1;
- 			}
- 		}
- 		catch(Exception $e){
- 			$this->exito = 0;
- 			echo "Error:  ".$e->getMessage();
-     }
+	private function procesaCorreos(){
+		$this->registros = array();
+		try{
+			$sql = "SELECT id, email, copia, body from correos where estatus = 0 ORDER BY id asc;";
+			$res = $this->db->sql_query($sql);		
+			if ($this->db->sql_numrows ($res) > 0){
+				while($row = $this->db->sql_fetchass()){
+					$this->registros[] = $row;
+				}
+			}
+		}
+		catch(Exception $e){
+			$this->mensaje = $e->getMessage();
+		}
+	}
+
+  private function envia(){
+		$emailFrom = array ("admin@soyfuncionalmx.com" => "Administrador Soy Funcional MX");
+		$tituloMnesaje = "Solicitud de Pedido por Internet";
+		if(count($this->registros) > 0){
+			foreach($this->registros as $data){
+				$body    = $data['body'];
+				$emailTo = $data['email'];
+				$copia   = $data['copia'];
+				try{
+					$transport = Swift_SmtpTransport::newInstance('smtp.gmail.com',465,'ssl')
+										->setUsername('cubesoftw@gmail.com')
+										->setPassword('Vallesoswa990205pwd!');
+					$mailer    = Swift_Mailer::newInstance($transport);
+					$message   = Swift_Message::newInstance($tituloMnesaje)
+											->setFrom($emailFrom)
+											->setTo($emailTo)
+											->setBcc($copia)
+											->setBody($body,'text/html')
+											->addPart($body,'text/plain');
+					//if (($mailer->send($message)) > 0){
+						$this->actualizaEstatus($data['id']);
+						$this->exito = Comunes::SAVE;
+						$this->mensaje = Comunes::MSGSUCESS;
+					//}
+				}
+				catch(Exception $e){
+					$this->exito = Comunes::LISTAR;
+					$this->mensaje  = $e->getMessage();
+				}
+			}
+		}else{
+			$this->exito = Comunes::LISTAR;
+			$this->mensaje  = "No existen correos por enviar";
+		}
   }
 	
-	private function calculaImporte(){
-    return $this->session['importe'] + 0;
-  }
-	
+	private function actualizaEstatus($id){
+		try{
+			$sql = "UPDATE correos SET estatus= '".Comunes::SAVE."' WHERE id = '".$id."' LIMIT 1;";
+			$this->db->sql_query($sql);
+		}
+		catch(Exception $e){
+			$this->mensaje = $e->getMessage();
+		}
+	}
 	public function obtenExito(){
 		return $this->exito;
 	}
