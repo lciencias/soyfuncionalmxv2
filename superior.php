@@ -19,93 +19,94 @@
         </div>
        <div class="rd-navbar-main-element">
 			<?php
-					$precio = 0;
-					$fechas        = array();
-					$pedidosXfecha = array();
-					$productos = array();
-					$productosPedidos = array();
-					$pedidos = 0;
-					$_SESSION['noPedidos'] = count($_SESSION['productos']);
-					if($_SESSION['visitante'] != ""){
-						$cantidad = 0;
-						$productosSeleccionados = array();
-						foreach( $_SESSION['productos'] as $data){
-							$tmp = explode('|',$data);
-							if( !in_array($tmp[0], $fechas) ){
-								$fechas[] = $tmp[0];
-							}
-							$pedidosXfecha[$tmp[0]] =  $pedidosXfecha[$tmp[0]] + 1;
-							$productos[] = $tmp[1];
+				include_once($pathSis."funciones.php");
+				$precio = 0;
+				$fechas        = array();
+				$pedidosXfecha = array();
+				$productos = array();
+				$productosPedidos = array();
+				$pedidos = 0;
+				$_SESSION['noPedidos'] = calculaProductos($_SESSION['productos']);
+				if($_SESSION['visitante'] != ""){
+					$cantidad = 0;
+					$productosSeleccionados = array();
+					foreach( $_SESSION['productos'] as $data){
+						$tmp = explode('|',$data);
+						if( !in_array($tmp[0], $fechas) ){
+							$fechas[] = $tmp[0];
 						}
-						foreach($productos as $idProdTmp){
-							foreach($prods as $data){
-								foreach($data as $dataProd){
-									if((int) $idProdTmp == (int) $dataProd['idproducto']){
-										$precio = (double) $precio + (double) $dataProd['precio']; 
-										$productosPedidos[] = $dataProd;
-									}
+						$pedidosXfecha[$tmp[0]] =  $pedidosXfecha[$tmp[0]] + 1;
+						$productos[] = $tmp[1];
+					}
+					foreach($productos as $idProdTmp){
+						foreach($prods as $data){
+							foreach($data as $dataProd){
+								if((int) $idProdTmp == (int) $dataProd['idproducto']){
+									$precio = (double) $precio + (double) $dataProd['precio']; 
+									$productosPedidos[] = $dataProd;
 								}
 							}
 						}
-					?>
-					<div class="rd-navbar-basket-wrap">
+					}
+				?>
+				<div class="rd-navbar-basket-wrap">
 					<a href="<?=$pathWeb?>cart-page.php" class="rd-navbar-basket fl-bigmug-line-shopping202" target="_self">
 							<span id="totalPedidos"><?=$_SESSION['noPedidos']?></span>
 					</a>
-					</div>
-					<a class="rd-navbar-basket rd-navbar-basket-mobile fl-bigmug-line-shopping202 rd-navbar-fixed-element-2" href="<?=$pathWeb?>cart-page.php">
-						<span><?=count($_SESSION['noPedidos'])?></span>
-					</a>
-					<?php
-					}
-					?>
-					<button class="rd-navbar-project-hamburger rd-navbar-project-hamburger-open rd-navbar-fixed-element-1" type="button" data-multitoggle=".rd-navbar-main" data-multitoggle-blur=".rd-navbar-wrap" data-multitoggle-isolate="data-multitoggle-isolate">
-						<span class="project-hamburger">
-							<span class="project-hamburger-line"></span>
-							<span class="project-hamburger-line"></span>
-							<span class="project-hamburger-line"></span>
-							<span class="project-hamburger-line"></span>
+				</div>
+				<a class="rd-navbar-basket rd-navbar-basket-mobile fl-bigmug-line-shopping202 rd-navbar-fixed-element-2" href="<?=$pathWeb?>cart-page.php">
+					<span><?=count($_SESSION['noPedidos'])?></span>
+				</a>
+				<?php
+				}
+				?>
+				<button class="rd-navbar-project-hamburger rd-navbar-project-hamburger-open rd-navbar-fixed-element-1" type="button" data-multitoggle=".rd-navbar-main" data-multitoggle-blur=".rd-navbar-wrap" data-multitoggle-isolate="data-multitoggle-isolate">
+					<span class="project-hamburger">
+						<span class="project-hamburger-line"></span>
+						<span class="project-hamburger-line"></span>
+						<span class="project-hamburger-line"></span>
+						<span class="project-hamburger-line"></span>
+					</span>
+				</button>
+			</div>
+			<div class="rd-navbar-project">
+				<div class="rd-navbar-project-header">
+					<button class="rd-navbar-project-hamburger rd-navbar-project-hamburger-close" type="button" data-multitoggle=".rd-navbar-main" data-multitoggle-blur=".rd-navbar-wrap" data-multitoggle-isolate>
+						<span class="project-close">
+							<span></span>
+							<span></span>
 						</span>
 					</button>
+					<h5 class="rd-navbar-project-title">CONTACTO</h5>
 				</div>
-				<div class="rd-navbar-project">
-					<div class="rd-navbar-project-header">
-						<button class="rd-navbar-project-hamburger rd-navbar-project-hamburger-close" type="button" data-multitoggle=".rd-navbar-main" data-multitoggle-blur=".rd-navbar-wrap" data-multitoggle-isolate>
-							<span class="project-close">
-								<span></span>
-								<span></span>
-							</span>
-						</button>
-						<h5 class="rd-navbar-project-title">CONTACTO</h5>
-					</div>
-					<div class="rd-navbar-project-content">
+				<div class="rd-navbar-project-content">
+					<div>
 						<div>
-							<div>
-								<div class="owl-carousel" data-items="1" data-dots="true" data-autoplay="true">
-									<img src="<?=$pathWebb?>images/about-5-350x269.jpg" alt="" width="350" height="269"/>
-									<img src="<?=$pathWebb?>images/about-6-350x269.jpg" alt="" width="350" height="269"/>
-									<img src="<?=$pathWebb?>images/about-7-350x269.jpg" alt="" width="350" height="269"/>
-								</div>
-								<ul class="contacts-modern">
-									<li>
-										Plaza Toltecas. Calle 10 # 83<br>
-										San Pedro de los Pinos<br>
-										&Aacute;lvaro Obreg&oacute;n</a><br/>
-										Tel: 55 51 31 86 96<br/>
-										<a href="mailto:hola@soyfuncionalmx.com"><span class="">hola@soyfuncionalmx.com</span></a>
-									</li>
-								</ul>
+							<div class="owl-carousel" data-items="1" data-dots="true" data-autoplay="true">
+								<img src="<?=$pathWebb?>images/about-5-350x269.jpg" alt="" width="350" height="269"/>
+								<img src="<?=$pathWebb?>images/about-6-350x269.jpg" alt="" width="350" height="269"/>
+								<img src="<?=$pathWebb?>images/about-7-350x269.jpg" alt="" width="350" height="269"/>
 							</div>
-							<div>
-								<ul class="list-inline list-social list-inline-xl">
-									<li><a class="icon mdi mdi-facebook" href="https://www.facebook.com/soyfuncionalmx/"></a></li>
-									<li><a class="icon mdi mdi-instagram" href="#"></a></li>
-								</ul>
-							</div>
+							<ul class="contacts-modern">
+								<li>
+									Plaza Toltecas. Calle 10 # 83<br>
+									San Pedro de los Pinos<br>
+									&Aacute;lvaro Obreg&oacute;n</a><br/>
+									Tel: 55 51 31 86 96<br/>
+									<a href="mailto:hola@soyfuncionalmx.com"><span class="">hola@soyfuncionalmx.com</span></a>
+								</li>
+							</ul>
+						</div>
+						<div>
+							<ul class="list-inline list-social list-inline-xl">
+								<li><a class="icon mdi mdi-facebook" href="https://www.facebook.com/soyfuncionalmx/"></a></li>
+								<li><a class="icon mdi mdi-instagram" href="#"></a></li>
+							</ul>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-	</nav>
+	</div>
+</nav>
 </div>

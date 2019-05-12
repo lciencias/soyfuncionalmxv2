@@ -3,16 +3,12 @@
 #Color Amarillo    = #e7e76a
 #Color gris fuerte = #56555a
 #Color gris suave  = #b8b6b9
-$visitante = 'visitante';
-$fecha     = 'fecha';
 session_start();
 header('Content-Type: text/html; charset=ISO-8859-1');
 set_time_limit (0);
 error_reporting(E_ALL ^ E_NOTICE ^ E_WARNING ^ E_PARSE);
 ini_set('memory_limit', -1);
 date_default_timezone_set("America/Mexico_City");
-$site       = "Soy Funcional MX";
-$panelTitle = "Soy Funcional MX";
 $exito = 0;
 if(trim(strtolower($_SERVER['SERVER_NAME'])) == "localhost"){
     if(PHP_OS != "WINNT"){
@@ -26,17 +22,6 @@ if(trim(strtolower($_SERVER['SERVER_NAME'])) == "localhost"){
     }
     $exito    = 1;
 }
-include_once($pathSis."funciones.php");
-if($_SESSION[$visitante] == ""){
-    $_SESSION[$visitante] = rand(99999990,9999999999);
-    $fechaPedido = date('d-m-Y');
-    if(date("H") > 13){
-        $fechaPedido = date("d-m-Y",strtotime($fecha_actual."+ 1 days")); 
-    }
-    $_SESSION['productos']   = array();
-    $_SESSION['fechaPedido'] = $fechaPedido;
-    $_SESSION['noPedidos']   = calculaProductos($_SESSION['productos']);
-}
 if($exito == 1){
     $pathCss   = $pathWeb."css/";
     $pathJs    = $pathWeb."js/";
@@ -44,6 +29,5 @@ if($exito == 1){
 	$pathCla   = $pathSis."panel/clases/";
 	$filesameA = explode('/',$_SERVER['SCRIPT_FILENAME']);
     $fileName  = $filesameA[count($filesameA) - 1 ];
-	include_once($pathSis."panel/BDconfig.php");
 }
 ?>

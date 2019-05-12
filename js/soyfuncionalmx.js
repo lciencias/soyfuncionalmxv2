@@ -69,14 +69,22 @@ $(document).ready(function() {
     });
 
     $(document).on("click", ".seleccionCategoria", function(e) {
+        var contador = 0;
         var idCat = $(this).attr('id');
-        if (parseInt(idCat) > 0) {
-            $(".cuadrados").hide();
-            $(".seleccionCategoria").each(function(i) {
-                if ($(this).prop('checked')) {
-                    $(".cuadro" + (i + 1)).show();
-                }
-            });
+        $(".seleccionCategoria").each(function(i) {
+            if ($(this).is(':checked')) {
+                contador++;
+            }
+        });
+        if (contador > 0) {
+            if (parseInt(idCat) > 0) {
+                $(".cuadrados").hide();
+                $(".seleccionCategoria").each(function(i) {
+                    if ($(this).prop('checked')) {
+                        $(".cuadro" + (i + 1)).show();
+                    }
+                });
+            }
         }
     });
 
@@ -109,7 +117,6 @@ $(document).ready(function() {
                         $('#tprocesando').css({ 'color': '#4B8A08' });
                         $('#tprocesando').html("En breve se publicar\u00E1 el testimonial");
                         setTimeout(function() {
-                            console.log("insertado");
                             $("#mtestimonial").modal('hide');
                         }, 4000);
                     } else {
@@ -207,7 +214,7 @@ $(document).ready(function() {
                         }, 4000);
                     } else {
                         $('#bprocesando').css({ 'color': '#B40431' });
-                        $('#bprocesando').html("Error al guardar la pregunta");
+                        $('#bprocesando').html("Error al guardar el boletin");
                     }
                     return false;
                 },
@@ -249,13 +256,13 @@ $(document).ready(function() {
                 success: function(data) {
                     $('#aviso').html("");
                     if (parseInt(data.exito) === 1) {
-                        $("#totalPedidos").html(data.msg.noPedidos);
+                        $("#totalPedidos").html(data.noPedidos);
                         $('#aviso').css({ "background-color": "#98bf44", "color": "#ffffff", "border": "2px solid #DDDDDD" });
                         $('#aviso').html("Producto Agregado");
 
                     } else {
                         $('#aviso').css({ "background-color": "#f5543f", "color": "#ffffff", "border": "2px solid #DDDDDD" });
-                        $('#aviso').html("Error: el producto NO se agrego");
+                        $('#aviso').html("Error: el producto NO se agreg\u00F3");
                     }
                     return false;
                 },
@@ -375,7 +382,7 @@ $(document).ready(function() {
         var nombre = $("#name").val();
         $("#errorNombre").html("");
         if (String(nombre) === "" || String(nombre).length < 6) {
-            $("#errorNombre").html("El campo nombre debe contener al menos 6 caracteres");
+            $("#errorNombre").html("El campo nombre debe contener al menos 6 car\u00E1cteres");
             return false;
         }
     });
@@ -384,11 +391,11 @@ $(document).ready(function() {
         $("#errorEmail").html("");
         var email = $("#email").val();
         if (String(email) === "" || String(email).length < 6) {
-            $("#errorEmail").html("El campo email debe contener al menos 6 caracteres");
+            $("#errorEmail").html("El campo email debe contener al menos 6 car\u00E1cteres");
             return false;
         }
         if (!valEmail(email)) {
-            $("#errorEmail").html("Favor de teclear un correo electronico valido.");
+            $("#errorEmail").html("Favor de teclear un correo electr\u00F3nico valido.");
             return false;
         }
     });
@@ -397,7 +404,7 @@ $(document).ready(function() {
         $("#errorPhone").html("");
         var phone = $("#phone").val();
         if (String(phone) === "" || phone.length !== 10) {
-            $("#errorPhone").html("El campo telefono debe contener 10 numeros");
+            $("#errorPhone").html("El campo telefono debe contener 10 n\u00FAmeros");
             return false;
         }
     });
@@ -406,7 +413,7 @@ $(document).ready(function() {
         $("#errorAddress").html("");
         var address = $("#address").val();
         if (String(address) === "" || String(address).length < 11) {
-            $("#errorAddress").html("El campo domicilio debe contener al menos 10 caracteres");
+            $("#errorAddress").html("El campo domicilio debe contener al menos 10 car\u00E1cteres");
             return false;
         }
     });
@@ -424,23 +431,23 @@ $(document).ready(function() {
         $("#errorPhone").html("");
         $("#errorAddress").html("");
         if (String(nombre) === "" || String(nombre).length < 6) {
-            $("#errorNombre").html("El campo nombre debe contener al menos 6 caracteres");
+            $("#errorNombre").html("El campo nombre debe contener al menos 6 car\u00E1cteres");
             return false;
         }
         if (String(email) === "" || String(email).length < 6) {
-            $("#errorEmail").html("El campo email debe contener al menos 6 caracteres");
+            $("#errorEmail").html("El campo email debe contener al menos 6 car\u00E1cteres");
             return false;
         }
         if (!valEmail(email)) {
-            $("#errorEmail").html("Favor de teclear un correo electronico valido.");
+            $("#errorEmail").html("Favor de teclear un correo electr\u00F3nico v\u00E1lido.");
             return false;
         }
         if (String(phone) === "" || phone.length !== 10) {
-            $("#errorPhone").html("El campo telefono debe contener 10 numeros");
+            $("#errorPhone").html("El campo tel\u00E9fono debe contener 10 n\u00FAmeros");
             return false;
         }
         if (String(address) === "" || String(address).length < 11) {
-            $("#errorAddress").html("El campo domicilio debe contener al menos 10 caracteres");
+            $("#errorAddress").html("El campo domicilio debe contener al menos 10 car\u00E1cteres");
             return false;
         }
         if (String(sessionId) !== "") {
@@ -461,9 +468,7 @@ $(document).ready(function() {
                 dataType: 'json',
                 beforeSend: function() {},
                 success: function(data) {
-                    console.log("data:  " + data.exito);
                     if (parseInt(data.exito) === 1) {
-                        console.log("se ha enviado el pedido");
                         location.href = baseurl + "logout.php";
                     } else {
                         console.log("Error al enviar el pedido");

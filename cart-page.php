@@ -8,10 +8,12 @@
   $prod   = new Producto($db,$_SESSION,$_REQUEST,Comunes::LISTAR,Comunes::WEB2);
   $prods  = $prod->obtenRegistros();
   $_SESSION['catalogo'] = $prods;
-
   $envio  = 0.00;
   $importe = calculaImporte($prods, $_SESSION);
   $_SESSION['importe'] = $importe;
+  if((double) $importe == 0.00){
+    header("Location: ".$pathWeb."grid-shop.php");
+  }
   include_once("header.php");
 ?>
 <body>
@@ -246,17 +248,7 @@ function botonEnviarPedido($pathWeb){
   return $buf;
 }
 
-function calculaImporte($prods, $session){
-  $importe = 0.00;
-  $seleccion = $session['productos'];
-  foreach($seleccion as $fechaP => $data){
-    foreach($data as $idProd => $cantidad){
-      $producto = $prods[$idProd];
-      $importe = $importe + ($producto['precio'] * $cantidad) + 0.00;
-    }
-  }
-  return $importe;
-}
+
 
 function formulario(){
   $buf = '
