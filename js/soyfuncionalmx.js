@@ -486,6 +486,11 @@ $(document).ready(function() {
         location.href = url;
     });
 
+    $(document).on("click", "#datosEnvio", function(e) {
+        var url = baseurl + "cart-send.php";
+        location.href = url;
+    });
+
     if ($("#fechainicial") !== undefined) {
         tabSeleccionado = $("#fechainicial").val();
     }

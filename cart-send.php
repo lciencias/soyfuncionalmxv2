@@ -52,16 +52,20 @@
         $buffer = numeroPedido($prods, $_SESSION);
         echo $buffer;
       ?>
-        <div class="tab-content">
-          <div class="tab-pane active" id="resumen" style="text-align:center;">
-            <?php
-              $buffer = "<br><span style='color:#002857;font-size:20px;'>Pedidos por d&iacute;a</span><br>".generaTabs($fechas);
-              $buffer.= contenidos($fechas, $prods, $_SESSION, $pathweb);
-              echo $buffer;
-            ?>        
+        <div class="row">
+          <div class="col-md-6">
+                <?php
+                  echo formulario();
+                ?>
           </div>
-          <hr>
+          <div class="col-md-6">
+                <?php
+                  echo importe($_SESSION['importe'] , $envio, $pathWeb);
+                ?>  
+              </div>
         </div>
+        
+        
       </div>
     </section>
     <?php
@@ -177,9 +181,6 @@ function contenidos($arrayFechas, $prods, $session, $pathweb){
     $buf .='<div class="tab-pane'.$tmp.'" id="hometab'.$contador.'">';
     $array= regresaProductos($prods, $fecha ,$session['productos']);
     $buf .= generaTabla($array, $session, $pathWeb, $fecha);
-    $buf .='
-            <button type="button" id="continuarPedido" tabIndex="6" class="button button-success button-zakaria" id="continuar">Continuar pedido</button>
-            <button type="button" tabIndex="7"  class="button button-primary button-zakaria" id="datosEnvio">Datos de env&iacute;o</button>';
     $buf .='</div>';
     $contador++;
   }
@@ -310,6 +311,7 @@ function importe($importe , $envio, $pathWeb){
             <td  style="text-align:center;">
               <button type="button" tabIndex="7" class="button button-primary button-zakaria" id="enviarPedido">Enviar Pedido</button>
             </td>
+            </tr>
         </tbody>
       </table>
     </div>';
