@@ -7,7 +7,7 @@
 					<div class="rd-navbar-brand">
 						<a class="brand" href="<?=$pathWeb?>index.php">
 							<p>
-								<span style="font-family: kalam, cursive;font-size: 45px;color:#B18904;">Soy</span>
+								<span style="font-family: kalam, cursive;font-size: 45px;color:#886A08;">Soy</span>
 							 	<span style="font-family: kalam, cursive;font-size: 45px;color:#7fd02c;">Funcional MX</span></p> 
 							<!--img class="brand-logo-dark"  src="<?=$pathWeb?>images/soyfuncionalmx.png" alt=""/>-->
 							<!--<img class="brand-logo-light" src="<?=$pathWeb?>images/logo-inverse-249x52.png" alt="" width="500" height="52"/>-->
